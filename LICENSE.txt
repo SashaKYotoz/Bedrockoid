@@ -1,0 +1,10 @@
+Copyright (c) 2025 SashaKYotoz
+All rights reserved.
+
+Some project elements go under: 
+
+MIT License (Copyright (c) 2022 bl4ckscor3)
+
+MIT License (Copyright (c) 2018 Snownee)
+
+GNU GENERAL PUBLIC LICENSE (Copyright (c) juancarloscp52)

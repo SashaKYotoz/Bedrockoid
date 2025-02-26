@@ -1,0 +1,5 @@
+v1	named	intermediary
+FIELD	net/sashakyotoz/bedrockoid/mixin/BlockMixin	Lnet/minecraft/block/BlockState;	defaultState	field_10646
+FIELD	net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin	Lnet/minecraft/util/collection/IdList;	providers	field_1995
+FIELD	net/sashakyotoz/bedrockoid/mixin/ComposterBlockMixin	[Lnet/minecraft/util/shape/VoxelShape;	LEVEL_TO_COLLISION_SHAPE	field_17568
+FIELD	net/sashakyotoz/bedrockoid/mixin/ComposterBlockMixin	Lnet/minecraft/state/property/IntProperty;	LEVEL	field_17565
