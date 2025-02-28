@@ -13,6 +13,7 @@
 Bedrockoid-Fabric/run/logs/
 Bedrockoid-Fabric/run/saves/
 Bedrockoid-Fabric/run/crash-reports/
+Bedrockoid-Fabric/src/main/generated/.cache/
 
 # Package Files #
 *.jar

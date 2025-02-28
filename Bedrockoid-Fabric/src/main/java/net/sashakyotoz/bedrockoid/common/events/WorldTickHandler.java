@@ -11,7 +11,6 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.WorldChunk;
-import net.sashakyotoz.bedrockoid.common.ModsUtils;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 
 public class WorldTickHandler implements ServerTickEvents.StartWorldTick, ServerTickEvents.EndWorldTick {
@@ -31,9 +30,9 @@ public class WorldTickHandler implements ServerTickEvents.StartWorldTick, Server
         ChunkPos chunkPos = chunk.getPos();
         int chunkX = chunkPos.getStartX();
         int chunkZ = chunkPos.getStartZ();
-
+        randomTickSpeed = Math.min(randomTickSpeed, 50);
         for (int i = 0; i < randomTickSpeed; i++) {
-            if (world.random.nextInt(48) == 0) {
+            if (world.random.nextInt(32) == 0) {
                 BlockPos randomPos = world.getRandomPosInChunk(chunkX, 0, chunkZ, 15);
 
                 if (world.getBlockState(world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, randomPos).down()).isIn(BlockTags.LEAVES)) {

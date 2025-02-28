@@ -9,7 +9,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.collection.IdList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
-import net.sashakyotoz.bedrockoid.common.BlockUtils;
+import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

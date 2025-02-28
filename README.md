@@ -11,3 +11,8 @@ Bedrockoid - a Minecraft Mod that implements Minecraft Bedrock Edition exclusive
 - Fire aspect can fire campfires
 - Entity uses shield if sneaking
 - Living shulkers can be dyed
+- Mushroom trees spawn in swamp
+- Frostwalker radius is increased to be matched with what in Bedrock
+- Color of sheep's fur applies to all fur spots
+- Reach around placement for blocks
+- Fallen trees from snapshot 25W09A are backported + trees with 2x2 trunk

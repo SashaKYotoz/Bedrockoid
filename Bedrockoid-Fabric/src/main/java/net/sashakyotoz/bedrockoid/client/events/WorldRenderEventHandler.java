@@ -2,9 +2,7 @@ package net.sashakyotoz.bedrockoid.client.events;
 
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.minecraft.util.hit.HitResult;
-import net.sashakyotoz.bedrockoid.common.BlockUtils;
-import org.jetbrains.annotations.Nullable;
+import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 
 public class WorldRenderEventHandler implements WorldRenderEvents.End,WorldRenderEvents.BlockOutline{
     @Override

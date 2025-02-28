@@ -1,0 +1,15 @@
+{
+  "type": "bedrockoid:fallen_tree",
+  "config": {
+    "isDoubleTrunk": false,
+    "logType": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:oak_log",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    }
+  }
+}

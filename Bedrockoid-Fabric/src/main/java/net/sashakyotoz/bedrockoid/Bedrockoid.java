@@ -20,8 +20,9 @@ public class Bedrockoid implements ModInitializer {
     public void onInitialize() {
         BedrockSnowManager.init();
         BedrockoidFeatures.register();
-        ServerTickEvents.START_WORLD_TICK.register(new WorldTickHandler());
-        ServerTickEvents.END_WORLD_TICK.register(new WorldTickHandler());
+        WorldTickHandler instance = new WorldTickHandler();
+        ServerTickEvents.START_WORLD_TICK.register(instance);
+        ServerTickEvents.END_WORLD_TICK.register(instance);
         ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(Blocks.GRASS_BLOCK, 0.1f);
     }
 

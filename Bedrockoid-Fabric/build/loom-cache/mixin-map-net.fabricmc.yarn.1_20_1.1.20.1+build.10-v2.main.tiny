@@ -1,5 +1,8 @@
 v1	named	intermediary
-FIELD	net/sashakyotoz/bedrockoid/mixin/BlockMixin	Lnet/minecraft/block/BlockState;	defaultState	field_10646
+FIELD	net/sashakyotoz/bedrockoid/mixin/blocks/BlockMixin	Lnet/minecraft/block/BlockState;	defaultState	field_10646
+FIELD	net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin	[Lnet/minecraft/util/shape/VoxelShape;	LEVEL_TO_COLLISION_SHAPE	field_17568
+FIELD	net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin	Lnet/minecraft/state/property/IntProperty;	LEVEL	field_17565
 FIELD	net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin	Lnet/minecraft/util/collection/IdList;	providers	field_1995
-FIELD	net/sashakyotoz/bedrockoid/mixin/ComposterBlockMixin	[Lnet/minecraft/util/shape/VoxelShape;	LEVEL_TO_COLLISION_SHAPE	field_17568
-FIELD	net/sashakyotoz/bedrockoid/mixin/ComposterBlockMixin	Lnet/minecraft/state/property/IntProperty;	LEVEL	field_17565
+FIELD	net/sashakyotoz/bedrockoid/mixin/client/MinecraftClientMixin	Lnet/minecraft/client/network/ClientPlayerEntity;	player	field_1724
+FIELD	net/sashakyotoz/bedrockoid/mixin/client/MinecraftClientMixin	Lnet/minecraft/util/hit/HitResult;	crosshairTarget	field_1765
+METHOD	net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin	(FLnet/minecraft/item/ItemConvertible;)V	registerCompostableItem	method_17753

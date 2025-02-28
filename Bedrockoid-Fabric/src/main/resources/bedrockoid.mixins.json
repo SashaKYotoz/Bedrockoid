@@ -4,17 +4,20 @@
   "package": "net.sashakyotoz.bedrockoid.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BlockMixin",
-    "BlockStateMixin",
-    "ComposterBlockMixin",
+    "FrostWalkerEnchantmentMixin",
     "ItemMixin",
     "LivingEntityMixin",
     "MobEntityMixin",
-    "TntBlockMixin"
+    "blocks.BlockMixin",
+    "blocks.BlockStateMixin",
+    "blocks.ComposterBlockMixin",
+    "blocks.TntBlockMixin"
   ],
   "client": [
     "client.BlockColorsMixin",
-    "client.BlockRenderManagerMixin"
+    "client.BlockRenderManagerMixin",
+    "client.MinecraftClientMixin",
+    "client.SheepWoolFeatureRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
