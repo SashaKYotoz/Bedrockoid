@@ -4,12 +4,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.World;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
+import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 
 public class VanillaManager implements SnowManager {
     @Override
@@ -29,12 +29,11 @@ public class VanillaManager implements SnowManager {
                     level.setBlockState(pos, snowLayers, 2);
                     return true;
                 }
-            }
-            else {
-                if (state.contains(Properties.DOUBLE_BLOCK_HALF))
-                    level.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 2);
-
-                level.setBlockState(pos, Blocks.SNOW.getDefaultState(), 2);
+            } else {
+                if (BlockUtils.canSnowlog(state))
+                    level.setBlockState(pos, state.with(BlockUtils.LAYERS, 1), 3);
+                else
+                    level.setBlockState(pos, Blocks.SNOW.getDefaultState(), 2);
                 return true;
             }
         }

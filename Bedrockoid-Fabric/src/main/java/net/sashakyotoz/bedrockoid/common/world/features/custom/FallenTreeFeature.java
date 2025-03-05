@@ -57,15 +57,6 @@ public class FallenTreeFeature extends Feature<FallenTreeFeatureConfig> {
             }
 
             world.setBlockState(trunkTopPos, trunk.with(PillarBlock.AXIS, Direction.UP.getAxis()), 3);
-            for (Direction direction : Direction.Type.HORIZONTAL) {
-                BlockPos vinePos = trunkTopPos.offset(direction.getOpposite());
-                if (world.getBlockState(vinePos).isReplaceable() && (random.nextInt(6) > 3)) {
-                    world.setBlockState(vinePos,
-                            Blocks.VINE.getDefaultState().with(VineBlock.getFacingProperty(direction), true),
-                            3
-                    );
-                }
-            }
             Direction direction = Direction.Type.HORIZONTAL.random(random);
             generateFallenTrunk2x2(world, direction, size, distance + 1, trunkTopPos, 21, trunk);
         }
@@ -179,11 +170,23 @@ public class FallenTreeFeature extends Feature<FallenTreeFeatureConfig> {
                         );
                         if (world.getBlockState(topPos.up()).isReplaceable())
                             world.setBlockState(topPos.up(), Blocks.AIR.getDefaultState(), 3);
-
+                        setVines(world, topPos);
                     }
                 }
             }
         }
         return true;
+    }
+
+    public void setVines(StructureWorldAccess world, BlockPos trunkPos) {
+        for (Direction direction : Direction.Type.HORIZONTAL) {
+            setVineOnTrunk(world, trunkPos, direction);
+        }
+    }
+
+    public void setVineOnTrunk(StructureWorldAccess world, BlockPos trunkPos, Direction direction) {
+        BlockPos vinePos = trunkPos.offset(direction.getOpposite());
+        if (world.getBlockState(vinePos).isReplaceable() && (world.getRandom().nextInt(6) > 3))
+            world.setBlockState(vinePos, Blocks.VINE.getDefaultState().with(VineBlock.getFacingProperty(direction), true), 3);
     }
 }

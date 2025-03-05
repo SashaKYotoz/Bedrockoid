@@ -1,5 +1,6 @@
 package net.sashakyotoz.bedrockoid;
 
+import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.block.Blocks;
@@ -18,12 +19,13 @@ public class Bedrockoid implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        MidnightConfig.init(MOD_ID, BedrockoidConfig.class);
+
         BedrockSnowManager.init();
         BedrockoidFeatures.register();
         WorldTickHandler instance = new WorldTickHandler();
         ServerTickEvents.START_WORLD_TICK.register(instance);
         ServerTickEvents.END_WORLD_TICK.register(instance);
-        ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(Blocks.GRASS_BLOCK, 0.1f);
     }
 
     public static Identifier makeID(String id) {

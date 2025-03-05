@@ -1,0 +1,21 @@
+{
+  "armorStandArms": true,
+  "redstoneConnectsToPiston": true,
+  "snowlogging": true,
+  "cauldronWaterloggability": true,
+  "cauldronNaturalFilling": true,
+  "stopElytraByPressingSpace": true,
+  "wetSpongesDryOut": true,
+  "entitySharesFire": true,
+  "fallenTrees": true,
+  "reachAroundPlacement": true,
+  "sheepFurColorFix": true,
+  "frostwalkerBoost": true,
+  "mushroomTreesInSwamp": true,
+  "shulkersCanBeDyed": true,
+  "shieldActivatesWhenSneaking": true,
+  "fireAspectImprovements": true,
+  "composterCollisionFix": true,
+  "snowSpawnsUnderTrees": true,
+  "snowCoversLeaves": true
+}

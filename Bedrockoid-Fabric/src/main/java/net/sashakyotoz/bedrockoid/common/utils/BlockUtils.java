@@ -1,44 +1,50 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.BlockModelRenderer;
-import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockRenderView;
-import net.minecraft.world.World;
-import net.sashakyotoz.bedrockoid.Bedrockoid;
+import net.minecraft.world.GameRules;
+import org.jetbrains.annotations.Nullable;
 
 public class BlockUtils {
     public static final IntProperty LAYERS = IntProperty.of("snow_layers", 0, 8);
-    public static MatrixStack matrices;
 
-    public static void renderSnowOverlay(BlockPos pos, World world, int snowAmount) {
-        BlockState snowState = Blocks.SNOW.getDefaultState().with(Properties.LAYERS, 3);
-        BlockRenderManager renderManager = MinecraftClient.getInstance().getBlockRenderManager();
-        BlockModelRenderer modelRenderer = renderManager.getModelRenderer();
-        VertexConsumerProvider.Immediate provider = MinecraftClient.getInstance().getBufferBuilders().getEntityVertexConsumers();
-        if (matrices != null && provider != null) {
-            Bedrockoid.log(String.format("It seems to be called: %s", provider.getBuffer(RenderLayers.getBlockLayer(snowState)).toString()));
-            matrices.push();
-            matrices.translate(-0.5, 0.0, -0.5);
-            modelRenderer.render(world, renderManager.getModel(snowState), snowState, pos, matrices,
-                    provider.getBuffer(RenderLayers.getBlockLayer(snowState)),
-                    false, world.random, 0,
-                    OverlayTexture.DEFAULT_UV);
-            matrices.pop();
+    public static boolean isSnowlogged(@Nullable BlockState state) {
+        return state != null
+                && state.getProperties() != null
+                && state.contains(LAYERS)
+                && state.get(LAYERS) > 0
+                && ModsUtils.isSnowloggingNotOverrided();
+    }
+
+    public static BlockState getSnowEquivalent(BlockState state) {
+        return Blocks.SNOW.getDefaultState().with(Properties.LAYERS, Math.max(1, state.get(LAYERS)));
+    }
+
+    public static BlockState getSnowPlacementState(BlockState state, ItemPlacementContext context) {
+        return getSnowloggedState(state, context.getWorld().getBlockState(context.getBlockPos()));
+    }
+
+    public static boolean canSnowlog(@Nullable BlockState state) {
+        return state != null && state.getProperties() != null
+                && state.contains(LAYERS) && state.getFluidState().isEmpty()
+                && ModsUtils.isSnowloggingNotOverrided();
+    }
+
+    public static BlockState getSnowloggedState(BlockState state, BlockState snowState) {
+        if (snowState != null && canSnowlog(state) && snowState.isOf(Blocks.SNOW)) {
+            int layers = snowState.get(Properties.LAYERS);
+            if (layers < 8)
+                state = state.with(LAYERS, layers);
         }
+        return state;
     }
 
     public static boolean haveLeavesToChangeColor(BlockState state, BlockRenderView world, BlockPos pos) {
@@ -58,16 +64,16 @@ public class BlockUtils {
         return false;
     }
 
-    //shapes
-    public static final VoxelShape[] SNOW_LAYERS_TO_SHAPE = new VoxelShape[]{
-            VoxelShapes.empty(),
-            Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 2.0, 16.0),
-            Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0),
-            Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 6.0, 16.0),
-            Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 8.0, 16.0),
-            Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0),
-            Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0),
-            Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 14.0, 16.0),
-            Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
-    };
+    public static boolean haveToFillUpCauldron(BlockState state, ServerWorld world, BlockPos pos) {
+        if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.WATER_CAULDRON) && state.get(Properties.LEVEL_3) != 3)
+            return true;
+        else if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.CAULDRON)) {
+            world.setBlockState(pos, Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 1));
+            return true;
+        } else if (world.getFluidState(pos.up()).isOf(Fluids.LAVA) && state.isOf(Blocks.CAULDRON) && world.getGameRules().getBoolean(GameRules.LAVA_SOURCE_CONVERSION)) {
+            world.setBlockState(pos, Blocks.LAVA_CAULDRON.getDefaultState());
+            return true;
+        }
+        return false;
+    }
 }

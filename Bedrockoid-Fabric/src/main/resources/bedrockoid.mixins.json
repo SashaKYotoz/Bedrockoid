@@ -6,18 +6,29 @@
   "mixins": [
     "FrostWalkerEnchantmentMixin",
     "ItemMixin",
-    "LivingEntityMixin",
-    "MobEntityMixin",
+    "blocks.BlockItemMixin",
     "blocks.BlockMixin",
     "blocks.BlockStateMixin",
     "blocks.ComposterBlockMixin",
-    "blocks.TntBlockMixin"
+    "blocks.FlowerBlockMixin",
+    "blocks.PlantsMixin",
+    "blocks.RedstoneWireBlockMixin",
+    "blocks.SnowyBlockMixin",
+    "blocks.TntBlockMixin",
+    "entities.ArmorStandEntityMixin",
+    "entities.EntityMixin",
+    "entities.LivingEntityMixin",
+    "entities.MobEntityMixin",
+    "entities.ServerPlayerInteractionManagerMixin",
+    "worldgen.BiomeMixin",
+    "worldgen.ServerWorldMixin"
   ],
   "client": [
     "client.BlockColorsMixin",
     "client.BlockRenderManagerMixin",
     "client.MinecraftClientMixin",
-    "client.SheepWoolFeatureRendererMixin"
+    "client.SheepWoolFeatureRendererMixin",
+    "client.TerrainRenderContextMixin"
   ],
   "injectors": {
     "defaultRequire": 1

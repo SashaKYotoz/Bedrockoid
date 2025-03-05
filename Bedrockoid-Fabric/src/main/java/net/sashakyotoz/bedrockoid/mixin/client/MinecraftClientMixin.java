@@ -7,6 +7,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.thread.ReentrantThreadExecutor;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ReachPlacementUtils;
 import org.jetbrains.annotations.Nullable;
@@ -30,7 +31,7 @@ public abstract class MinecraftClientMixin extends ReentrantThreadExecutor<Runna
 
     @Inject(method = "doItemUse", at = @At("HEAD"))
     private void crosshairTargetHandling(CallbackInfo ci) {
-        if (this.player == null || ModsUtils.isBedrockifyIn())
+        if (this.player == null || ModsUtils.isBedrockifyIn() || !BedrockoidConfig.reachAroundPlacement)
             return;
         if (ReachPlacementUtils.INSTANCE.canReachAround()) {
             final ClientPlayerEntity player = this.player;

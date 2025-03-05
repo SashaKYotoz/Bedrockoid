@@ -1,5 +1,7 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.block.MapColor;
@@ -8,10 +10,12 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.sashakyotoz.bedrockoid.Bedrockoid;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -24,10 +28,11 @@ import java.util.Optional;
 public class ReachPlacementUtils {
     public static final ReachPlacementUtils INSTANCE = new ReachPlacementUtils();
     private final MinecraftClient client = MinecraftClient.getInstance();
+    public static final Identifier PLACEMENT_ICON = Bedrockoid.makeID("textures/gui/reach_around_icon.png");
 
     public void renderIndicator(DrawContext drawContext) {
-        if (client.isInSingleplayer() && this.canReachAround())
-            drawContext.fill((client.getWindow().getScaledWidth() / 2) - 5, (client.getWindow().getScaledHeight() / 2) + 5, (client.getWindow().getScaledWidth() / 2) + 4, (client.getWindow().getScaledHeight() / 2) + 6, 0xFFFFFF);
+        if (canReachAround())
+            drawContext.drawTexture(PLACEMENT_ICON, (drawContext.getScaledWindowWidth() / 2) - 8, (drawContext.getScaledWindowHeight() / 2) - 8, 0, 0, 15, 15, 15, 15);
     }
 
     public boolean canReachAround() {
@@ -49,12 +54,14 @@ public class ReachPlacementUtils {
 
         return getRaycastIntersection(player).isPresent();
     }
+
     public static BlockPos getFacingSteppingBlockPos(@NotNull Entity player) {
         return player.getSteppingPos().offset(player.getHorizontalFacing());
     }
 
     /**
      * Draws a vector from the player's eyes to the end of the reach distance, in the direction the player is facing. We can use this to check if the block is valid for placement.
+     *
      * @return The position of the intersection between the raycast and the surface of the target block.
      * @author axialeaa
      */

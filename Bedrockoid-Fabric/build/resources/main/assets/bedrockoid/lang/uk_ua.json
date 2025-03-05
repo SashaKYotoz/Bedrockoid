@@ -1,0 +1,22 @@
+{
+  "bedrockoid.midnightconfig.title":"Конфігурації Bedrockoid",
+  "bedrockoid.midnightconfig.armorStandArms":"Чи має стійка для обладунків мати руки за замовчуванням",
+  "bedrockoid.midnightconfig.redstoneConnectsToPiston":"Чи може редстоун з'єднуватися з поршнем",
+  "bedrockoid.midnightconfig.snowlogging":"Чи може сніг покривати рослини",
+  "bedrockoid.midnightconfig.cauldronWaterloggability":"Чи має казан омиватися водою, якщо стоїть у ній",
+  "bedrockoid.midnightconfig.cauldronNaturalFilling":"Чи може казан заповнюватися, якщо є рідина над ним",
+  "bedrockoid.midnightconfig.stopElytraByPressingSpace":"Чи може політ на елітрах зупинятися натисканням кнопки для стрибку",
+  "bedrockoid.midnightconfig.wetSpongesDryOut":"Чи має волога губка висихати в сухих біомах",
+  "bedrockoid.midnightconfig.entitySharesFire":"Чи можуть істоти переносити вогонь на блоки",
+  "bedrockoid.midnightconfig.fallenTrees":"Чи мають повалені дерева спавнитися",
+  "bedrockoid.midnightconfig.reachAroundPlacement":"Чи має використовуватися розміщення блоків як у Bedrock Edition",
+  "bedrockoid.midnightconfig.sheepFurColorFix":"Чи має овеча вовна відмальовуватися правильно",
+  "bedrockoid.midnightconfig.frostwalkerBoost":"Чи має зачарування льодохід бути поліпшеним",
+  "bedrockoid.midnightconfig.mushroomTreesInSwamp":"Чи можуть здорові гриби спавнитися у болотах",
+  "bedrockoid.midnightconfig.shulkersCanBeDyed":"Чи можуть живі шалкери бути розмальовані",
+  "bedrockoid.midnightconfig.shieldActivatesWhenSneaking":"Чи активуватиметься щит при ході крадькома",
+  "bedrockoid.midnightconfig.fireAspectImprovements":"Чи можу ",
+  "bedrockoid.midnightconfig.composterCollisionFix":"Have composter's collision to be fixed after composting",
+  "bedrockoid.midnightconfig.snowSpawnsUnderTrees":"Have snow to be spawned under trees",
+  "bedrockoid.midnightconfig.snowCoversLeaves":"Can leaves be painted in white if snow above them or biome is snowy"
+}

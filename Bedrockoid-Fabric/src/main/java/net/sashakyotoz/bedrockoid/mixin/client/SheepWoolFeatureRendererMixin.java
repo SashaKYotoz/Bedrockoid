@@ -9,6 +9,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.DyeColor;
 import net.sashakyotoz.bedrockoid.Bedrockoid;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,7 +24,7 @@ public abstract class SheepWoolFeatureRendererMixin extends FeatureRenderer<Shee
 
     @Inject(method = "render*", at = @At("RETURN"))
     private void bedrockify$renderWoolColorAfterShearing(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, SheepEntity sheepEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
-        if (ModsUtils.isBedrockifyIn())
+        if (ModsUtils.isBedrockifyIn() || !BedrockoidConfig.sheepFurColorFix)
             return;
         else {
             float s;

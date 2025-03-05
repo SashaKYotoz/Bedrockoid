@@ -13,6 +13,7 @@ import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placementmodifier.PlacementModifier;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.sashakyotoz.bedrockoid.Bedrockoid;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.FallenTreeFeature;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.SnowUnderTreeFeature;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.configs.FallenTreeFeatureConfig;
@@ -25,26 +26,31 @@ public class BedrockoidFeatures {
         Registry.register(Registries.FEATURE, Bedrockoid.makeID("snow_under_tree"), SnowUnderTreeFeature.INSTANCE);
         Registry.register(Registries.FEATURE, Bedrockoid.makeID("fallen_tree"), FallenTreeFeature.INSTANCE);
 
-        BiomeModifications.addFeature(context -> context.getBiome().getTemperature() < 0.15f && context.getBiome().hasPrecipitation(),
-                GenerationStep.Feature.TOP_LAYER_MODIFICATION, SNOW_UNDER_TREES);
+        if (BedrockoidConfig.snowSpawnsUnderTrees){
+            BiomeModifications.addFeature(context -> context.getBiome().getTemperature() < 0.15f && context.getBiome().hasPrecipitation(),
+                    GenerationStep.Feature.TOP_LAYER_MODIFICATION, SNOW_UNDER_TREES);
+        }
+        if (BedrockoidConfig.fallenTrees){
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST),
+                    GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_OAK_TREE);
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
+                    GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_DARK_OAK_TREE);
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.BIRCH_FOREST, BiomeKeys.FLOWER_FOREST),
+                    GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_BIRCH_TREE);
+            BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_TAIGA),
+                    GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_SPRUCE_TREE);
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA),
+                    GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_BIG_SPRUCE_TREE);
+            BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_JUNGLE),
+                    GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_JUNGLE_TREE);
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE),
+                    GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_BIG_JUNGLE_TREE);
+        }
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST),
-                GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_OAK_TREE);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
-                GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_DARK_OAK_TREE);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.BIRCH_FOREST, BiomeKeys.FLOWER_FOREST),
-                GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_BIRCH_TREE);
-        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_TAIGA),
-                GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_SPRUCE_TREE);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA),
-                GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_BIG_SPRUCE_TREE);
-        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.IS_JUNGLE),
-                GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_JUNGLE_TREE);
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE),
-                GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_BIG_JUNGLE_TREE);
-
-        BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.SWAMP_HUT_HAS_STRUCTURE),
-                GenerationStep.Feature.TOP_LAYER_MODIFICATION, VegetationPlacedFeatures.MUSHROOM_ISLAND_VEGETATION);
+        if (BedrockoidConfig.mushroomTreesInSwamp){
+            BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.SWAMP_HUT_HAS_STRUCTURE),
+                    GenerationStep.Feature.TOP_LAYER_MODIFICATION, VegetationPlacedFeatures.MUSHROOM_ISLAND_VEGETATION);
+        }
     }
 
     //configured features
