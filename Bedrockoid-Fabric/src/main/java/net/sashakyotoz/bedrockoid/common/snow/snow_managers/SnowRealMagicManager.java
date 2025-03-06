@@ -24,9 +24,6 @@ public class SnowRealMagicManager implements SnowManager {
 
     @Override
     public BlockState getStateAfterMelting(BlockState stateNow, StructureWorldAccess level, BlockPos pos) {
-//        if (SnowCommonConfig.snowNeverMelt)
-//            return stateNow;
-
 //        if (stateNow.getBlock() instanceof SnowVariant snowVariant)
 //            return snowVariant.getRaw(stateNow, level, pos);
 

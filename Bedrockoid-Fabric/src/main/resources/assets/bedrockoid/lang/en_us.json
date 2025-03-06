@@ -1,5 +1,7 @@
 {
   "bedrockoid.midnightconfig.title":"Bedrockoid Configuration",
+  "bedrockoid.midnightconfig.category.flags":"Bedrockoid Features",
+  "bedrockoid.midnightconfig.category.lists":"Bedrockoid Blacklists",
   "bedrockoid.midnightconfig.armorStandArms":"Have arms of armor stand to be visible by default",
   "bedrockoid.midnightconfig.redstoneConnectsToPiston":"Can be redstone connected to piston",
   "bedrockoid.midnightconfig.snowlogging":"Can be plants covered by snow",
@@ -19,5 +21,6 @@
   "bedrockoid.midnightconfig.fireAspectImprovements":"Can item with fire aspect fire tnt, campfires and candles",
   "bedrockoid.midnightconfig.composterCollisionFix":"Have composter's collision to be fixed after composting",
   "bedrockoid.midnightconfig.snowSpawnsUnderTrees":"Have snow to be spawned under trees",
+  "bedrockoid.midnightconfig.disableSnowUnderTreesIn": "List of biomes, where snow blocked to spawned under trees",
   "bedrockoid.midnightconfig.snowCoversLeaves":"Can leaves be painted in white if snow above them or biome is snowy"
 }

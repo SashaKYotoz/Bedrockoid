@@ -14,8 +14,12 @@
   "mushroomTreesInSwamp": true,
   "shulkersCanBeDyed": true,
   "shieldActivatesWhenSneaking": true,
+  "canPlantsBeBonemeal": true,
   "fireAspectImprovements": true,
   "composterCollisionFix": true,
   "snowSpawnsUnderTrees": true,
+  "disableSnowUnderTreesIn": [
+    "minecraft:snowy_taiga"
+  ],
   "snowCoversLeaves": true
 }

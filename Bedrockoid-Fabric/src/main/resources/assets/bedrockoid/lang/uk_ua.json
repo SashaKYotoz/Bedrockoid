@@ -1,5 +1,7 @@
 {
   "bedrockoid.midnightconfig.title": "Конфігурації Bedrockoid",
+  "bedrockoid.midnightconfig.category.flags": "Bedrockoid Функції",
+  "bedrockoid.midnightconfig.category.lists":"Bedrockoid Списки виключення",
   "bedrockoid.midnightconfig.armorStandArms": "Чи має стійка для обладунків мати руки за замовчуванням",
   "bedrockoid.midnightconfig.redstoneConnectsToPiston": "Чи може редстоун з'єднуватися з поршнем",
   "bedrockoid.midnightconfig.snowlogging": "Чи може сніг покривати рослини",
@@ -12,12 +14,13 @@
   "bedrockoid.midnightconfig.reachAroundPlacement": "Чи має використовуватися розміщення блоків як у Bedrock Edition",
   "bedrockoid.midnightconfig.sheepFurColorFix": "Чи має овеча вовна відмальовуватися правильно",
   "bedrockoid.midnightconfig.frostwalkerBoost": "Чи має зачарування льодохід бути поліпшеним",
-  "bedrockoid.midnightconfig.mushroomTreesInSwamp": "Чи можуть здорові гриби спавнитися у болотах",
+  "bedrockoid.midnightconfig.mushroomTreesInSwamp": "Чи можуть великі гриби спавнитися у болотах",
   "bedrockoid.midnightconfig.shulkersCanBeDyed": "Чи можуть живі шалкери бути розмальовані",
   "bedrockoid.midnightconfig.canPlantsBeBonemeal": "Чи можна дублювати рослини завдяки кістяному борошну",
   "bedrockoid.midnightconfig.shieldActivatesWhenSneaking": "Чи активуватиметься щит при ході крадькома",
   "bedrockoid.midnightconfig.fireAspectImprovements": "Чи може предмет зі силою вогню підпалювати",
   "bedrockoid.midnightconfig.composterCollisionFix": "Чи має колізія компостера працювати правильно",
   "bedrockoid.midnightconfig.snowSpawnsUnderTrees": "Чи може сніг бути розміщеним під деревами",
-  "bedrockoid.midnightconfig.snowCoversLeaves": "Чи маю листя сніжитися й змінювати колір"
+  "bedrockoid.midnightconfig.disableSnowUnderTreesIn": "Список біомів, де заблоковано розміщення снігу під деревами",
+  "bedrockoid.midnightconfig.snowCoversLeaves": "Чи має листя сніжитися й змінювати колір"
 }

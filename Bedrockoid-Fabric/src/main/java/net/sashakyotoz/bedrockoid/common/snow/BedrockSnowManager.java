@@ -14,37 +14,32 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.WorldChunk;
 import net.sashakyotoz.bedrockoid.common.snow.snow_managers.SnowManager;
+import net.sashakyotoz.bedrockoid.common.snow.snow_managers.SnowRealMagicManager;
 import net.sashakyotoz.bedrockoid.common.snow.snow_managers.VanillaManager;
+import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-// Code goes under Copyright (c) 2022 bl4ckscor3 from SnowUnderTrees project
+// Code goes under Copyright (c) 2022 bl4ckscor3
 public class BedrockSnowManager {
-    private static final List<Identifier> biomesToAddTo = new ArrayList<>();
     private static SnowManager snowManager;
     private static ChunkRunner chunkRunner;
-    private static boolean isSereneSeasonsLoaded;
     private static BiFunction<StructureWorldAccess, BlockPos, Boolean> temperatureCheck;
 
     public static void init() {
 //        if (ModsUtils.isSnowRealMagicIn())
 //            snowManager = new SnowRealMagicManager();
 //        else
-        snowManager = new VanillaManager();
+            snowManager = new VanillaManager();
 
 //        if (isSereneSeasonsLoaded)
 //            temperatureCheck = (level, pos) -> SereneSeasonsHandler.coldEnoughToSnow(level, level.getBiome(pos), pos, level.getSeaLevel());
 //        else
         temperatureCheck = (level, pos) -> !level.getBiome(pos).value().doesNotSnow(pos);
         chunkRunner = (level, action) -> level.getChunkManager().threadedAnvilChunkStorage.entryIterator().forEach(chunkHolder -> chunkHolder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_WORLD_CHUNK).ifLeft(action));
-    }
-
-    public static void addSnowUnderTrees(Identifier biomeName) {
-        if (!biomesToAddTo.contains(biomeName))
-            biomesToAddTo.add(biomeName);
     }
 
     public static boolean placeSnow(StructureWorldAccess level, BlockPos pos) {

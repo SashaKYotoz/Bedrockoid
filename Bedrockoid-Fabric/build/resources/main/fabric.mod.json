@@ -7,6 +7,7 @@
   "authors": [],
   "contact": {},
   "license": "All-Rights-Reserved",
+  "icon": "assets/bedrockoid/bedrockoid.png",
   "environment": "*",
   "entrypoints": {
     "client": [

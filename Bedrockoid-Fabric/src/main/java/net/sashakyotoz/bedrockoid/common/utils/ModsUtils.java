@@ -11,10 +11,6 @@ public class ModsUtils {
         return FabricLoader.getInstance().isModLoaded("snowundertrees");
     }
 
-    public static boolean isSereneSeasonsIn() {
-        return FabricLoader.getInstance().isModLoaded("sereneseasons");
-    }
-
     public static boolean isBedrockifyIn() {
         return FabricLoader.getInstance().isModLoaded("bedrockify");
     }
