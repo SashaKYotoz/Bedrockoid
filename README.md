@@ -23,7 +23,7 @@ rather than make Java Edition look like Bedrock Edition
 - Cauldron fills naturally if fluid is above it
 - Cauldron are Waterloggable
 - Plants can be covered in snow
-- Plants can multiplied by bonemealing
+- Plants can be multiplied by bonemealing
 - Redstone can be connected to pistons
 - Armor stand has arms by default
 

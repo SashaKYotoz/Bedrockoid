@@ -3,6 +3,7 @@ package net.sashakyotoz.bedrockoid.common.utils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.VineBlock;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
@@ -45,6 +46,14 @@ public class BlockUtils {
                 state = state.with(LAYERS, layers);
         }
         return state;
+    }
+    public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos){
+        if (world != null && pos != null) {
+            return state.getBlock() instanceof VineBlock && world.getBiomeFabric(pos) != null
+                    && world.getBiomeFabric(pos).value().getTemperature() < 0.15f
+                    && world.getBiomeFabric(pos).value().hasPrecipitation();
+        }
+        return false;
     }
 
     public static boolean haveLeavesToChangeColor(BlockState state, BlockRenderView world, BlockPos pos) {

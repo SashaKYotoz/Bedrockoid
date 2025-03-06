@@ -15,6 +15,10 @@ public class ModsUtils {
         return FabricLoader.getInstance().isModLoaded("bedrockify");
     }
 
+    public static boolean isSodiumIn() {
+        return FabricLoader.getInstance().isModLoaded("sodium");
+    }
+
     public static boolean isWilderWildIn() {
         return FabricLoader.getInstance().isModLoaded("wilderwild");
     }

@@ -29,4 +29,5 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = FLAGS) public static boolean snowSpawnsUnderTrees = true;
     @Entry(category = LISTS) public static List<String> disableSnowUnderTreesIn = Lists.newArrayList();
     @Entry(category = FLAGS) public static boolean snowCoversLeaves = true;
+    @Entry(category = FLAGS) public static boolean snowCoversVines = true;
 }

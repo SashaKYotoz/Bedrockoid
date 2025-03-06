@@ -24,6 +24,7 @@ public class Bedrockoid implements ModInitializer {
         WorldTickHandler instance = new WorldTickHandler();
         ServerTickEvents.START_WORLD_TICK.register(instance);
         ServerTickEvents.END_WORLD_TICK.register(instance);
+
     }
 
     public static Identifier makeID(String id) {

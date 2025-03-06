@@ -22,5 +22,6 @@
   "bedrockoid.midnightconfig.composterCollisionFix": "Чи має колізія компостера працювати правильно",
   "bedrockoid.midnightconfig.snowSpawnsUnderTrees": "Чи може сніг бути розміщеним під деревами",
   "bedrockoid.midnightconfig.disableSnowUnderTreesIn": "Список біомів, де заблоковано розміщення снігу під деревами",
-  "bedrockoid.midnightconfig.snowCoversLeaves": "Чи має листя сніжитися й змінювати колір"
+  "bedrockoid.midnightconfig.snowCoversLeaves": "Чи має листя сніжитися й змінювати колір",
+  "bedrockoid.midnightconfig.snowCoversVines": "Чи має лоза сніжитися й змінювати колір"
 }

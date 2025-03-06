@@ -22,5 +22,6 @@
   "bedrockoid.midnightconfig.composterCollisionFix":"Have composter's collision to be fixed after composting",
   "bedrockoid.midnightconfig.snowSpawnsUnderTrees":"Have snow to be spawned under trees",
   "bedrockoid.midnightconfig.disableSnowUnderTreesIn": "List of biomes, where snow blocked to spawned under trees",
-  "bedrockoid.midnightconfig.snowCoversLeaves":"Can leaves be painted in white if snow above them or biome is snowy"
+  "bedrockoid.midnightconfig.snowCoversLeaves":"Can leaves be painted in white if snow above them or biome is snowy",
+  "bedrockoid.midnightconfig.snowCoversVines":"Can vines be painted in white if snow above them or biome is snowy"
 }
