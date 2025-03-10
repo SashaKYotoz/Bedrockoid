@@ -8,6 +8,7 @@ import net.minecraft.client.render.entity.model.SheepEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.ColorHelper;
 import net.sashakyotoz.bedrockoid.Bedrockoid;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
@@ -27,29 +28,22 @@ public abstract class SheepWoolFeatureRendererMixin extends FeatureRenderer<Shee
         if (ModsUtils.isBedrockifyIn() || !BedrockoidConfig.sheepFurColorFix)
             return;
         else {
-            float s;
-            float t;
-            float u;
+            int color;
             if (sheepEntity.hasCustomName() && "jeb_".equals(sheepEntity.getName().getString())) {
                 int n = sheepEntity.age / 25 + sheepEntity.getId();
                 int o = DyeColor.values().length;
                 int p = n % o;
                 int q = (n + 1) % o;
-                float r = ((float) (sheepEntity.age % 25) + tickDelta) / 25.0F;
-                float[] fs = SheepEntity.getRgbColor(DyeColor.byId(p));
-                float[] gs = SheepEntity.getRgbColor(DyeColor.byId(q));
-                s = fs[0] * (1.0F - r) + gs[0] * r;
-                t = fs[1] * (1.0F - r) + gs[1] * r;
-                u = fs[2] * (1.0F - r) + gs[2] * r;
+                float r = ((float)(sheepEntity.age % 25) + tickDelta) / 25.0F;
+                int s = SheepEntity.getRgbColor(DyeColor.byId(p));
+                int t = SheepEntity.getRgbColor(DyeColor.byId(q));
+                color = ColorHelper.Argb.lerp(r, s, t);
             } else {
-                float[] hs = SheepEntity.getRgbColor(sheepEntity.getColor());
-                s = hs[0];
-                t = hs[1];
-                u = hs[2];
+                color= SheepEntity.getRgbColor(sheepEntity.getColor());
             }
 
             render(this.getContextModel(), this.getContextModel(), Bedrockoid.makeID("textures/entity/sheep_sheared_fur.png"),
-                    matrixStack, vertexConsumerProvider, light, sheepEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, s, t, u);
+                    matrixStack, vertexConsumerProvider, light, sheepEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, color);
         }
     }
 }

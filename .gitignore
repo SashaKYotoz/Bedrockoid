@@ -10,6 +10,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+Bedrockoid-Forge/run/
 Bedrockoid-Fabric/.idea/
 Bedrockoid-Fabric/run/logs/
 Bedrockoid-Fabric/run/saves/

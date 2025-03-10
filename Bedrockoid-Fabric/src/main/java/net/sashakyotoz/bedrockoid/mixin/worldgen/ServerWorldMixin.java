@@ -17,7 +17,10 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
-    @WrapOperation(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z", ordinal = 1))
+    @WrapOperation(
+            method = "tickIceAndSnow",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z", ordinal = 0)
+    )
     public boolean tickPrecipitationA(
             BlockState instance, Block block, Operation<Boolean> original,
             @Share("bedrockoidRunSnowlogging") LocalBooleanRef runSnowlogging, @Share("bedrockoidSnowloggedLayers") LocalIntRef snowloggedLayers
@@ -28,7 +31,11 @@ public class ServerWorldMixin {
         return runSnowlogging.get() || original.call(instance, block);
     }
 
-    @WrapOperation(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;", ordinal = 0)
+    @WrapOperation(
+            method = "tickIceAndSnow",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;",
+                    ordinal = 0)
     )
     public Comparable<?> tickPrecipitationB(
             BlockState instance, Property property, Operation<Comparable> original, @Share("bedrockoidRunSnowlogging") LocalBooleanRef runSnowlogging, @Share("bedrockoidSnowloggedLayers") LocalIntRef snowloggedLayers
@@ -36,7 +43,9 @@ public class ServerWorldMixin {
         return runSnowlogging.get() ? snowloggedLayers.get() : original.call(instance, property);
     }
 
-    @WrapOperation(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;", ordinal = 0)
+    @WrapOperation(
+            method = "tickIceAndSnow",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;", ordinal = 0)
     )
     public Object tickPrecipitationC(
             BlockState instance, Property<?> property, Comparable<?> comparable, Operation<Object> original,

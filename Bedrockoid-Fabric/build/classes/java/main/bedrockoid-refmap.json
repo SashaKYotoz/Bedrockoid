@@ -1,9 +1,5 @@
 {
   "mappings": {
-    "net/sashakyotoz/bedrockoid/mixin/FrostWalkerEnchantmentMixin": {
-      "Lnet/minecraft/util/math/MathHelper;nextInt(Lnet/minecraft/util/math/random/Random;II)I": "Lnet/minecraft/class_3532;method_15395(Lnet/minecraft/class_5819;II)I",
-      "freezeWater": "Lnet/minecraft/class_1894;method_8236(Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;I)V"
-    },
     "net/sashakyotoz/bedrockoid/mixin/ItemMixin": {
       "useOnBlock": "Lnet/minecraft/class_1792;method_7884(Lnet/minecraft/class_1838;)Lnet/minecraft/class_1269;"
     },
@@ -43,8 +39,7 @@
       "isSnow": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
-      "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/class_1657;method_5998(Lnet/minecraft/class_1268;)Lnet/minecraft/class_1799;",
-      "onUse": "Lnet/minecraft/class_2530;method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
+      "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;"
     },
     "net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin": {
       "scale(Lnet/minecraft/entity/passive/AbstractHorseEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V": "Lnet/minecraft/class_875;method_3874(Lnet/minecraft/class_1496;Lnet/minecraft/class_4587;F)V"
@@ -92,15 +87,11 @@
       "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;": "Lnet/minecraft/class_2680;method_11654(Lnet/minecraft/class_2769;)Ljava/lang/Comparable;",
       "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z": "Lnet/minecraft/class_2680;method_27852(Lnet/minecraft/class_2248;)Z",
       "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;": "Lnet/minecraft/class_2680;method_11657(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)Ljava/lang/Object;",
-      "tickChunk": "Lnet/minecraft/class_3218;method_18203(Lnet/minecraft/class_2818;I)V"
+      "tickIceAndSnow": "Lnet/minecraft/class_3218;method_52370(Lnet/minecraft/class_2338;)V"
     }
   },
   "data": {
     "named:intermediary": {
-      "net/sashakyotoz/bedrockoid/mixin/FrostWalkerEnchantmentMixin": {
-        "Lnet/minecraft/util/math/MathHelper;nextInt(Lnet/minecraft/util/math/random/Random;II)I": "Lnet/minecraft/class_3532;method_15395(Lnet/minecraft/class_5819;II)I",
-        "freezeWater": "Lnet/minecraft/class_1894;method_8236(Lnet/minecraft/class_1309;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;I)V"
-      },
       "net/sashakyotoz/bedrockoid/mixin/ItemMixin": {
         "useOnBlock": "Lnet/minecraft/class_1792;method_7884(Lnet/minecraft/class_1838;)Lnet/minecraft/class_1269;"
       },
@@ -140,8 +131,7 @@
         "isSnow": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
-        "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/class_1657;method_5998(Lnet/minecraft/class_1268;)Lnet/minecraft/class_1799;",
-        "onUse": "Lnet/minecraft/class_2530;method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
+        "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;"
       },
       "net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin": {
         "scale(Lnet/minecraft/entity/passive/AbstractHorseEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V": "Lnet/minecraft/class_875;method_3874(Lnet/minecraft/class_1496;Lnet/minecraft/class_4587;F)V"
@@ -189,7 +179,7 @@
         "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;": "Lnet/minecraft/class_2680;method_11654(Lnet/minecraft/class_2769;)Ljava/lang/Comparable;",
         "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z": "Lnet/minecraft/class_2680;method_27852(Lnet/minecraft/class_2248;)Z",
         "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;": "Lnet/minecraft/class_2680;method_11657(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)Ljava/lang/Object;",
-        "tickChunk": "Lnet/minecraft/class_3218;method_18203(Lnet/minecraft/class_2818;I)V"
+        "tickIceAndSnow": "Lnet/minecraft/class_3218;method_52370(Lnet/minecraft/class_2338;)V"
       }
     }
   }

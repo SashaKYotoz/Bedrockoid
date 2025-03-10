@@ -30,7 +30,7 @@ public class Bedrockoid implements ModInitializer {
 
 
     public static Identifier makeID(String id) {
-        return new Identifier(MOD_ID, id);
+        return Identifier.of(MOD_ID, id);
     }
 
     public static <T> T log(T message) {

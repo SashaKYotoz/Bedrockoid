@@ -34,7 +34,7 @@ public class BedrockSnowManager {
 //            temperatureCheck = (level, pos) -> SereneSeasonsHandler.coldEnoughToSnow(level, level.getBiome(pos), pos, level.getSeaLevel());
 //        else
         temperatureCheck = (level, pos) -> !level.getBiome(pos).value().doesNotSnow(pos);
-        chunkRunner = (level, action) -> level.getChunkManager().threadedAnvilChunkStorage.entryIterator().forEach(chunkHolder -> chunkHolder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_WORLD_CHUNK).ifLeft(action));
+        chunkRunner = (level, action) -> level.getChunkManager().chunkLoadingManager.entryIterator().forEach(chunkHolder -> chunkHolder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_WORLD_CHUNK).ifPresent(action));
     }
 
     public static boolean placeSnow(StructureWorldAccess level, BlockPos pos) {
@@ -79,7 +79,7 @@ public class BedrockSnowManager {
         chunkRunner.run(level, chunk -> {
             ChunkPos chunkPos = chunk.getPos();
 
-            if ((level.shouldTick(chunkPos) && cache.threadedAnvilChunkStorage.shouldTick(chunkPos)) || cache.threadedAnvilChunkStorage.getTicketManager().shouldTickBlocks(chunkPos.toLong())) {
+            if ((level.shouldTick(chunkPos) && cache.chunkLoadingManager.shouldTick(chunkPos)) || cache.chunkLoadingManager.getTicketManager().shouldTickBlocks(chunkPos.toLong())) {
                 if (level.shouldTickBlocksInChunk(chunkPos.toLong()))
                     action.accept(chunk);
             }

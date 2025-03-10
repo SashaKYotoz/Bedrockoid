@@ -3,14 +3,17 @@ package net.sashakyotoz.bedrockoid.mixin;
 import net.minecraft.block.*;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
@@ -25,7 +28,8 @@ public class ItemMixin {
     @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
     private void litBlockWithAspect(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
         ItemStack itemStack = context.getStack();
-        if (EnchantmentHelper.getLevel(Enchantments.FIRE_ASPECT, itemStack) > 0 && BedrockoidConfig.fireAspectImprovements) {
+        if (context.getPlayer() != null && context.getPlayer().getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).isPresent()
+                && EnchantmentHelper.getLevel(context.getPlayer().getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).get(), itemStack) > 0 && BedrockoidConfig.fireAspectImprovements) {
             PlayerEntity playerEntity = context.getPlayer();
             World world = context.getWorld();
             BlockPos blockPos = context.getBlockPos();
@@ -35,7 +39,7 @@ public class ItemMixin {
                 world.setBlockState(blockPos, blockState.with(Properties.LIT, Boolean.TRUE), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
                 world.emitGameEvent(playerEntity, GameEvent.BLOCK_CHANGE, blockPos);
                 if (playerEntity != null)
-                    context.getStack().damage(1, playerEntity, p -> p.sendToolBreakStatus(context.getHand()));
+                    context.getStack().damage(1, playerEntity, context.getHand() == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
                 cir.setReturnValue(ActionResult.success(world.isClient()));
             }
         }

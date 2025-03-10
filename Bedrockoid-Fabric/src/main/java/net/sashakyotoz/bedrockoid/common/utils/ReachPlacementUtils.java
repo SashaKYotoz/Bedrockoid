@@ -67,7 +67,7 @@ public class ReachPlacementUtils {
      */
     private Optional<Vec3d> getRaycastIntersection(@NotNull ClientPlayerEntity player) {
         Vec3d rayStartPos = player.getEyePos();
-        Vec3d rayEndPos = player.getRotationVec(1.0F).multiply(4.5f).add(rayStartPos);
+        Vec3d rayEndPos = player.getRotationVec(1.0F).multiply(player.getBlockInteractionRange()).add(rayStartPos);
 
         return new Box(getFacingSteppingBlockPos(player)).raycast(rayStartPos, rayEndPos);
     }

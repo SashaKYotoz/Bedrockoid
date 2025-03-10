@@ -5,8 +5,6 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.collection.IdList;
 import net.minecraft.util.math.BlockPos;

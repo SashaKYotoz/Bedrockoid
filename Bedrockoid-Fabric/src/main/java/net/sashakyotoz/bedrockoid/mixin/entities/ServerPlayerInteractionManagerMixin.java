@@ -22,7 +22,7 @@ public class ServerPlayerInteractionManagerMixin {
             )
     )
     public boolean destroyBlockB(
-            ServerWorld instance, BlockPos blockPos, boolean b, Operation<Boolean> original, @Local BlockState destroyedState
+            ServerWorld instance, BlockPos blockPos, boolean b, Operation<Boolean> original, @Local(ordinal = 1) BlockState destroyedState
     ) {
         if (BlockUtils.isSnowlogged(destroyedState)) {
             instance.setBlockState(blockPos, destroyedState.with(BlockUtils.LAYERS, 0), Block.NOTIFY_ALL);
