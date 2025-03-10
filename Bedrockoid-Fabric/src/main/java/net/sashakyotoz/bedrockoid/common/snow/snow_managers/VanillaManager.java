@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.StructureWorldAccess;
@@ -30,6 +31,8 @@ public class VanillaManager implements SnowManager {
                     return true;
                 }
             } else {
+                if (state.contains(Properties.DOUBLE_BLOCK_HALF))
+                    level.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 3);
                 if (BlockUtils.canSnowlog(state))
                     level.setBlockState(pos, state.with(BlockUtils.LAYERS, 1), 3);
                 else

@@ -1,0 +1,21 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+license = "All Rights Reserved"
+[[mods]]
+modId = "bedrockoid"
+version = "0.1"
+displayName = "Bedrockoid-Forge"
+authors = "SashaKYotoz"
+description = "Even more Bedrock features for Java Edition"
+[[dependencies.bedrockoid]]
+modId = "forge"
+mandatory = true
+versionRange = "[47,)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.bedrockoid]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.1,1.21)"
+ordering = "NONE"
+side = "BOTH"

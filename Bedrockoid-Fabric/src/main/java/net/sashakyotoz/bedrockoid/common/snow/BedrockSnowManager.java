@@ -5,7 +5,6 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
@@ -14,12 +13,8 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.WorldChunk;
 import net.sashakyotoz.bedrockoid.common.snow.snow_managers.SnowManager;
-import net.sashakyotoz.bedrockoid.common.snow.snow_managers.SnowRealMagicManager;
 import net.sashakyotoz.bedrockoid.common.snow.snow_managers.VanillaManager;
-import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 

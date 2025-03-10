@@ -24,6 +24,7 @@
     "worldgen.ServerWorldMixin"
   ],
   "client": [
+    "client.AbstractHorseEntityRendererMixin",
     "client.BlockColorsMixin",
     "client.BlockRenderManagerMixin",
     "client.MinecraftClientMixin",

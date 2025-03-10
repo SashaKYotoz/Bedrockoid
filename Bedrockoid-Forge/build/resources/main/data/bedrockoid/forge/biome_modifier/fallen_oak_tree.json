@@ -1,0 +1,8 @@
+{
+  "type": "bedrockoid:fallen_tree",
+  "feature": "bedrockoid:fallen_oak_tree",
+  "biomes": [
+    "minecraft:flower_forest",
+    "minecraft:forest"
+  ]
+}

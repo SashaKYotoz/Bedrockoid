@@ -23,7 +23,7 @@ public abstract class SheepWoolFeatureRendererMixin extends FeatureRenderer<Shee
     }
 
     @Inject(method = "render*", at = @At("RETURN"))
-    private void bedrockify$renderWoolColorAfterShearing(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, SheepEntity sheepEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
+    private void renderWoolColorAfterShearing(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, SheepEntity sheepEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
         if (ModsUtils.isBedrockifyIn() || !BedrockoidConfig.sheepFurColorFix)
             return;
         else {

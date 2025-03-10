@@ -5,8 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3051b065-29cb-4b88-baaf-236c3b352763" name="Changes" comment="first couple features for fabric">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/.idea/modules/bedrockoid-forge.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/.idea/modules/bedrockoid-forge.test.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/java/net/sashakyotoz/bedrockoid/common/EventHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/java/net/sashakyotoz/bedrockoid/common/world/features/BiomeModifiers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/java/net/sashakyotoz/bedrockoid/common/world/features/modifiers/FallenTreeBiomeModifier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/java/net/sashakyotoz/bedrockoid/common/world/features/modifiers/SnowUnderTreeBiomeModifier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/BlockColorsMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseRendererMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/ChunkRenderDispatcherMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/META-INF/accesstransformer.cfg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/fallen_big_jungle_tree.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/fallen_big_spruce_tree.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/fallen_birch_tree.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/fallen_dark_oak_tree.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/fallen_jungle_tree.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/fallen_oak_tree.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/fallen_spruce_tree.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/snow_under_trees.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Bedrockoid-Forge/src/main/resources/data/bedrockoid/forge/biome_modifier/swamp_mushroom_trees.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" afterDir="false" />
@@ -14,22 +35,22 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/img.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/img_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Bedrockoid-Fabric.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Bedrockoid-Fabric.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/bedrockoid-refmap.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/bedrockoid-refmap.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/bedrockoid/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/bedrockoid/lang/en_us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/bedrockoid/lang/uk_ua.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/bedrockoid/lang/uk_ua.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/bedrockoid.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/bedrockoid.mixins.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/run/config/fabric/indigo-renderer.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/options.txt" beforeDir="false" afterPath="$PROJECT_DIR$/run/options.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/screenshots/2025-02-26_12.34.57.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/screenshots/2025-03-04_12.44.17.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/Bedrockoid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/Bedrockoid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/BedrockoidConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/BedrockoidConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/client/BedrockoidClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/client/BedrockoidClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/utils/BlockUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/utils/BlockUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/utils/ModsUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/utils/ModsUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/bedrockoid/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/bedrockoid/lang/en_us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/bedrockoid/lang/uk_ua.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/bedrockoid/lang/uk_ua.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/snow/BedrockSnowManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/snow/BedrockSnowManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/snow/snow_managers/VanillaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/snow/snow_managers/VanillaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/SheepWoolFeatureRendererMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/SheepWoolFeatureRendererMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/worldgen/ServerWorldMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/worldgen/ServerWorldMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bedrockoid.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bedrockoid.mixins.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -134,6 +155,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/oleksandr/.gradle/caches/modules-2/files-2.1/maven.modrinth/snow-real-magic/10.5.2/6c8384764698f41ce26be8d2b431054be699024/snow-real-magic-10.5.2.jar&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
@@ -149,7 +171,7 @@
       <recent name="net.sashakyotoz.bedrockoid.common.datagen" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Bedrockoid-Fabric [build]">
+  <component name="RunManager" selected="Gradle.Bedrockoid-Fabric [runClient]">
     <configuration name="Bedrockoid-Fabric [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -240,8 +262,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Bedrockoid-Fabric [build]" />
         <item itemvalue="Gradle.Bedrockoid-Fabric [runClient]" />
+        <item itemvalue="Gradle.Bedrockoid-Fabric [build]" />
         <item itemvalue="Gradle.Bedrockoid-Fabric [runServer]" />
         <item itemvalue="Gradle.Bedrockoid-Fabric [runDatagen]" />
       </list>

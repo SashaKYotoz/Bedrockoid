@@ -30,7 +30,7 @@ public class ServerWorldMixin {
 
     @WrapOperation(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;", ordinal = 0)
     )
-    public Comparable<?> wilderWild$tickPrecipitationB(
+    public Comparable<?> tickPrecipitationB(
             BlockState instance, Property property, Operation<Comparable> original, @Share("bedrockoidRunSnowlogging") LocalBooleanRef runSnowlogging, @Share("bedrockoidSnowloggedLayers") LocalIntRef snowloggedLayers
     ) {
         return runSnowlogging.get() ? snowloggedLayers.get() : original.call(instance, property);
@@ -38,7 +38,7 @@ public class ServerWorldMixin {
 
     @WrapOperation(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;", ordinal = 0)
     )
-    public Object wilderWild$tickPrecipitationC(
+    public Object tickPrecipitationC(
             BlockState instance, Property<?> property, Comparable<?> comparable, Operation<Object> original,
             @Share("bedrockoidRunSnowlogging") LocalBooleanRef runSnowlogging, @Share("bedrockoidSnowloggedLayers") LocalIntRef snowloggedLayers
     ) {

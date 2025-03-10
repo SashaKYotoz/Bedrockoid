@@ -1,0 +1,38 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.sashakyotoz.bedrockoid.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "bedrockoid.refmap.json",
+  "mixins": [
+    "FrostWalkerEnchantmentMixin",
+    "ItemMixin",
+    "blocks.BlockItemMixin",
+    "blocks.BlockMixin",
+    "blocks.BlockStateMixin",
+    "blocks.ComposterBlockMixin",
+    "blocks.FlowerBlockMixin",
+    "blocks.PlantsMixin",
+    "blocks.RedstoneWireBlockMixin",
+    "blocks.SnowyBlockMixin",
+    "blocks.TntBlockMixin",
+    "entities.ArmorStandEntityMixin",
+    "entities.EntityMixin",
+    "entities.LivingEntityMixin",
+    "entities.MobEntityMixin",
+    "entities.ServerPlayerInteractionManagerMixin",
+    "worldgen.BiomeMixin",
+    "worldgen.ServerWorldMixin"
+  ],
+  "client": [
+    "blocks.BlockColorsMixin",
+    "client.AbstractHorseRendererMixin",
+    "client.BlockRenderDispatcherMixin",
+    "client.ChunkRenderDispatcherMixin",
+    "client.MinecraftClientMixin",
+    "client.SheepWoolLayerRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

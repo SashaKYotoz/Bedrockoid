@@ -1,0 +1,7 @@
+net/sashakyotoz/bedrockoid/mixin/blocks/BlockMixin defaultBlockState f_49786_
+net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin SHAPES f_51916_
+net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin LEVEL f_51913_
+net/sashakyotoz/bedrockoid/mixin/client/MinecraftClientMixin player f_91074_
+net/sashakyotoz/bedrockoid/mixin/client/MinecraftClientMixin hitResult f_91077_
+net/sashakyotoz/bedrockoid/mixin/blocks/BlockStateMixin asState ()Lnet/minecraft/world/level/block/state/BlockState; m_7160_
+net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin add (FLnet/minecraft/world/level/ItemLike;)V m_51920_

@@ -26,6 +26,7 @@ rather than make Java Edition look like Bedrock Edition
 - Plants can be multiplied by bonemealing
 - Redstone can be connected to pistons
 - Armor stand has arms by default
+- ~~Horses' size changes due to time to grow up~~
 
 <hr>
 

@@ -1,0 +1,8 @@
+{
+  "type": "bedrockoid:fallen_tree",
+  "feature": "bedrockoid:fallen_big_jungle_tree",
+  "biomes": [
+    "minecraft:jungle",
+    "minecraft:sparse_jungle"
+  ]
+}

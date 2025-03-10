@@ -46,6 +46,9 @@
       "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/class_1657;method_5998(Lnet/minecraft/class_1268;)Lnet/minecraft/class_1799;",
       "onUse": "Lnet/minecraft/class_2530;method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
     },
+    "net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin": {
+      "scale(Lnet/minecraft/entity/passive/AbstractHorseEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V": "Lnet/minecraft/class_875;method_3874(Lnet/minecraft/class_1496;Lnet/minecraft/class_4587;F)V"
+    },
     "net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin": {
       "getColor": "Lnet/minecraft/class_324;method_1697(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;I)I"
     },
@@ -139,6 +142,9 @@
       "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
         "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;": "Lnet/minecraft/class_1657;method_5998(Lnet/minecraft/class_1268;)Lnet/minecraft/class_1799;",
         "onUse": "Lnet/minecraft/class_2530;method_9534(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
+      },
+      "net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin": {
+        "scale(Lnet/minecraft/entity/passive/AbstractHorseEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V": "Lnet/minecraft/class_875;method_3874(Lnet/minecraft/class_1496;Lnet/minecraft/class_4587;F)V"
       },
       "net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin": {
         "getColor": "Lnet/minecraft/class_324;method_1697(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;I)I"
