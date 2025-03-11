@@ -3,6 +3,7 @@ package net.sashakyotoz.bedrockoid;
 import eu.midnightdust.lib.config.MidnightConfig;
 import org.apache.commons.compress.utils.Lists;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BedrockoidConfig extends MidnightConfig {
@@ -27,7 +28,7 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = FLAGS) public static boolean fireAspectImprovements = true;
     @Entry(category = FLAGS) public static boolean composterCollisionFix = true;
     @Entry(category = FLAGS) public static boolean snowSpawnsUnderTrees = true;
-    @Entry(category = LISTS) public static List<String> disableSnowUnderTreesIn = Lists.newArrayList();
+    @Entry(category = LISTS) public static List<String> disableSnowUnderTreesIn = new ArrayList<>();
     @Entry(category = FLAGS) public static boolean snowCoversLeaves = true;
     @Entry(category = FLAGS) public static boolean snowCoversVines = true;
 }

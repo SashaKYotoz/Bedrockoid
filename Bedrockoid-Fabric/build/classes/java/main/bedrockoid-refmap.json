@@ -66,6 +66,7 @@
     "net/sashakyotoz/bedrockoid/mixin/entities/EntityMixin": {
       "(Lnet/minecraft/particle/ParticleType;Lnet/minecraft/block/BlockState;)Lnet/minecraft/particle/BlockStateParticleEffect;": "(Lnet/minecraft/class_2396;Lnet/minecraft/class_2680;)Lnet/minecraft/class_2388;",
       "baseTick": "Lnet/minecraft/class_1297;method_5670()V",
+      "interact": "Lnet/minecraft/class_1297;method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
       "spawnSprintingParticles": "Lnet/minecraft/class_1297;method_5839()V"
     },
     "net/sashakyotoz/bedrockoid/mixin/entities/LivingEntityMixin": {
@@ -158,6 +159,7 @@
       "net/sashakyotoz/bedrockoid/mixin/entities/EntityMixin": {
         "(Lnet/minecraft/particle/ParticleType;Lnet/minecraft/block/BlockState;)Lnet/minecraft/particle/BlockStateParticleEffect;": "(Lnet/minecraft/class_2396;Lnet/minecraft/class_2680;)Lnet/minecraft/class_2388;",
         "baseTick": "Lnet/minecraft/class_1297;method_5670()V",
+        "interact": "Lnet/minecraft/class_1297;method_5688(Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;)Lnet/minecraft/class_1269;",
         "spawnSprintingParticles": "Lnet/minecraft/class_1297;method_5839()V"
       },
       "net/sashakyotoz/bedrockoid/mixin/entities/LivingEntityMixin": {
