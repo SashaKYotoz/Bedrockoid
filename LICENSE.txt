@@ -1,5 +1,5 @@
 Copyright (c) 2025 SashaKYotoz
-All rights reserved.
+MIT License
 
 Some project elements go under: 
 
