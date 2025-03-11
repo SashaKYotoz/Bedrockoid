@@ -33,7 +33,7 @@ public class BedrockSnowManager {
 //        if (isSereneSeasonsLoaded)
 //            temperatureCheck = (level, pos) -> SereneSeasonsHandler.coldEnoughToSnow(level, level.getBiome(pos), pos, level.getSeaLevel());
 //        else
-        temperatureCheck = (level, pos) -> !level.getBiome(pos).value().doesNotSnow(pos);
+        temperatureCheck = (level, pos) -> !level.getBiome(pos).value().doesNotSnow(pos, level.getSeaLevel());
         chunkRunner = (level, action) -> level.getChunkManager().chunkLoadingManager.entryIterator().forEach(chunkHolder -> chunkHolder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_WORLD_CHUNK).ifPresent(action));
     }
 
@@ -44,7 +44,7 @@ public class BedrockSnowManager {
     public static boolean canSnow(StructureWorldAccess level, BlockPos pos) {
         RegistryEntry<Biome> biome = level.getBiome(pos);
 
-        if (biome.value().getPrecipitation(pos) == Biome.Precipitation.SNOW) {
+        if (biome.value().getPrecipitation(pos, level.getSeaLevel()) == Biome.Precipitation.SNOW) {
             BlockState stateAtPos = level.getBlockState(pos);
 
             if (!stateAtPos.isReplaceable())
@@ -70,7 +70,7 @@ public class BedrockSnowManager {
     }
 
     private static boolean isInBuildRangeAndDarkEnough(StructureWorldAccess level, BlockPos pos) {
-        return pos.getY() >= level.getBottomY() && pos.getY() <= level.getTopY() && level.getLightLevel(LightType.BLOCK, pos) < 10;
+        return pos.getY() >= level.getBottomY() && pos.getY() <= level.getHeight() && level.getLightLevel(LightType.BLOCK, pos) < 10;
     }
 
     public static void runForChunks(ServerWorld level, Consumer<WorldChunk> action) {

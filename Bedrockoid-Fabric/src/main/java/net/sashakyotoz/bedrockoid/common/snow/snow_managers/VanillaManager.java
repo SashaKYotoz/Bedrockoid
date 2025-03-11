@@ -15,7 +15,7 @@ import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 public class VanillaManager implements SnowManager {
     @Override
     public boolean placeSnow(StructureWorldAccess level, BlockPos pos) {
-        int accumulationHeight = level instanceof World l ? l.getGameRules().getInt(GameRules.SNOW_ACCUMULATION_HEIGHT) : 1;
+        int accumulationHeight = level instanceof World world && world.getServer() != null ? world.getServer().getGameRules().getInt(GameRules.SNOW_ACCUMULATION_HEIGHT) : 1;
 
         if (accumulationHeight > 0 && BedrockSnowManager.canSnow(level, pos)) {
             BlockState state = level.getBlockState(pos);

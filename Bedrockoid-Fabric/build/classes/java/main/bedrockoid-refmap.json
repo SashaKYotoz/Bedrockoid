@@ -18,7 +18,6 @@
       "getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;": "Lnet/minecraft/class_4970$class_4971;method_26194(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
       "getFluidState": "Lnet/minecraft/class_4970$class_4971;method_26227()Lnet/minecraft/class_3610;",
       "getOutlineShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;": "Lnet/minecraft/class_4970$class_4971;method_26172(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
-      "getStateForNeighborUpdate": "Lnet/minecraft/class_4970$class_4971;method_26191(Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
       "hasRandomTicks": "Lnet/minecraft/class_4970$class_4971;method_26229()Z",
       "randomTick": "Lnet/minecraft/class_4970$class_4971;method_26199(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V"
     },
@@ -39,10 +38,7 @@
       "isSnow": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
-      "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;"
-    },
-    "net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin": {
-      "scale(Lnet/minecraft/entity/passive/AbstractHorseEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V": "Lnet/minecraft/class_875;method_3874(Lnet/minecraft/class_1496;Lnet/minecraft/class_4587;F)V"
+      "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
     },
     "net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin": {
       "getColor": "Lnet/minecraft/class_324;method_1697(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;I)I"
@@ -55,7 +51,7 @@
       "doItemUse": "Lnet/minecraft/class_310;method_1583()V"
     },
     "net/sashakyotoz/bedrockoid/mixin/client/SheepWoolFeatureRendererMixin": {
-      "render*": "Lnet/minecraft/class_994;method_4198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1472;FFFFFF)V"
+      "render*": "Lnet/minecraft/class_994;method_4198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10063;FF)V"
     },
     "net/sashakyotoz/bedrockoid/mixin/client/TerrainRenderContextMixin": {
       "tessellateBlock": "Lnet/fabricmc/fabric/impl/client/indigo/renderer/render/TerrainRenderContext;tessellateBlock(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1087;Lnet/minecraft/class_4587;)V"
@@ -111,7 +107,6 @@
         "getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;": "Lnet/minecraft/class_4970$class_4971;method_26194(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
         "getFluidState": "Lnet/minecraft/class_4970$class_4971;method_26227()Lnet/minecraft/class_3610;",
         "getOutlineShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;": "Lnet/minecraft/class_4970$class_4971;method_26172(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
-        "getStateForNeighborUpdate": "Lnet/minecraft/class_4970$class_4971;method_26191(Lnet/minecraft/class_2350;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_2338;)Lnet/minecraft/class_2680;",
         "hasRandomTicks": "Lnet/minecraft/class_4970$class_4971;method_26229()Z",
         "randomTick": "Lnet/minecraft/class_4970$class_4971;method_26199(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V"
       },
@@ -132,10 +127,7 @@
         "isSnow": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
-        "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;"
-      },
-      "net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin": {
-        "scale(Lnet/minecraft/entity/passive/AbstractHorseEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V": "Lnet/minecraft/class_875;method_3874(Lnet/minecraft/class_1496;Lnet/minecraft/class_4587;F)V"
+        "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_1269;"
       },
       "net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin": {
         "getColor": "Lnet/minecraft/class_324;method_1697(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;I)I"
@@ -148,7 +140,7 @@
         "doItemUse": "Lnet/minecraft/class_310;method_1583()V"
       },
       "net/sashakyotoz/bedrockoid/mixin/client/SheepWoolFeatureRendererMixin": {
-        "render*": "Lnet/minecraft/class_994;method_4198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_1472;FFFFFF)V"
+        "render*": "Lnet/minecraft/class_994;method_4198(Lnet/minecraft/class_4587;Lnet/minecraft/class_4597;ILnet/minecraft/class_10063;FF)V"
       },
       "net/sashakyotoz/bedrockoid/mixin/client/TerrainRenderContextMixin": {
         "tessellateBlock": "Lnet/fabricmc/fabric/impl/client/indigo/renderer/render/TerrainRenderContext;tessellateBlock(Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;Lnet/minecraft/class_1087;Lnet/minecraft/class_4587;)V"

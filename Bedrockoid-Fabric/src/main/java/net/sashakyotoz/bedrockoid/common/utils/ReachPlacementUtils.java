@@ -8,6 +8,7 @@ import net.minecraft.block.MapColor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
@@ -32,7 +33,7 @@ public class ReachPlacementUtils {
 
     public void renderIndicator(DrawContext drawContext) {
         if (canReachAround())
-            drawContext.drawTexture(PLACEMENT_ICON, (drawContext.getScaledWindowWidth() / 2) - 8, (drawContext.getScaledWindowHeight() / 2) - 8, 0, 0, 15, 15, 15, 15);
+            drawContext.drawGuiTexture(RenderLayer::getCrosshair,PLACEMENT_ICON, (drawContext.getScaledWindowWidth() / 2) - 8, (drawContext.getScaledWindowHeight() / 2) - 8, 0, 0, 15, 15, 15, 15);
     }
 
     public boolean canReachAround() {

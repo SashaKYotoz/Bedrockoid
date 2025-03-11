@@ -5,10 +5,12 @@ import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.feature.SheepWoolFeatureRenderer;
 import net.minecraft.client.render.entity.model.SheepEntityModel;
+import net.minecraft.client.render.entity.state.SheepEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.ColorHelper;
+import net.minecraft.util.math.MathHelper;
 import net.sashakyotoz.bedrockoid.Bedrockoid;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
@@ -18,32 +20,33 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SheepWoolFeatureRenderer.class)
-public abstract class SheepWoolFeatureRendererMixin extends FeatureRenderer<SheepEntity, SheepEntityModel<SheepEntity>> {
-    public SheepWoolFeatureRendererMixin(FeatureRendererContext<SheepEntity, SheepEntityModel<SheepEntity>> context) {
+public abstract class SheepWoolFeatureRendererMixin extends FeatureRenderer<SheepEntityRenderState, SheepEntityModel> {
+    public SheepWoolFeatureRendererMixin(FeatureRendererContext<SheepEntityRenderState, SheepEntityModel> context) {
         super(context);
     }
 
     @Inject(method = "render*", at = @At("RETURN"))
-    private void renderWoolColorAfterShearing(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, SheepEntity sheepEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
+    private void renderWoolColorAfterShearing(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, SheepEntityRenderState sheepState, float tickDelta, float animationProgress, CallbackInfo ci) {
         if (ModsUtils.isBedrockifyIn() || !BedrockoidConfig.sheepFurColorFix)
             return;
         else {
             int color;
-            if (sheepEntity.hasCustomName() && "jeb_".equals(sheepEntity.getName().getString())) {
-                int n = sheepEntity.age / 25 + sheepEntity.getId();
-                int o = DyeColor.values().length;
-                int p = n % o;
-                int q = (n + 1) % o;
-                float r = ((float)(sheepEntity.age % 25) + tickDelta) / 25.0F;
-                int s = SheepEntity.getRgbColor(DyeColor.byId(p));
-                int t = SheepEntity.getRgbColor(DyeColor.byId(q));
-                color = ColorHelper.Argb.lerp(r, s, t);
+            if (sheepState.customName != null && "jeb_".equals(sheepState.customName.getString())) {
+                int k = MathHelper.floor(sheepState.age);
+                int l = k / 25 + sheepState.id;
+                int m = DyeColor.values().length;
+                int n = l % m;
+                int o = (l + 1) % m;
+                float h = ((float)(k % 25) + MathHelper.fractionalPart(sheepState.age)) / 25.0F;
+                int p = SheepEntity.getRgbColor(DyeColor.byId(n));
+                int q = SheepEntity.getRgbColor(DyeColor.byId(o));
+                color = ColorHelper.lerp(h, p, q);
             } else {
-                color= SheepEntity.getRgbColor(sheepEntity.getColor());
+                color = SheepEntity.getRgbColor(sheepState.color);
             }
 
-            render(this.getContextModel(), this.getContextModel(), Bedrockoid.makeID("textures/entity/sheep_sheared_fur.png"),
-                    matrixStack, vertexConsumerProvider, light, sheepEntity, limbAngle, limbDistance, animationProgress, headYaw, headPitch, tickDelta, color);
+            render(this.getContextModel(), Bedrockoid.makeID("textures/entity/sheep_sheared_fur.png"),
+                    matrixStack, vertexConsumerProvider, light, sheepState, color);
         }
     }
 }

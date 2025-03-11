@@ -16,7 +16,9 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldEvents;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
+import net.minecraft.world.tick.ScheduledTickView;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,11 +34,11 @@ public abstract class BlockStateMixin {
     @Shadow
     protected abstract BlockState asBlockState();
 
-    @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"))
-    private void onUpdateShape(Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-        if (world.getBlockState(pos).contains(Properties.WATERLOGGED) && world.getBlockState(pos).get(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-    }
+//    @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"))
+//    private void onUpdateShape(WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random, CallbackInfoReturnable<BlockState> cir) {
+//        if (world.getBlockState(pos).contains(Properties.WATERLOGGED) && world.getBlockState(pos).get(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+//            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+//    }
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void applyWaterloggability(CallbackInfoReturnable<FluidState> cir) {

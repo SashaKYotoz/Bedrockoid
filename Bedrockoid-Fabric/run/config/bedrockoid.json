@@ -18,8 +18,7 @@
   "fireAspectImprovements": true,
   "composterCollisionFix": true,
   "snowSpawnsUnderTrees": true,
-  "disableSnowUnderTreesIn": [
-    "minecraft:snowy_taiga"
-  ],
-  "snowCoversLeaves": true
+  "disableSnowUnderTreesIn": [],
+  "snowCoversLeaves": true,
+  "snowCoversVines": true
 }

@@ -39,7 +39,7 @@ public class WorldTickHandler implements ServerTickEvents.StartWorldTick, Server
                 if (world.getBlockState(world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, randomPos).down()).isIn(BlockTags.LEAVES)) {
                     BlockPos pos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, randomPos);
                     Biome biome = world.getBiome(pos).value();
-                    boolean biomeDisabled = BedrockoidConfig.disableSnowUnderTreesIn.contains(world.getRegistryManager().get(RegistryKeys.BIOME).getKey(biome).toString());
+                    boolean biomeDisabled = BedrockoidConfig.disableSnowUnderTreesIn.contains(world.getRegistryManager().getOrThrow(RegistryKeys.BIOME).getKey(biome).toString());
 
                     if (!biomeDisabled && BedrockSnowManager.placeSnow(world, pos)) {
                         BlockPos posBelow = pos.down();

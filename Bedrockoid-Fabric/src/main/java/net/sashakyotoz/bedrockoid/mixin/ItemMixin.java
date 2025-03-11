@@ -28,8 +28,8 @@ public class ItemMixin {
     @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
     private void litBlockWithAspect(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
         ItemStack itemStack = context.getStack();
-        if (context.getPlayer() != null && context.getPlayer().getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).isPresent()
-                && EnchantmentHelper.getLevel(context.getPlayer().getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).get(), itemStack) > 0 && BedrockoidConfig.fireAspectImprovements) {
+        if (context.getPlayer() != null && context.getPlayer().getWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).isPresent()
+                && EnchantmentHelper.getLevel(context.getPlayer().getWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).get(), itemStack) > 0 && BedrockoidConfig.fireAspectImprovements) {
             PlayerEntity playerEntity = context.getPlayer();
             World world = context.getWorld();
             BlockPos blockPos = context.getBlockPos();
@@ -40,7 +40,7 @@ public class ItemMixin {
                 world.emitGameEvent(playerEntity, GameEvent.BLOCK_CHANGE, blockPos);
                 if (playerEntity != null)
                     context.getStack().damage(1, playerEntity, context.getHand() == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-                cir.setReturnValue(ActionResult.success(world.isClient()));
+                cir.setReturnValue(ActionResult.SUCCESS_SERVER);
             }
         }
     }

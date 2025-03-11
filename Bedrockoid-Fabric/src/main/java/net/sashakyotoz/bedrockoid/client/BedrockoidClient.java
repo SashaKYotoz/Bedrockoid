@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
 import net.minecraft.world.biome.FoliageColors;
 import net.minecraft.world.biome.GrassColors;
@@ -22,11 +23,12 @@ public class BedrockoidClient implements ClientModInitializer {
         HudRenderCallback.EVENT.register((drawContext, tickDelta) -> ReachPlacementUtils.INSTANCE.renderIndicator(drawContext));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (BedrockoidConfig.stopElytraByPressingSpace) {
-                if (!ModsUtils.isBedrockifyIn() && client.player != null && client.player.isFallFlying() && timeFlying > 10 && client.options.jumpKey.isPressed()) {
-                    client.player.stopFallFlying();
+                if (!ModsUtils.isBedrockifyIn() && client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && timeFlying > 10 && client.options.jumpKey.isPressed()) {
+                    client.player.getAbilities().flying = false;
+                    client.player.sendAbilitiesUpdate();
                     client.player.networkHandler.sendPacket(new ClientCommandC2SPacket(client.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
                 }
-                if (!ModsUtils.isBedrockifyIn() && client.player != null && client.player.isFallFlying() && !client.options.jumpKey.isPressed())
+                if (!ModsUtils.isBedrockifyIn() && client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && !client.options.jumpKey.isPressed())
                     timeFlying++;
                 else
                     timeFlying = 0;
@@ -44,7 +46,7 @@ public class BedrockoidClient implements ClientModInitializer {
                                 colour = 0xCCCCCC;
                             return colour;
                         } else
-                            return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
+                            return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.DEFAULT;
                     },
                     Blocks.OAK_LEAVES,
                     Blocks.SPRUCE_LEAVES,
@@ -72,7 +74,7 @@ public class BedrockoidClient implements ClientModInitializer {
                     (state, world, pos, index) -> {
                         if (BlockUtils.canVinesBeCoveredInSnow(state, world, pos) && BedrockoidConfig.snowCoversVines)
                             return 0xCCCCCC;
-                        return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
+                        return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.DEFAULT;
                     },
                     Blocks.VINE
             );

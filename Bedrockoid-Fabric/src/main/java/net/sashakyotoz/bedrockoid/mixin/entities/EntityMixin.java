@@ -55,8 +55,8 @@ public class EntityMixin {
     @Inject(method = "interact", at = @At("HEAD"))
     private void handleFireAspectInteraction(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         Entity entity = (Entity) ((Object) this);
-        if (entity instanceof TntMinecartEntity minecart && player.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).isPresent()
-                && EnchantmentHelper.getLevel(player.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).get(), player.getStackInHand(hand)) > 0)
+        if (entity instanceof TntMinecartEntity minecart && player.getWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).isPresent()
+                && EnchantmentHelper.getLevel(player.getWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).get(), player.getStackInHand(hand)) > 0)
             minecart.prime();
     }
 }
