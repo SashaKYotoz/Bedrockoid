@@ -26,11 +26,4 @@ public class BlockItemMixin {
         return (BlockUtils.isSnowlogged(instance) && BedrockoidConfig.snowlogging) ?
                 original.call(BlockUtils.getSnowEquivalent(instance),reader,pos,entity) : original.call(instance,reader,pos,entity);
     }
-
-//    @Inject(method = "getPlaceSound(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)Lnet/minecraft/sounds/SoundEvent;", at = @At("HEAD"), cancellable = true)
-//    public void getPlaceSound(BlockState state, Level world, BlockPos pos, Player entity, CallbackInfoReturnable<SoundEvent> cir) {
-//        if (BlockUtils.isSnowlogged(state) && ModsUtils.isSnowloggingNotOverrided()) {
-//            cir.setReturnValue(BlockUtils.getSnowEquivalent(state).getSoundType().getPlaceSound());
-//        }
-//    }
 }

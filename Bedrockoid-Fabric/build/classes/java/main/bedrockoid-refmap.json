@@ -8,13 +8,12 @@
       "useOnBlock": "Lnet/minecraft/class_1792;method_7884(Lnet/minecraft/class_1838;)Lnet/minecraft/class_1269;"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/BlockItemMixin": {
-      "Lnet/minecraft/block/BlockState;getSoundGroup()Lnet/minecraft/sound/BlockSoundGroup;": "Lnet/minecraft/class_2680;method_26231()Lnet/minecraft/class_2498;",
-      "getPlaceSound": "Lnet/minecraft/class_1747;method_19260(Lnet/minecraft/class_2680;)Lnet/minecraft/class_3414;",
-      "place*": "Lnet/minecraft/class_1747;method_7712(Lnet/minecraft/class_1750;)Lnet/minecraft/class_1269;"
+      "getPlaceSound": "Lnet/minecraft/class_1747;method_19260(Lnet/minecraft/class_2680;)Lnet/minecraft/class_3414;"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/BlockMixin": {
       "appendProperties": "Lnet/minecraft/class_2248;method_9515(Lnet/minecraft/class_2689$class_2690;)V",
       "getPlacementState": "Lnet/minecraft/class_2248;method_9605(Lnet/minecraft/class_1750;)Lnet/minecraft/class_2680;",
+      "precipitationTick": "Lnet/minecraft/class_2248;method_9504(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1959$class_1963;)V",
       "randomDisplayTick": "Lnet/minecraft/class_2248;method_9496(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V",
       "setDefaultState": "Lnet/minecraft/class_2248;method_9590(Lnet/minecraft/class_2680;)V"
     },
@@ -32,11 +31,18 @@
       "getCollisionShape": "Lnet/minecraft/class_3962;method_9549(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
       "registerDefaultCompostableItems": "Lnet/minecraft/class_3962;method_17758()V"
     },
+    "net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin": {
+      "appendProperties": "Lnet/minecraft/class_5556;method_9515(Lnet/minecraft/class_2689$class_2690;)V"
+    },
     "net/sashakyotoz/bedrockoid/mixin/blocks/PlantsMixin": {
       "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/RedstoneWireBlockMixin": {
       "connectsTo(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;)Z": "Lnet/minecraft/class_2457;method_10482(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z"
+    },
+    "net/sashakyotoz/bedrockoid/mixin/blocks/SnowBlockMixin": {
+      "Lnet/minecraft/block/SnowyBlock;isSnow(Lnet/minecraft/block/BlockState;)Z": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z",
+      "getPlacementState": "Lnet/minecraft/class_2493;method_9605(Lnet/minecraft/class_1750;)Lnet/minecraft/class_2680;"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/SnowyBlockMixin": {
       "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z": "Lnet/minecraft/class_2680;method_26164(Lnet/minecraft/class_6862;)Z",
@@ -83,16 +89,6 @@
     "net/sashakyotoz/bedrockoid/mixin/entities/ServerPlayerInteractionManagerMixin": {
       "Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z": "Lnet/minecraft/class_3218;method_8650(Lnet/minecraft/class_2338;Z)Z",
       "tryBreakBlock": "Lnet/minecraft/class_3225;method_14266(Lnet/minecraft/class_2338;)Z"
-    },
-    "net/sashakyotoz/bedrockoid/mixin/worldgen/BiomeMixin": {
-      "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z": "Lnet/minecraft/class_2680;method_27852(Lnet/minecraft/class_2248;)Z",
-      "canSetSnow": "Lnet/minecraft/class_1959;method_8696(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z"
-    },
-    "net/sashakyotoz/bedrockoid/mixin/worldgen/ServerWorldMixin": {
-      "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;": "Lnet/minecraft/class_2680;method_11654(Lnet/minecraft/class_2769;)Ljava/lang/Comparable;",
-      "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z": "Lnet/minecraft/class_2680;method_27852(Lnet/minecraft/class_2248;)Z",
-      "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;": "Lnet/minecraft/class_2680;method_11657(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)Ljava/lang/Object;",
-      "tickChunk": "Lnet/minecraft/class_3218;method_18203(Lnet/minecraft/class_2818;I)V"
     }
   },
   "data": {
@@ -105,13 +101,12 @@
         "useOnBlock": "Lnet/minecraft/class_1792;method_7884(Lnet/minecraft/class_1838;)Lnet/minecraft/class_1269;"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/BlockItemMixin": {
-        "Lnet/minecraft/block/BlockState;getSoundGroup()Lnet/minecraft/sound/BlockSoundGroup;": "Lnet/minecraft/class_2680;method_26231()Lnet/minecraft/class_2498;",
-        "getPlaceSound": "Lnet/minecraft/class_1747;method_19260(Lnet/minecraft/class_2680;)Lnet/minecraft/class_3414;",
-        "place*": "Lnet/minecraft/class_1747;method_7712(Lnet/minecraft/class_1750;)Lnet/minecraft/class_1269;"
+        "getPlaceSound": "Lnet/minecraft/class_1747;method_19260(Lnet/minecraft/class_2680;)Lnet/minecraft/class_3414;"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/BlockMixin": {
         "appendProperties": "Lnet/minecraft/class_2248;method_9515(Lnet/minecraft/class_2689$class_2690;)V",
         "getPlacementState": "Lnet/minecraft/class_2248;method_9605(Lnet/minecraft/class_1750;)Lnet/minecraft/class_2680;",
+        "precipitationTick": "Lnet/minecraft/class_2248;method_9504(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1959$class_1963;)V",
         "randomDisplayTick": "Lnet/minecraft/class_2248;method_9496(Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V",
         "setDefaultState": "Lnet/minecraft/class_2248;method_9590(Lnet/minecraft/class_2680;)V"
       },
@@ -129,11 +124,18 @@
         "getCollisionShape": "Lnet/minecraft/class_3962;method_9549(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
         "registerDefaultCompostableItems": "Lnet/minecraft/class_3962;method_17758()V"
       },
+      "net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin": {
+        "appendProperties": "Lnet/minecraft/class_5556;method_9515(Lnet/minecraft/class_2689$class_2690;)V"
+      },
       "net/sashakyotoz/bedrockoid/mixin/blocks/PlantsMixin": {
         "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/RedstoneWireBlockMixin": {
         "connectsTo(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;)Z": "Lnet/minecraft/class_2457;method_10482(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z"
+      },
+      "net/sashakyotoz/bedrockoid/mixin/blocks/SnowBlockMixin": {
+        "Lnet/minecraft/block/SnowyBlock;isSnow(Lnet/minecraft/block/BlockState;)Z": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z",
+        "getPlacementState": "Lnet/minecraft/class_2493;method_9605(Lnet/minecraft/class_1750;)Lnet/minecraft/class_2680;"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/SnowyBlockMixin": {
         "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z": "Lnet/minecraft/class_2680;method_26164(Lnet/minecraft/class_6862;)Z",
@@ -180,16 +182,6 @@
       "net/sashakyotoz/bedrockoid/mixin/entities/ServerPlayerInteractionManagerMixin": {
         "Lnet/minecraft/server/world/ServerWorld;removeBlock(Lnet/minecraft/util/math/BlockPos;Z)Z": "Lnet/minecraft/class_3218;method_8650(Lnet/minecraft/class_2338;Z)Z",
         "tryBreakBlock": "Lnet/minecraft/class_3225;method_14266(Lnet/minecraft/class_2338;)Z"
-      },
-      "net/sashakyotoz/bedrockoid/mixin/worldgen/BiomeMixin": {
-        "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z": "Lnet/minecraft/class_2680;method_27852(Lnet/minecraft/class_2248;)Z",
-        "canSetSnow": "Lnet/minecraft/class_1959;method_8696(Lnet/minecraft/class_4538;Lnet/minecraft/class_2338;)Z"
-      },
-      "net/sashakyotoz/bedrockoid/mixin/worldgen/ServerWorldMixin": {
-        "Lnet/minecraft/block/BlockState;get(Lnet/minecraft/state/property/Property;)Ljava/lang/Comparable;": "Lnet/minecraft/class_2680;method_11654(Lnet/minecraft/class_2769;)Ljava/lang/Comparable;",
-        "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z": "Lnet/minecraft/class_2680;method_27852(Lnet/minecraft/class_2248;)Z",
-        "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;": "Lnet/minecraft/class_2680;method_11657(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)Ljava/lang/Object;",
-        "tickChunk": "Lnet/minecraft/class_3218;method_18203(Lnet/minecraft/class_2818;I)V"
       }
     }
   }

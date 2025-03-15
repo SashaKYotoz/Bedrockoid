@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.VineBlock;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
@@ -29,25 +30,15 @@ public class BlockUtils {
         return Blocks.SNOW.getDefaultState().with(Properties.LAYERS, Math.max(1, state.get(LAYERS)));
     }
 
-    public static BlockState getSnowPlacementState(BlockState state, ItemPlacementContext context) {
-        return getSnowloggedState(state, context.getWorld().getBlockState(context.getBlockPos()));
-    }
-
     public static boolean canSnowlog(@Nullable BlockState state) {
+        if (state != null && state.contains(Properties.DOUBLE_BLOCK_HALF) && state.get(Properties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER)
+            return false;
         return state != null && state.getProperties() != null
                 && state.contains(LAYERS) && state.getFluidState().isEmpty()
                 && ModsUtils.isSnowloggingNotOverrided();
     }
 
-    public static BlockState getSnowloggedState(BlockState state, BlockState snowState) {
-        if (snowState != null && canSnowlog(state) && snowState.isOf(Blocks.SNOW)) {
-            int layers = snowState.get(Properties.LAYERS);
-            if (layers < 8)
-                state = state.with(LAYERS, layers);
-        }
-        return state;
-    }
-    public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos){
+    public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos) {
         if (world != null && pos != null) {
             return state.getBlock() instanceof VineBlock && world.getBiomeFabric(pos) != null
                     && world.getBiomeFabric(pos).value().getTemperature() < 0.15f
@@ -77,7 +68,7 @@ public class BlockUtils {
         if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.WATER_CAULDRON) && state.get(Properties.LEVEL_3) != 3)
             return true;
         else if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.CAULDRON)) {
-            world.setBlockState(pos, Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 1));
+            world.setBlockState(pos, Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 1).with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED)));
             return true;
         } else if (world.getFluidState(pos.up()).isOf(Fluids.LAVA) && state.isOf(Blocks.CAULDRON) && world.getGameRules().getBoolean(GameRules.LAVA_SOURCE_CONVERSION)) {
             world.setBlockState(pos, Blocks.LAVA_CAULDRON.getDefaultState());

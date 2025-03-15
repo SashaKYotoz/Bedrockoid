@@ -11,17 +11,17 @@
     "blocks.BlockStateMixin",
     "blocks.ComposterBlockMixin",
     "blocks.FlowerBlockMixin",
+    "blocks.LeveledCauldronBlockMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
+    "blocks.SnowBlockMixin",
     "blocks.SnowyBlockMixin",
     "blocks.TntBlockMixin",
     "entities.ArmorStandEntityMixin",
     "entities.EntityMixin",
     "entities.LivingEntityMixin",
     "entities.MobEntityMixin",
-    "entities.ServerPlayerInteractionManagerMixin",
-    "worldgen.BiomeMixin",
-    "worldgen.ServerWorldMixin"
+    "entities.ServerPlayerInteractionManagerMixin"
   ],
   "client": [
     "client.AbstractHorseEntityRendererMixin",

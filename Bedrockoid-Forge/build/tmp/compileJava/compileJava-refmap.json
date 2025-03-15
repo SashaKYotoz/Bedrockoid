@@ -17,6 +17,9 @@
       "bootStrap": "Lnet/minecraft/world/level/block/ComposterBlock;m_51988_()V",
       "Lnet/minecraft/world/level/LevelAccessor;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z": "Lnet/minecraft/world/level/LevelAccessor;m_7731_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z"
     },
+    "net/sashakyotoz/bedrockoid/mixin/blocks/LayeredCauldronBlockMixin": {
+      "createBlockStateDefinition": "Lnet/minecraft/world/level/block/LayeredCauldronBlock;m_7926_(Lnet/minecraft/world/level/block/state/StateDefinition$Builder;)V"
+    },
     "net/sashakyotoz/bedrockoid/mixin/blocks/BlockItemMixin": {
       "place": "Lnet/minecraft/world/item/BlockItem;m_40576_(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/InteractionResult;"
     },
@@ -110,6 +113,9 @@
         "getCollisionShape": "Lnet/minecraft/world/level/block/ComposterBlock;m_5939_(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;",
         "bootStrap": "Lnet/minecraft/world/level/block/ComposterBlock;m_51988_()V",
         "Lnet/minecraft/world/level/LevelAccessor;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z": "Lnet/minecraft/world/level/LevelAccessor;m_7731_(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z"
+      },
+      "net/sashakyotoz/bedrockoid/mixin/blocks/LayeredCauldronBlockMixin": {
+        "createBlockStateDefinition": "Lnet/minecraft/world/level/block/LayeredCauldronBlock;m_7926_(Lnet/minecraft/world/level/block/state/StateDefinition$Builder;)V"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/BlockItemMixin": {
         "place": "Lnet/minecraft/world/item/BlockItem;m_40576_(Lnet/minecraft/world/item/context/BlockPlaceContext;)Lnet/minecraft/world/InteractionResult;"

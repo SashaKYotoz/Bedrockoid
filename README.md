@@ -30,8 +30,7 @@ rather than make Java Edition look like Bedrock Edition
 
 <hr>
 
-## To develop this mod, code from certain projects was used:
+## Feature implemented in mod are also presented in:
 - [Bedrockify](https://github.com/juancarloscp52/BedrockIfy/) - mod that makes Java Edition looks completely like Bedrock Edition
 - [SnowUnderTrees](https://github.com/bl4ckscor3/SnowUnderTrees/) - mod that places snow under trees
 - [SnowRealMagic](https://github.com/Snownee/SnowRealMagic/) - mod that brings amazing interaction with snow
-- [WilderWild](https://github.com/FrozenBlock/WilderWild/) - mod, which name describe it the best way

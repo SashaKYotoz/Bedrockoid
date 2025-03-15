@@ -49,6 +49,7 @@ public class BlockUtils {
         }
         return state;
     }
+
     @OnlyIn(Dist.CLIENT)
     public static boolean canVinesBeCoveredInSnow(BlockState state, BlockAndTintGetter getter, BlockPos pos) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -68,6 +69,7 @@ public class BlockUtils {
         }
         return false;
     }
+
     @OnlyIn(Dist.CLIENT)
     public static boolean haveLeavesToSlightlyChangeColor(BlockState state, BlockAndTintGetter getter, BlockPos pos) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -82,7 +84,8 @@ public class BlockUtils {
         if (world.getFluidState(pos.above()).is(Fluids.WATER) && state.is(Blocks.WATER_CAULDRON) && state.getValue(BlockStateProperties.LEVEL_CAULDRON) != 3)
             return true;
         else if (world.getFluidState(pos.above()).is(Fluids.WATER) && state.is(Blocks.CAULDRON)) {
-            world.setBlock(pos, Blocks.WATER_CAULDRON.defaultBlockState().setValue(BlockStateProperties.LEVEL_CAULDRON, 1), 3);
+            world.setBlock(pos, Blocks.WATER_CAULDRON.defaultBlockState()
+                    .setValue(BlockStateProperties.LEVEL_CAULDRON, 1).setValue(BlockStateProperties.WATERLOGGED, state.getValue(BlockStateProperties.WATERLOGGED)), 3);
             return true;
         } else if (world.getFluidState(pos.above()).is(Fluids.LAVA) && state.is(Blocks.CAULDRON) && world.getGameRules().getBoolean(GameRules.RULE_LAVA_SOURCE_CONVERSION)) {
             world.setBlock(pos, Blocks.LAVA_CAULDRON.defaultBlockState(), 3);

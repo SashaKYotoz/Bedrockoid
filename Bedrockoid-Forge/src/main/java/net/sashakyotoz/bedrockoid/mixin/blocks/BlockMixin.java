@@ -8,6 +8,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -26,7 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = Block.class, priority = 900)
 public abstract class BlockMixin {
 
-    @Shadow private BlockState defaultBlockState;
+    @Shadow
+    private BlockState defaultBlockState;
 
     @Inject(method = "registerDefaultState", at = @At("TAIL"))
     private void addSnowLayers(BlockState state, CallbackInfo ci) {
@@ -58,9 +60,14 @@ public abstract class BlockMixin {
     @Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
     private void onGetPlacementState(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> cir) {
         BlockState state = cir.getReturnValue();
-        if (state != null && state.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability) {
-            FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
-            cir.setReturnValue(state.setValue(BlockStateProperties.WATERLOGGED, fluidState.is(FluidTags.WATER)));
+        BlockState contextState = ctx.getLevel().getBlockState(ctx.getClickedPos());
+        if (state != null) {
+            if (state.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability) {
+                FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+                cir.setReturnValue(state.setValue(BlockStateProperties.WATERLOGGED, fluidState.is(FluidTags.WATER)));
+            }
+            if (BedrockoidConfig.snowlogging && contextState.is(Blocks.SNOW) && BlockUtils.canSnowlog(state) && contextState.getValue(BlockStateProperties.LAYERS) < 8)
+                cir.setReturnValue(state.setValue(BlockUtils.LAYERS, contextState.getValue(BlockStateProperties.LAYERS)));
         }
     }
 }

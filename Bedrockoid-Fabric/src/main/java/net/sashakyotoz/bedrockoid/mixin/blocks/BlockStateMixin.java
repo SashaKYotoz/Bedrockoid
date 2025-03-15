@@ -34,8 +34,13 @@ public abstract class BlockStateMixin {
 
     @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"))
     private void onUpdateShape(Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-        if (world.getBlockState(pos).contains(Properties.WATERLOGGED) && world.getBlockState(pos).get(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (world.getBlockState(pos).getBlock() instanceof AbstractCauldronBlock
+                && world.getBlockState(pos).contains(Properties.WATERLOGGED)
+                && world.getBlockState(pos).get(Properties.WATERLOGGED)
+                && BedrockoidConfig.cauldronWaterloggability)
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        if (BlockUtils.canSnowlog(world.getBlockState(pos)) && world.getBlockState(pos).getFluidState() != null)
+            world.setBlockState(pos, world.getBlockState(pos).with(BlockUtils.LAYERS, 0), Block.NOTIFY_ALL);
     }
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
@@ -60,7 +65,6 @@ public abstract class BlockStateMixin {
             return VoxelShapes.union(original, BlockUtils.getSnowEquivalent(blockState).getOutlineShape(world, pos, context));
         return original;
     }
-
     @Inject(method = "randomTick", at = @At("TAIL"))
     private void randomTick(ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
         BlockState state = world.getBlockState(pos);

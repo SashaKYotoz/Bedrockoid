@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
+import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -29,7 +30,7 @@ public class FlowerBlockMixin implements BonemealableBlock {
 
     @Override
     public void performBonemeal(ServerLevel serverLevel, RandomSource random, BlockPos blockPos, BlockState blockState) {
-        if (!ModsUtils.isBedrockifyIn() && BedrockoidConfig.canPlantsBeBonemeal) {
+        if (!ModsUtils.isBedrockifyIn() && BedrockoidConfig.canPlantsBeBonemeal && !BlockUtils.isSnowlogged(blockState)) {
             int amount = random.nextIntBetweenInclusive(1, 5);
             for (int i = 0; i < amount; i++) {
                 int x = random.nextIntBetweenInclusive(-3, 3);
