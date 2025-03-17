@@ -13,20 +13,20 @@ rather than make Java Edition look like Bedrock Edition
 - Entity uses shield if sneaking
 - Living shulkers can be dyed
 - Mushroom trees spawn in swamp
-- Frostwalker radius is increased to be matched with what is in Bedrock Edition
+- Frostwalker radius is increased to be matched with what is in Bedrock Edition (coming for Minecraft 1.21+ in v0.1.1)
 - Color of sheep's fur applies to all fur spots
 - Reach around placement for blocks
 - Fallen trees from snapshot 25W09A are backported + trees with 2x2 trunk
 - Any entities in fire can light candles and campfires
-- Wet sponge dries out when in dry biome
+- Wet sponge dries out when in dry biome (doesn't dry out instantly like in nether, it takes some time)
 - Stop elytra flying by pressing space on air
-- Cauldron fills naturally if fluid is above it
+- Cauldron fills naturally if fluid is above it (doesn't fill in instantly, it takes some time)
 - Cauldron are Waterloggable
 - Plants can be covered in snow
 - Plants can be multiplied by bonemealing
 - Redstone can be connected to pistons
 - Armor stand has arms by default
-- ~~Horses' size changes due to time to grow up~~
+- ~~Horses' size changes due to time to grow up~~ (feature was deimplemented due to bug with horse taming)
 
 <hr>
 
