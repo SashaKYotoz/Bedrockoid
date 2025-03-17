@@ -18,7 +18,6 @@ import net.sashakyotoz.bedrockoid.common.snow.snow_managers.VanillaManager;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-// Code goes under Copyright (c) 2022 bl4ckscor3
 public class BedrockSnowManager {
     private static SnowManager snowManager;
     private static ChunkRunner chunkRunner;
@@ -29,10 +28,6 @@ public class BedrockSnowManager {
 //            snowManager = new SnowRealMagicManager();
 //        else
             snowManager = new VanillaManager();
-
-//        if (isSereneSeasonsLoaded)
-//            temperatureCheck = (level, pos) -> SereneSeasonsHandler.coldEnoughToSnow(level, level.getBiome(pos), pos, level.getSeaLevel());
-//        else
         temperatureCheck = (level, pos) -> !level.getBiome(pos).value().doesNotSnow(pos);
         chunkRunner = (level, action) -> level.getChunkManager().chunkLoadingManager.entryIterator().forEach(chunkHolder -> chunkHolder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_WORLD_CHUNK).ifPresent(action));
     }

@@ -8,6 +8,7 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
+import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -25,7 +26,7 @@ public class FlowerBlockMixin implements Fertilizable {
 
     @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        if (!ModsUtils.isBedrockifyIn() && BedrockoidConfig.canPlantsBeBonemeal) {
+        if (!ModsUtils.isBedrockifyIn() && BedrockoidConfig.canPlantsBeBonemeal && !BlockUtils.isSnowlogged(state)) {
             int amount = random.nextBetween(1, 5);
             for (int i = 0; i < amount; i++) {
                 int x = random.nextBetween(-3, 3);

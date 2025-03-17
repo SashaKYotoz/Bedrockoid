@@ -1,12 +1,2 @@
 Copyright (c) 2025 SashaKYotoz
-All rights reserved.
-
-Some project elements go under: 
-
-MIT License (Copyright (c) 2022 bl4ckscor3) | https://github.com/bl4ckscor3/SnowUnderTrees/
-
-MIT License (Copyright (c) 2018 Snownee) | https://github.com/Snownee/SnowRealMagic/
-
-GNU GENERAL PUBLIC LICENSE (Copyright (c) juancarloscp52) | https://github.com/juancarloscp52/BedrockIfy/
-
-GNU GENERAL PUBLIC LICENSE (Copyright (c) AViewFromTheTop) | https://github.com/FrozenBlock/WilderWild/
+GPL-3.0 license

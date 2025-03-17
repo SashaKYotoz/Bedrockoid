@@ -28,11 +28,18 @@
       "getCollisionShape": "Lnet/minecraft/class_3962;method_9549(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
       "registerDefaultCompostableItems": "Lnet/minecraft/class_3962;method_17758()V"
     },
+    "net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin": {
+      "appendProperties": "Lnet/minecraft/class_5556;method_9515(Lnet/minecraft/class_2689$class_2690;)V"
+    },
     "net/sashakyotoz/bedrockoid/mixin/blocks/PlantsMixin": {
       "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/RedstoneWireBlockMixin": {
       "connectsTo(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;)Z": "Lnet/minecraft/class_2457;method_10482(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z"
+    },
+    "net/sashakyotoz/bedrockoid/mixin/blocks/SnowBlockMixin": {
+      "Lnet/minecraft/block/SnowyBlock;isSnow(Lnet/minecraft/block/BlockState;)Z": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z",
+      "getPlacementState": "Lnet/minecraft/class_2493;method_9605(Lnet/minecraft/class_1750;)Lnet/minecraft/class_2680;"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/SnowyBlockMixin": {
       "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z": "Lnet/minecraft/class_2680;method_26164(Lnet/minecraft/class_6862;)Z",
@@ -121,11 +128,18 @@
         "getCollisionShape": "Lnet/minecraft/class_3962;method_9549(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
         "registerDefaultCompostableItems": "Lnet/minecraft/class_3962;method_17758()V"
       },
+      "net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin": {
+        "appendProperties": "Lnet/minecraft/class_5556;method_9515(Lnet/minecraft/class_2689$class_2690;)V"
+      },
       "net/sashakyotoz/bedrockoid/mixin/blocks/PlantsMixin": {
         "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/RedstoneWireBlockMixin": {
         "connectsTo(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/Direction;)Z": "Lnet/minecraft/class_2457;method_10482(Lnet/minecraft/class_2680;Lnet/minecraft/class_2350;)Z"
+      },
+      "net/sashakyotoz/bedrockoid/mixin/blocks/SnowBlockMixin": {
+        "Lnet/minecraft/block/SnowyBlock;isSnow(Lnet/minecraft/block/BlockState;)Z": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z",
+        "getPlacementState": "Lnet/minecraft/class_2493;method_9605(Lnet/minecraft/class_1750;)Lnet/minecraft/class_2680;"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/SnowyBlockMixin": {
         "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z": "Lnet/minecraft/class_2680;method_26164(Lnet/minecraft/class_6862;)Z",

@@ -1,0 +1,38 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.sashakyotoz.bedrockoid.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "bedrockoid.refmap.json",
+  "mixins": [
+    "ItemMixin",
+    "blocks.BlockItemMixin",
+    "blocks.BlockMixin",
+    "blocks.BlockStateMixin",
+    "blocks.ComposterBlockMixin",
+    "blocks.FlowerBlockMixin",
+    "blocks.LayeredCauldronBlockMixin",
+    "blocks.PlantsMixin",
+    "blocks.RedstoneWireBlockMixin",
+    "blocks.SnowyBlockMixin",
+    "blocks.TntBlockMixin",
+    "entities.ArmorStandEntityMixin",
+    "entities.EntityMixin",
+    "entities.LivingEntityMixin",
+    "entities.MobEntityMixin",
+    "entities.ServerPlayerInteractionManagerMixin",
+    "worldgen.BiomeMixin",
+    "worldgen.ServerLevelMixin"
+  ],
+  "client": [
+    "blocks.BlockColorsMixin",
+    "client.AbstractHorseRendererMixin",
+    "client.BlockRenderDispatcherMixin",
+    "client.SectionCompilerMixin",
+    "client.MinecraftClientMixin",
+    "client.SheepWoolLayerRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

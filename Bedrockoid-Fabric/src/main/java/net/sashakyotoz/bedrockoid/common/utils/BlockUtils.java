@@ -47,7 +47,8 @@ public class BlockUtils {
         }
         return state;
     }
-    public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos){
+
+    public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos) {
         if (world != null && pos != null) {
             return state.getBlock() instanceof VineBlock && world.getBiomeFabric(pos) != null
                     && world.getBiomeFabric(pos).value().getTemperature() < 0.15f
@@ -77,7 +78,7 @@ public class BlockUtils {
         if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.WATER_CAULDRON) && state.get(Properties.LEVEL_3) != 3)
             return true;
         else if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.CAULDRON)) {
-            world.setBlockState(pos, Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 1));
+            world.setBlockState(pos, Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 1).with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED)));
             return true;
         } else if (world.getFluidState(pos.up()).isOf(Fluids.LAVA) && state.isOf(Blocks.CAULDRON) && world.getGameRules().getBoolean(GameRules.LAVA_SOURCE_CONVERSION)) {
             world.setBlockState(pos, Blocks.LAVA_CAULDRON.getDefaultState());

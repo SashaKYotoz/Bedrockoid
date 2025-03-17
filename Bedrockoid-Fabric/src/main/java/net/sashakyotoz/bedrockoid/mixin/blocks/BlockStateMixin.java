@@ -34,7 +34,10 @@ public abstract class BlockStateMixin {
 
     @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"))
     private void onUpdateShape(Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-        if (world.getBlockState(pos).contains(Properties.WATERLOGGED) && world.getBlockState(pos).get(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (world.getBlockState(pos).getBlock() instanceof AbstractCauldronBlock
+                && world.getBlockState(pos).contains(Properties.WATERLOGGED)
+                && world.getBlockState(pos).get(Properties.WATERLOGGED)
+                && BedrockoidConfig.cauldronWaterloggability)
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
     }
 
@@ -66,14 +69,14 @@ public abstract class BlockStateMixin {
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof WetSpongeBlock
                 && BedrockoidConfig.wetSpongesDryOut
-                && random.nextInt(26) == 5
+                && random.nextInt(12) == 5
                 && !world.getBiome(pos).value().hasPrecipitation()
                 && (world.getBiome(pos).value().getTemperature() > 0.75f)) {
             world.setBlockState(pos, Blocks.SPONGE.getDefaultState(), Block.NOTIFY_ALL);
             world.syncWorldEvent(WorldEvents.WET_SPONGE_DRIES_OUT, pos, 0);
             world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
         }
-        if (random.nextInt(5) == 1 && BlockUtils.haveToFillUpCauldron(state, world, pos)) {
+        if (random.nextInt(4) == 1 && BlockUtils.haveToFillUpCauldron(state, world, pos)) {
             if (state.getBlock() instanceof LeveledCauldronBlock && BedrockoidConfig.cauldronNaturalFilling) {
                 BlockState blockState = state.cycle(Properties.LEVEL_3);
                 world.setBlockState(pos, blockState);

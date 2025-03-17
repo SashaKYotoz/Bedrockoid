@@ -1,1 +1,11 @@
 /enchant @a minecraft:fire_aspect
+/gamerule randomTickSpeed 100
+/enchant @a minecraft:frost_walker 2
+/locate biome minecraft:cherry_grove
+/tp @s -2050 63 1622
+/locate biome minecraft:ocean
+/tp @s -1459 81 985
+/setblock ~ ~ ~ minecraft:acacia_fence
+/time set day
+/tp 0 100 0
+/tp 9000 100 0
