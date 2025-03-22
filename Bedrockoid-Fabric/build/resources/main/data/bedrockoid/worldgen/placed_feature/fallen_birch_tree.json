@@ -38,6 +38,7 @@
         "state": {
           "Name": "minecraft:birch_sapling",
           "Properties": {
+            "snow_layers": "0",
             "stage": "0"
           }
         }

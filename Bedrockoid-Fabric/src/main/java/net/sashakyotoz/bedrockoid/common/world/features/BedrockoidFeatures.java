@@ -2,7 +2,6 @@ package net.sashakyotoz.bedrockoid.common.world.features;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;

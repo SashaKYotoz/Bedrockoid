@@ -2,7 +2,6 @@ package net.sashakyotoz.bedrockoid.mixin.blocks;
 
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.FluidTags;
@@ -56,9 +55,16 @@ public abstract class BlockMixin {
     @Inject(method = "getPlacementState", at = @At("RETURN"), cancellable = true)
     private void onGetPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
         BlockState state = cir.getReturnValue();
-        if (state != null && state.contains(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability) {
-            FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-            cir.setReturnValue(state.with(Properties.WATERLOGGED, fluidState.isIn(FluidTags.WATER)));
+        BlockState contextState = ctx.getWorld().getBlockState(ctx.getBlockPos());
+        if (state != null) {
+            if (state.contains(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability) {
+                FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
+                cir.setReturnValue(state.with(Properties.WATERLOGGED, fluidState.isIn(FluidTags.WATER)));
+            }
+            if (BedrockoidConfig.snowlogging && contextState.isOf(Blocks.SNOW) && BlockUtils.canSnowlog(state))
+                cir.setReturnValue(state.with(BlockUtils.LAYERS, contextState.get(Properties.LAYERS) < 8
+                        ? contextState.get(Properties.LAYERS)
+                        : state.get(BlockUtils.LAYERS)));
         }
     }
 }

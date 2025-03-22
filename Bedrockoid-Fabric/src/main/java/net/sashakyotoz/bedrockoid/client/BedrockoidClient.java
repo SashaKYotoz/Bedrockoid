@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
+import net.minecraft.state.property.Properties;
 import net.minecraft.world.biome.FoliageColors;
 import net.minecraft.world.biome.GrassColors;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
@@ -50,7 +51,6 @@ public class BedrockoidClient implements ClientModInitializer {
                     Blocks.SPRUCE_LEAVES,
                     Blocks.BIRCH_LEAVES,
                     Blocks.JUNGLE_LEAVES,
-                    Blocks.CHERRY_LEAVES,
                     Blocks.ACACIA_LEAVES,
                     Blocks.DARK_OAK_LEAVES,
                     Blocks.MANGROVE_LEAVES,
@@ -59,7 +59,11 @@ public class BedrockoidClient implements ClientModInitializer {
             );
             ColorProviderRegistry.BLOCK.register(
                     (state, world, pos, index) -> {
-                        if (BlockUtils.isSnowlogged(state) && BedrockoidConfig.snowlogging)
+                        if ((BlockUtils.isSnowlogged(state)
+                                || (state.contains(Properties.DOUBLE_BLOCK_HALF)
+                                && world != null && pos != null
+                                && BlockUtils.isSnowlogged(world.getBlockState(pos.down()))))
+                                && BedrockoidConfig.snowlogging)
                             return 0xCCCCCC;
                         return world != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
                     },

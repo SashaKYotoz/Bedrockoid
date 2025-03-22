@@ -38,6 +38,7 @@
         "state": {
           "Name": "minecraft:oak_sapling",
           "Properties": {
+            "snow_layers": "0",
             "stage": "0"
           }
         }

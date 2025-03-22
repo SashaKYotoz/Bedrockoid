@@ -29,17 +29,36 @@ public abstract class SheepWoolFeatureRendererMixin extends FeatureRenderer<Shee
             return;
         else {
             int color;
-            if (sheepEntity.hasCustomName() && "jeb_".equals(sheepEntity.getName().getString())) {
-                int n = sheepEntity.age / 25 + sheepEntity.getId();
-                int o = DyeColor.values().length;
-                int p = n % o;
-                int q = (n + 1) % o;
-                float r = ((float)(sheepEntity.age % 25) + tickDelta) / 25.0F;
-                int s = SheepEntity.getRgbColor(DyeColor.byId(p));
-                int t = SheepEntity.getRgbColor(DyeColor.byId(q));
-                color = ColorHelper.Argb.lerp(r, s, t);
+            if (sheepEntity.hasCustomName()) {
+                color = SheepEntity.getRgbColor(sheepEntity.getColor());
+                if (sheepEntity.getName().getString().equals("jeb_")) {
+                    int n = sheepEntity.age / 25 + sheepEntity.getId();
+                    int o = DyeColor.values().length;
+                    int p = n % o;
+                    int q = (n + 1) % o;
+                    float r = ((float) (sheepEntity.age % 25) + tickDelta) / 25.0F;
+                    int s = SheepEntity.getRgbColor(DyeColor.byId(p));
+                    int t = SheepEntity.getRgbColor(DyeColor.byId(q));
+                    color = ColorHelper.Argb.lerp(r, s, t);
+                }
+                //don't mind me on this :)
+                if (sheepEntity.getName().getString().equals("SashaKYotoz")) {
+                    DyeColor[] cycle = new DyeColor[] {
+                            DyeColor.LIGHT_BLUE,
+                            DyeColor.YELLOW,
+                            DyeColor.RED,
+                            DyeColor.BLACK
+                    };
+                    int n = sheepEntity.age / 25 + sheepEntity.getId();
+                    int currentIndex = n % cycle.length;
+                    int nextIndex = (n + 1) % cycle.length;
+                    float r = ((float) (sheepEntity.age % 25) + tickDelta) / 25.0F;
+                    int currentColor = SheepEntity.getRgbColor(cycle[currentIndex]);
+                    int nextColor = SheepEntity.getRgbColor(cycle[nextIndex]);
+                    color = ColorHelper.Argb.lerp(r, currentColor, nextColor);
+                }
             } else {
-                color= SheepEntity.getRgbColor(sheepEntity.getColor());
+                color = SheepEntity.getRgbColor(sheepEntity.getColor());
             }
 
             render(this.getContextModel(), this.getContextModel(), Bedrockoid.makeID("textures/entity/sheep_sheared_fur.png"),
