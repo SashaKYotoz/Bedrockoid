@@ -10,6 +10,7 @@
     "blocks.BlockStateMixin",
     "blocks.ComposterBlockMixin",
     "blocks.FlowerBlockMixin",
+    "blocks.LeveledCauldronBlockMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowyBlockMixin",

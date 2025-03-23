@@ -18,6 +18,7 @@
       "getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;": "Lnet/minecraft/class_4970$class_4971;method_26194(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
       "getFluidState": "Lnet/minecraft/class_4970$class_4971;method_26227()Lnet/minecraft/class_3610;",
       "getOutlineShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;": "Lnet/minecraft/class_4970$class_4971;method_26172(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
+      "getStateForNeighborUpdate": "Lnet/minecraft/class_4970$class_4971;method_26191(Lnet/minecraft/class_4538;Lnet/minecraft/class_10225;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680;",
       "hasRandomTicks": "Lnet/minecraft/class_4970$class_4971;method_26229()Z",
       "randomTick": "Lnet/minecraft/class_4970$class_4971;method_26199(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V"
     },
@@ -26,6 +27,9 @@
       "addToComposter": "Lnet/minecraft/class_3962;method_17756(Lnet/minecraft/class_1297;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2680;",
       "getCollisionShape": "Lnet/minecraft/class_3962;method_9549(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
       "registerDefaultCompostableItems": "Lnet/minecraft/class_3962;method_17758()V"
+    },
+    "net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin": {
+      "appendProperties": "Lnet/minecraft/class_5556;method_9515(Lnet/minecraft/class_2689$class_2690;)V"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/PlantsMixin": {
       "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
@@ -107,6 +111,7 @@
         "getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;": "Lnet/minecraft/class_4970$class_4971;method_26194(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
         "getFluidState": "Lnet/minecraft/class_4970$class_4971;method_26227()Lnet/minecraft/class_3610;",
         "getOutlineShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;": "Lnet/minecraft/class_4970$class_4971;method_26172(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
+        "getStateForNeighborUpdate": "Lnet/minecraft/class_4970$class_4971;method_26191(Lnet/minecraft/class_4538;Lnet/minecraft/class_10225;Lnet/minecraft/class_2338;Lnet/minecraft/class_2350;Lnet/minecraft/class_2338;Lnet/minecraft/class_2680;Lnet/minecraft/class_5819;)Lnet/minecraft/class_2680;",
         "hasRandomTicks": "Lnet/minecraft/class_4970$class_4971;method_26229()Z",
         "randomTick": "Lnet/minecraft/class_4970$class_4971;method_26199(Lnet/minecraft/class_3218;Lnet/minecraft/class_2338;Lnet/minecraft/class_5819;)V"
       },
@@ -115,6 +120,9 @@
         "addToComposter": "Lnet/minecraft/class_3962;method_17756(Lnet/minecraft/class_1297;Lnet/minecraft/class_2680;Lnet/minecraft/class_1936;Lnet/minecraft/class_2338;Lnet/minecraft/class_1799;)Lnet/minecraft/class_2680;",
         "getCollisionShape": "Lnet/minecraft/class_3962;method_9549(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
         "registerDefaultCompostableItems": "Lnet/minecraft/class_3962;method_17758()V"
+      },
+      "net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin": {
+        "appendProperties": "Lnet/minecraft/class_5556;method_9515(Lnet/minecraft/class_2689$class_2690;)V"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/PlantsMixin": {
         "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"

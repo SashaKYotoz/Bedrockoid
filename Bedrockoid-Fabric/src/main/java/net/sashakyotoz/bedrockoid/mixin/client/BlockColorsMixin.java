@@ -6,6 +6,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.registry.Registries;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.collection.IdList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
@@ -28,9 +29,13 @@ public class BlockColorsMixin {
             BlockColorProvider blockColorProvider = this.providers.get(Registries.BLOCK.getRawId(state.getBlock()));
             if (BlockUtils.canVinesBeCoveredInSnow(state, world, pos) && BedrockoidConfig.snowCoversVines)
                 return 0xCCCCCC;
-            if (BlockUtils.isSnowlogged(state) && BedrockoidConfig.snowlogging)
+            if ((BlockUtils.isSnowlogged(state)
+                    || (state.contains(Properties.DOUBLE_BLOCK_HALF)
+                    && world != null && pos != null
+                    && BlockUtils.isSnowlogged(world.getBlockState(pos.down()))))
+                    && BedrockoidConfig.snowlogging)
                 return blockColorProvider == null ? -1 : 0xCCCCCC;
-            if (BedrockoidConfig.snowCoversLeaves) {
+            if (BedrockoidConfig.snowCoversLeaves && !ModsUtils.isSnowyLeavesPlusIn()) {
                 if (BlockUtils.haveLeavesToChangeColor(state, world, pos))
                     return blockColorProvider == null ? -1 : (BlockUtils.haveLeavesToChangeColor(state, world, pos)
                             ? 0xFFFFFF : blockColorProvider.getColor(state, world, pos, tintIndex));

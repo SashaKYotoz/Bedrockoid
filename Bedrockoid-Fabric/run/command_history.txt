@@ -1,1 +1,2 @@
 /enchant @a minecraft:fire_aspect
+/time set day

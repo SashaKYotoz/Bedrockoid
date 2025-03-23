@@ -18,6 +18,9 @@ public class ModsUtils {
     public static boolean isSodiumIn() {
         return FabricLoader.getInstance().isModLoaded("sodium");
     }
+    public static boolean isSnowyLeavesPlusIn() {
+        return FabricLoader.getInstance().isModLoaded("snowyleavesplus");
+    }
 
     public static boolean isWilderWildIn() {
         return FabricLoader.getInstance().isModLoaded("wilderwild");

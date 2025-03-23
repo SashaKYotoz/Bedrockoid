@@ -11,6 +11,9 @@
 .mtj.tmp/
 
 Bedrockoid-Forge/run/
+Bedrockoid-Forge/.idea/
+Bedrockoid-Neoforge/run/
+Bedrockoid-Neoforge/.idea/
 Bedrockoid-Fabric/.idea/
 Bedrockoid-Fabric/run/logs/
 Bedrockoid-Fabric/run/saves/

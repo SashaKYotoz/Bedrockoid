@@ -8,6 +8,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
+import net.minecraft.state.property.Properties;
 import net.minecraft.world.biome.FoliageColors;
 import net.minecraft.world.biome.GrassColors;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
@@ -22,19 +23,19 @@ public class BedrockoidClient implements ClientModInitializer {
     public void onInitializeClient() {
         HudRenderCallback.EVENT.register((drawContext, tickDelta) -> ReachPlacementUtils.INSTANCE.renderIndicator(drawContext));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (BedrockoidConfig.stopElytraByPressingSpace) {
-                if (!ModsUtils.isBedrockifyIn() && client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && timeFlying > 10 && client.options.jumpKey.isPressed()) {
+            if (BedrockoidConfig.stopElytraByPressingSpace && !ModsUtils.isBedrockifyIn()) {
+                if (client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && timeFlying > 10 && client.options.jumpKey.isPressed()) {
                     client.player.getAbilities().flying = false;
                     client.player.sendAbilitiesUpdate();
                     client.player.networkHandler.sendPacket(new ClientCommandC2SPacket(client.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
                 }
-                if (!ModsUtils.isBedrockifyIn() && client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && !client.options.jumpKey.isPressed())
+                if (client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && !client.options.jumpKey.isPressed())
                     timeFlying++;
                 else
                     timeFlying = 0;
             }
         });
-        if (ModsUtils.isSodiumIn()) {
+        if (ModsUtils.isSodiumIn() && !ModsUtils.isSnowyLeavesPlusIn()) {
             ColorProviderRegistry.BLOCK.register(
                     (state, world, pos, index) -> {
                         if (BlockUtils.haveLeavesToChangeColor(state, world, pos)
@@ -52,7 +53,6 @@ public class BedrockoidClient implements ClientModInitializer {
                     Blocks.SPRUCE_LEAVES,
                     Blocks.BIRCH_LEAVES,
                     Blocks.JUNGLE_LEAVES,
-                    Blocks.CHERRY_LEAVES,
                     Blocks.ACACIA_LEAVES,
                     Blocks.DARK_OAK_LEAVES,
                     Blocks.MANGROVE_LEAVES,
@@ -61,7 +61,11 @@ public class BedrockoidClient implements ClientModInitializer {
             );
             ColorProviderRegistry.BLOCK.register(
                     (state, world, pos, index) -> {
-                        if (BlockUtils.isSnowlogged(state) && BedrockoidConfig.snowlogging)
+                        if ((BlockUtils.isSnowlogged(state)
+                                || (state.contains(Properties.DOUBLE_BLOCK_HALF)
+                                && world != null && pos != null
+                                && BlockUtils.isSnowlogged(world.getBlockState(pos.down()))))
+                                && BedrockoidConfig.snowlogging)
                             return 0xCCCCCC;
                         return world != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
                     },
