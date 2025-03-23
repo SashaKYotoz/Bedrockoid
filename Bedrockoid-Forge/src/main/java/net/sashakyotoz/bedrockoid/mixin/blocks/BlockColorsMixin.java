@@ -7,6 +7,7 @@ import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +27,11 @@ public class BlockColorsMixin {
                 colour = 0xCCCCCC;
             return colour;
         }
-        if (BlockUtils.isSnowlogged(state) && BedrockoidConfig.snowlogging)
+        if ((BlockUtils.isSnowlogged(state)
+                || (state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF)
+                && getter != null && pos != null
+                && BlockUtils.isSnowlogged(getter.getBlockState(pos.below()))))
+                && BedrockoidConfig.snowlogging)
             return 0xCCCCCC;
         if (BlockUtils.canVinesBeCoveredInSnow(state, getter, pos) && BedrockoidConfig.snowCoversVines)
             return 0xCCCCCC;

@@ -67,14 +67,14 @@ public abstract class BlockStateMixin {
         BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof WetSpongeBlock
                 && BedrockoidConfig.wetSpongesDryOut
-                && random.nextInt(26) == 5
+                && random.nextInt(12) == 5
                 && !level.getBiome(pos).value().hasPrecipitation()
                 && (level.getBiome(pos).value().getBaseTemperature() > 0.75f)) {
             level.setBlock(pos, Blocks.SPONGE.defaultBlockState(), 3);
             level.levelEvent(LevelEvent.PARTICLES_WATER_EVAPORATING, pos, 0);
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
         }
-        if (random.nextInt(5) == 1 && BlockUtils.haveToFillUpCauldron(state, level, pos)) {
+        if (random.nextInt(4) == 1 && BlockUtils.haveToFillUpCauldron(state, level, pos)) {
             if (state.getBlock() instanceof LayeredCauldronBlock && BedrockoidConfig.cauldronNaturalFilling) {
                 BlockState blockState = state.cycle(BlockStateProperties.LEVEL_CAULDRON);
                 level.setBlockAndUpdate(pos, blockState);

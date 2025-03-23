@@ -2,10 +2,10 @@ package net.sashakyotoz.bedrockoid;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.file.FileConfig;
-import org.apache.commons.compress.utils.Lists;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BedrockoidConfig {
@@ -31,7 +31,7 @@ public class BedrockoidConfig {
     public static boolean fireAspectImprovements = true;
     public static boolean composterCollisionFix = true;
     public static boolean snowSpawnsUnderTrees = true;
-    public static List<String> disableSnowUnderTreesIn = Lists.newArrayList();
+    public static List<String> disableSnowUnderTreesIn = new ArrayList<>();
     public static boolean snowCoversLeaves = true;
     public static boolean snowCoversVines = true;
 
@@ -59,7 +59,7 @@ public class BedrockoidConfig {
         config.add(FLAGS + ".bedrockoid.snowSpawnsUnderTrees", true);
         config.add(FLAGS + ".bedrockoid.snowCoversLeaves", true);
         config.add(FLAGS + ".bedrockoid.snowCoversVines", true);
-        config.add(LISTS + ".bedrockoid.disableSnowUnderTreesIn", Lists.newArrayList());
+        config.add(LISTS + ".bedrockoid.disableSnowUnderTreesIn", new ArrayList<>());
         config.save();
     }
 

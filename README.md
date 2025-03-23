@@ -2,6 +2,9 @@
 Bedrockoid - a Minecraft Mod that implements Minecraft Bedrock Edition exclusive gameplay features into Minecraft Java Edition, 
 rather than make Java Edition look like Bedrock Edition
 
+[![Modrinth](https://img.shields.io/modrinth/dt/bedrockoid?style=for-the-badge&color=CCFFCC&logo=modrinth)](https://modrinth.com/mod/bedrockoid)
+[![CurseForge](https://cf.way2muchnoise.eu/short_bedrockoid_downloads.svg?badge_style=for_the_badge)](https://www.curseforge.com/minecraft/mc-mods/bedrockoid)
+
 <hr>
 
 ## Features list:
@@ -13,7 +16,7 @@ rather than make Java Edition look like Bedrock Edition
 - Entity uses shield if sneaking
 - Living shulkers can be dyed
 - Mushroom trees spawn in swamp
-- Frostwalker radius is increased to be matched with what is in Bedrock Edition (coming for Minecraft 1.21+ in v0.1.1)
+- Frostwalker radius is increased to be matched with what is in Bedrock Edition
 - Color of sheep's fur applies to all fur spots
 - Reach around placement for blocks
 - Fallen trees from snapshot 25W09A are backported + trees with 2x2 trunk
@@ -26,7 +29,6 @@ rather than make Java Edition look like Bedrock Edition
 - Plants can be multiplied by bonemealing
 - Redstone can be connected to pistons
 - Armor stand has arms by default
-- ~~Horses' size changes due to time to grow up~~ (feature was deimplemented due to bug with horse taming)
 
 <hr>
 

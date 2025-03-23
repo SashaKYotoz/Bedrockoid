@@ -1,9 +1,9 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
-license = "All Rights Reserved"
+license = "GPL-3.0 license"
 [[mods]]
 modId = "bedrockoid"
-version = "0.1"
+version = "0.1.1"
 displayName = "Bedrockoid-Forge"
 authors = "SashaKYotoz"
 description = "Even more Bedrock features for Java Edition"

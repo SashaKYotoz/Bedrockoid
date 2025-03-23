@@ -66,6 +66,7 @@
     },
     "net/sashakyotoz/bedrockoid/mixin/entities/EntityMixin": {
       "spawnSprintParticle": "Lnet/minecraft/world/entity/Entity;m_20076_()V",
+      "interact": "Lnet/minecraft/world/entity/Entity;m_6096_(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
       "baseTick": "Lnet/minecraft/world/entity/Entity;m_6075_()V"
     },
     "net/sashakyotoz/bedrockoid/mixin/entities/MobEntityMixin": {
@@ -163,6 +164,7 @@
       },
       "net/sashakyotoz/bedrockoid/mixin/entities/EntityMixin": {
         "spawnSprintParticle": "Lnet/minecraft/world/entity/Entity;m_20076_()V",
+        "interact": "Lnet/minecraft/world/entity/Entity;m_6096_(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
         "baseTick": "Lnet/minecraft/world/entity/Entity;m_6075_()V"
       },
       "net/sashakyotoz/bedrockoid/mixin/entities/MobEntityMixin": {
