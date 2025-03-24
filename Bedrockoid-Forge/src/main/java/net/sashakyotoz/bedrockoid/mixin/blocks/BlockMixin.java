@@ -6,6 +6,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -29,7 +30,6 @@ public abstract class BlockMixin {
 
     @Shadow
     private BlockState defaultBlockState;
-
     @Inject(method = "registerDefaultState", at = @At("TAIL"))
     private void addSnowLayers(BlockState state, CallbackInfo ci) {
         Block block = state.getBlock();

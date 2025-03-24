@@ -18,8 +18,8 @@ public class BlockColorsMixin {
     @WrapOperation(method = "getColor(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;I)I",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/client/color/block/BlockColor;getColor(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/core/BlockPos;I)I"))
     private int handleSpruceColor(BlockColor instance, BlockState state, BlockAndTintGetter getter, BlockPos pos, int i, Operation<Integer> original) {
-        if (BedrockoidConfig.snowCoversLeaves && BlockUtils.haveLeavesToChangeColor(state, getter, pos)
-                || BlockUtils.haveLeavesToSlightlyChangeColor(state, getter, pos)) {
+        if (BedrockoidConfig.snowCoversLeaves && (BlockUtils.haveLeavesToChangeColor(state, getter, pos)
+                || BlockUtils.haveLeavesToSlightlyChangeColor(state, getter, pos))) {
             int colour = 0;
             if (BlockUtils.haveLeavesToChangeColor(state, getter, pos))
                 colour = 0xFFFFFF;

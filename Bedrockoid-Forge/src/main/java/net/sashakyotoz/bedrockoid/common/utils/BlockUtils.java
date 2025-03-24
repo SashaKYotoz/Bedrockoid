@@ -35,9 +35,9 @@ public class BlockUtils {
         return getSnowloggedState(state, context.getLevel().getBlockState(context.getClickedPos()));
     }
 
-    public static boolean canSnowlog(@Nullable BlockState state) {
-        return state != null && state.getProperties() != null
-                && state.hasProperty(LAYERS) && state.getFluidState().isEmpty()
+    public static boolean canSnowlog(BlockState state) {
+        return state != null && state.hasProperty(LAYERS)
+                && state.getFluidState().isEmpty()
                 && ModsUtils.isSnowloggingNotOverrided();
     }
 

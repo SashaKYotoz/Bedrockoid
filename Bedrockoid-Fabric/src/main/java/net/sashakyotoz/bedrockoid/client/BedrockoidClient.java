@@ -37,8 +37,8 @@ public class BedrockoidClient implements ClientModInitializer {
         if (ModsUtils.isSodiumIn()) {
             ColorProviderRegistry.BLOCK.register(
                     (state, world, pos, index) -> {
-                        if (BlockUtils.haveLeavesToChangeColor(state, world, pos)
-                                || BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos)) {
+                        if ((BlockUtils.haveLeavesToChangeColor(state, world, pos)
+                                || BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos)) && BedrockoidConfig.snowCoversLeaves) {
                             int colour = 0;
                             if (BlockUtils.haveLeavesToChangeColor(state, world, pos))
                                 colour = 0xFFFFFF;

@@ -21,6 +21,7 @@ public class Bedrockoid {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
         BedrockoidConfig.loadConfig();
+        BedrockoidConfig.init();
         BedrockSnowManager.init();
 
         BedrockoidFeatures.REGISTRY.register(modEventBus);

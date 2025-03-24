@@ -23,7 +23,7 @@
 		snowlogging = true
 		fireAspectImprovements = true
 		cauldronWaterloggability = true
-		snowCoversLeaves = true
+		snowCoversLeaves = false
 		composterCollisionFix = true
 		redstoneConnectsToPiston = true
 		sheepFurColorFix = true

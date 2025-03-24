@@ -19,8 +19,8 @@ public class BedrockoidModBusClient {
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register(
                 (state, world, pos, index) -> {
-                    if (BlockUtils.haveLeavesToChangeColor(state, world, pos)
-                            || BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos)) {
+                    if ((BlockUtils.haveLeavesToChangeColor(state, world, pos)
+                            || BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos)) && BedrockoidConfig.snowCoversLeaves) {
                         int colour = 0;
                         if (BlockUtils.haveLeavesToChangeColor(state, world, pos))
                             colour = 0xFFFFFF;

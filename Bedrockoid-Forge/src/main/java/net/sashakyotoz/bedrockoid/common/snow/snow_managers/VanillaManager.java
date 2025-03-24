@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 
@@ -32,7 +33,9 @@ public class VanillaManager implements SnowManager {
                 }
             } else {
                 if (state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF))
-                    level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
+                    level.setBlock(pos.above(), state
+                            .setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER)
+                            .setValue(BlockUtils.LAYERS, 0), 2);
                 if (BlockUtils.canSnowlog(state))
                     level.setBlock(pos, state.setValue(BlockUtils.LAYERS, 1), 2);
                 else
