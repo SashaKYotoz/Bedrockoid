@@ -15,6 +15,9 @@ import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+//frozenblock team copyright
+//stating changes: use of yarn mappings
+//source code: https://github.com/FrozenBlock/WilderWild/blob/1.21.4/src/main/java/net/frozenblock/wilderwild/mixin/snowlogging/worldgen/ServerLevelMixin.java
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
     @WrapOperation(

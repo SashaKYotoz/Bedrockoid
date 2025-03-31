@@ -20,6 +20,7 @@ import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 
+//copyright bl4ckscor3 MIT License https://github.com/bl4ckscor3/SnowUnderTrees/
 @EventBusSubscriber
 public class NeoBusEvents {
     @SubscribeEvent

@@ -9,3 +9,12 @@
 /time set day
 /tp 0 100 0
 /tp 9000 100 0
+/locate biome minecraft:snowy_plains
+/tp @s 2812 80 212
+/fill 2890 80 282 2869 74 302 minecraft:short_grass replace snow
+/time set day
+/weather rain 1d
+/gamerule randomTickSpeed 100
+/gamerule snowAccumulationHeight 2
+/gamerule snowAccumulationHeight 1
+/gamerule randomTickSpeed 5

@@ -19,6 +19,9 @@ import java.util.Optional;
  *
  * @author juancarloscp52
  */
+//juancarloscp52 copyright
+//stating changes: rendering of texture instead of fill bar
+//source code: https://github.com/juancarloscp52/BedrockIfy/blob/1.21/src/main/java/me/juancarloscp52/bedrockify/client/features/reacharoundPlacement/ReachAroundPlacement.java
 public class ReachPlacementUtils {
     public static final ReachPlacementUtils INSTANCE = new ReachPlacementUtils();
     private final MinecraftClient client = MinecraftClient.getInstance();

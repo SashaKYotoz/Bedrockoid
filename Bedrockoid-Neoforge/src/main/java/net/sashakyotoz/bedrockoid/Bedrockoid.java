@@ -18,10 +18,11 @@ public class Bedrockoid {
     public Bedrockoid(IEventBus modEventBus) {
         BedrockoidConfig.loadConfig();
         BedrockSnowManager.init();
-
+        BedrockoidConfig.init();
         BedrockoidFeatures.REGISTRY.register(modEventBus);
         BiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
     }
+
     public static ResourceLocation makeID(String id) {
         return ResourceLocation.fromNamespaceAndPath(MOD_ID, id);
     }
