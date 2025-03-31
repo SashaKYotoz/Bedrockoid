@@ -17,6 +17,9 @@ import org.jetbrains.annotations.Nullable;
 public class BlockUtils {
     public static final IntProperty LAYERS = IntProperty.of("snow_layers", 0, 8);
 
+    //frozenblock team copyright
+    //stating changes: use of yarn mappings / extra boolean conditions
+    //source code: https://github.com/FrozenBlock/WilderWild/blob/master/src/main/java/net/frozenblock/wilderwild/block/impl/SnowloggingUtils.java
     public static boolean isSnowlogged(@Nullable BlockState state) {
         return state != null
                 && state.getProperties() != null
@@ -29,25 +32,13 @@ public class BlockUtils {
         return Blocks.SNOW.getDefaultState().with(Properties.LAYERS, Math.max(1, state.get(LAYERS)));
     }
 
-    public static BlockState getSnowPlacementState(BlockState state, ItemPlacementContext context) {
-        return getSnowloggedState(state, context.getWorld().getBlockState(context.getBlockPos()));
-    }
-
     public static boolean canSnowlog(@Nullable BlockState state) {
         return state != null && state.getProperties() != null
                 && state.contains(LAYERS) && state.getFluidState().isEmpty()
                 && ModsUtils.isSnowloggingNotOverrided();
     }
-
-    public static BlockState getSnowloggedState(BlockState state, BlockState snowState) {
-        if (snowState != null && canSnowlog(state) && snowState.isOf(Blocks.SNOW)) {
-            int layers = snowState.get(Properties.LAYERS);
-            if (layers < 8)
-                state = state.with(LAYERS, layers);
-        }
-        return state;
-    }
-    public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos){
+    //
+    public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos) {
         if (world != null && pos != null) {
             return state.getBlock() instanceof VineBlock && world.getBiomeFabric(pos) != null
                     && world.getBiomeFabric(pos).value().getTemperature() < 0.15f

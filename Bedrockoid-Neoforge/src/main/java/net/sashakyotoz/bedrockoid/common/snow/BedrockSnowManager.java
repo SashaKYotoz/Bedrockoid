@@ -1,4 +1,5 @@
 package net.sashakyotoz.bedrockoid.common.snow;
+
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -17,6 +18,7 @@ import net.sashakyotoz.bedrockoid.common.snow.snow_managers.VanillaManager;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
+//copyright bl4ckscor3 MIT License https://github.com/bl4ckscor3/SnowUnderTrees/
 public class BedrockSnowManager {
     private static SnowManager snowManager;
     private static ChunkRunner chunkRunner;
@@ -26,8 +28,8 @@ public class BedrockSnowManager {
 //        if (ModsUtils.isSnowRealMagicIn())
 //            snowManager = new SnowRealMagicManager();
 //        else
-            snowManager = new VanillaManager();
-        temperatureCheck = (level, pos) -> !level.getBiome(pos).value().warmEnoughToRain(pos,level.getSeaLevel());
+        snowManager = new VanillaManager();
+        temperatureCheck = (level, pos) -> !level.getBiome(pos).value().warmEnoughToRain(pos, level.getSeaLevel());
         chunkRunner = (level, action) -> level.getChunkSource().chunkMap.getChunks().forEach(chunkHolder -> chunkHolder.getEntityTickingChunkFuture().getNow(ChunkHolder.UNLOADED_LEVEL_CHUNK).ifSuccess(action));
     }
 
@@ -38,7 +40,7 @@ public class BedrockSnowManager {
     public static boolean canSnow(WorldGenLevel level, BlockPos pos) {
         Holder<Biome> biome = level.getBiome(pos);
 
-        if (biome.value().getPrecipitationAt(pos,level.getSeaLevel()) == Biome.Precipitation.SNOW) {
+        if (biome.value().getPrecipitationAt(pos, level.getSeaLevel()) == Biome.Precipitation.SNOW) {
             BlockState stateAtPos = level.getBlockState(pos);
 
             if (!stateAtPos.canBeReplaced())

@@ -23,6 +23,9 @@ public class BedrockoidClient implements ClientModInitializer {
     public void onInitializeClient() {
         HudRenderCallback.EVENT.register((drawContext, tickDelta) -> ReachPlacementUtils.INSTANCE.renderIndicator(drawContext));
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            //juancarloscp52 copyright
+            //stating changes: 'if' condition changes to integrate mod's config
+            //source code: https://github.com/juancarloscp52/BedrockIfy/blob/1.21/src/main/java/me/juancarloscp52/bedrockify/client/BedrockifyClient.java
             if (BedrockoidConfig.stopElytraByPressingSpace && !ModsUtils.isBedrockifyIn()) {
                 if (client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && timeFlying > 10 && client.options.jumpKey.isPressed()) {
                     client.player.getAbilities().flying = false;
