@@ -18,6 +18,9 @@ import org.jetbrains.annotations.Nullable;
 public class BlockUtils {
     public static final IntProperty LAYERS = IntProperty.of("snow_layers", 0, 8);
 
+    //frozenblock team copyright
+    //stating changes: use of yarn mappings / extra boolean conditions
+    //source code: https://github.com/FrozenBlock/WilderWild/blob/master/src/main/java/net/frozenblock/wilderwild/block/impl/SnowloggingUtils.java
     public static boolean isSnowlogged(@Nullable BlockState state) {
         return state != null
                 && state.getProperties() != null
@@ -37,6 +40,7 @@ public class BlockUtils {
                 && state.contains(LAYERS) && state.getFluidState().isEmpty()
                 && ModsUtils.isSnowloggingNotOverrided();
     }
+    //
 
     public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos) {
         if (world != null && pos != null) {

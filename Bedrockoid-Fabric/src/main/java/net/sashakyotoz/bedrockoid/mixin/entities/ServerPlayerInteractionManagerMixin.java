@@ -10,6 +10,9 @@ import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+//frozenblock team copyright
+//stating changes: use of yarn mappings
+//source code: https://github.com/FrozenBlock/WilderWild/blob/dev-snowlogging/src/main/java/net/frozenblock/wilderwild/mixin/snowlogging/ServerPlayerGameModeMixin.java
 @Mixin(ServerPlayerInteractionManager.class)
 public class ServerPlayerInteractionManagerMixin {
     @WrapOperation(

@@ -14,18 +14,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+//frozenblock team copyright
+//stating changes: use of yarn mappings
+//source code: originally from https://github.com/FrozenBlock/WilderWild/
 @Mixin(TerrainRenderContext.class)
-public class TerrainRenderContextMixin {
+public abstract class TerrainRenderContextMixin {
+    @Shadow public abstract void tessellateBlock(BlockState blockState, BlockPos blockPos, BakedModel model, MatrixStack matrixStack);
+
     @Inject(method = "tessellateBlock", at = @At("HEAD"), require = 0)
     public void bedrockoidTessellation(BlockState blockState, BlockPos blockPos, BakedModel model, MatrixStack matrixStack, CallbackInfo ci) {
         if (BlockUtils.isSnowlogged(blockState) && BedrockoidConfig.snowlogging) {
             BlockState snowState = BlockUtils.getSnowEquivalent(blockState);
             this.tessellateBlock(snowState, blockPos, MinecraftClient.getInstance().getBlockRenderManager().getModel(snowState), matrixStack);
         }
-    }
-
-    @Shadow
-    public void tessellateBlock(BlockState blockState, BlockPos blockPos, BakedModel model, MatrixStack matrixStack) {
-        throw new AssertionError("Mixin injection failed -Bedrockoid TerrainRenderContextMixin.");
     }
 }
