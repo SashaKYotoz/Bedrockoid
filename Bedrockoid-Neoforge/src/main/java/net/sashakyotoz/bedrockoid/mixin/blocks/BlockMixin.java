@@ -7,6 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
+import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,7 +34,9 @@ public abstract class BlockMixin {
         Block block = state.getBlock();
         if (block instanceof BushBlock && block.getStateDefinition().getProperties().contains(BlockUtils.LAYERS) && BedrockoidConfig.snowlogging)
             this.defaultBlockState = state.setValue(BlockUtils.LAYERS, 0);
-        if (block instanceof AbstractCauldronBlock && block.getStateDefinition().getProperties().contains(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (block instanceof AbstractCauldronBlock && block.getStateDefinition().getProperties().contains(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
+            this.defaultBlockState = state.setValue(BlockStateProperties.WATERLOGGED, false);
+        if (block instanceof AnvilBlock && block.getStateDefinition().getProperties().contains(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             this.defaultBlockState = state.setValue(BlockStateProperties.WATERLOGGED, false);
     }
 
@@ -58,7 +61,7 @@ public abstract class BlockMixin {
     @Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
     private void onGetPlacementState(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> cir) {
         BlockState state = cir.getReturnValue();
-        if (state != null && state.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability) {
+        if (state != null && state.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability) {
             FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
             cir.setReturnValue(state.setValue(BlockStateProperties.WATERLOGGED, fluidState.is(FluidTags.WATER)));
         }

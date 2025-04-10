@@ -11,7 +11,7 @@
     "blocks.BlockStateMixin",
     "blocks.ComposterBlockMixin",
     "blocks.FlowerBlockMixin",
-    "blocks.LayeredCauldronBlockMixin",
+    "blocks.NotWaterloggableBlockMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowyBlockMixin",
@@ -26,10 +26,9 @@
   ],
   "client": [
     "blocks.BlockColorsMixin",
-    "client.AbstractHorseRendererMixin",
     "client.BlockRenderDispatcherMixin",
-    "client.SectionCompilerMixin",
     "client.MinecraftClientMixin",
+    "client.SectionCompilerMixin",
     "client.SheepWoolLayerRendererMixin"
   ],
   "injectors": {

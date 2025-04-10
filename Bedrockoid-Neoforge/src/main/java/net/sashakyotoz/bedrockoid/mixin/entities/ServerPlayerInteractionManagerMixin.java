@@ -12,6 +12,9 @@ import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+//frozenblock team copyright
+//stating changes: wilderWild$destroyBlockA() renamed to destroyBlock()
+//source code: https://github.com/FrozenBlock/WilderWild/blob/dev-snowlogging/src/main/java/net/frozenblock/wilderwild/mixin/snowlogging/ServerPlayerGameModeMixin.java
 @Mixin({ServerPlayerGameMode.class})
 public class ServerPlayerInteractionManagerMixin {
     @WrapOperation(
@@ -21,13 +24,13 @@ public class ServerPlayerInteractionManagerMixin {
                     target = "Lnet/minecraft/world/level/block/state/BlockState;canHarvestBlock(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/entity/player/Player;)Z"
             )
     )
-    public boolean destroyBlockB(
+    public boolean destroyBlock(
             BlockState instance, BlockGetter getter, BlockPos pos, Player player, Operation<Boolean> original
     ) {
         if (BlockUtils.isSnowlogged(getter.getBlockState(pos))) {
             player.level().setBlockAndUpdate(pos, getter.getBlockState(pos).setValue(BlockUtils.LAYERS, 0));
             return true;
         }
-        return original.call(instance,getter, pos, player);
+        return original.call(instance, getter, pos, player);
     }
 }

@@ -37,14 +37,14 @@ public abstract class BlockStateMixin {
         if (world.getBlockState(pos).getBlock() instanceof AbstractCauldronBlock
                 && world.getBlockState(pos).contains(Properties.WATERLOGGED)
                 && world.getBlockState(pos).get(Properties.WATERLOGGED)
-                && BedrockoidConfig.cauldronWaterloggability)
+                && BedrockoidConfig.blocksWaterloggability)
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
     }
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void applyWaterloggability(CallbackInfoReturnable<FluidState> cir) {
         AbstractBlock.AbstractBlockState block = (AbstractBlock.AbstractBlockState) ((Object) this);
-        if (block.getBlock() instanceof AbstractCauldronBlock && block.contains(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block.getBlock()) && block.contains(Properties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             cir.setReturnValue(block.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState());
     }
 

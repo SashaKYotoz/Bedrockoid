@@ -1,9 +1,6 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.VineBlock;
+import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
@@ -83,6 +80,27 @@ public class BlockUtils {
         } else if (world.getFluidState(pos.up()).isOf(Fluids.LAVA) && state.isOf(Blocks.CAULDRON) && world.getGameRules().getBoolean(GameRules.LAVA_SOURCE_CONVERSION)) {
             world.setBlockState(pos, Blocks.LAVA_CAULDRON.getDefaultState());
             return true;
+        }
+        return false;
+    }
+
+    private static final Class<?>[] WATERLOGGED_MISSING_BLOCKS = {
+            LeveledCauldronBlock.class,
+            AbstractCauldronBlock.class,
+            AnvilBlock.class,
+            BedBlock.class,
+            PressurePlateBlock.class,
+            FenceGateBlock.class,
+            LecternBlock.class,
+            HopperBlock.class,
+            GrindstoneBlock.class,
+            StonecutterBlock.class
+    };
+
+    public static boolean isInstanceOfAny(Block block) {
+        for (Class<?> clazz : WATERLOGGED_MISSING_BLOCKS) {
+            if (clazz.isInstance(block))
+                return true;
         }
         return false;
     }

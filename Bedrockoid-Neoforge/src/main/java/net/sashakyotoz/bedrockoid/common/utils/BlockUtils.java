@@ -6,9 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -36,6 +34,7 @@ public class BlockUtils {
                 && state.hasProperty(LAYERS) && state.getFluidState().isEmpty()
                 && ModsUtils.isSnowloggingNotOverrided();
     }
+
     @OnlyIn(Dist.CLIENT)
     public static boolean canVinesBeCoveredInSnow(BlockState state, BlockAndTintGetter getter, BlockPos pos) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -55,6 +54,7 @@ public class BlockUtils {
         }
         return false;
     }
+
     @OnlyIn(Dist.CLIENT)
     public static boolean haveLeavesToSlightlyChangeColor(BlockState state, BlockAndTintGetter getter, BlockPos pos) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -78,4 +78,26 @@ public class BlockUtils {
         }
         return false;
     }
+
+    private static final Class<?>[] WATERLOGGED_MISSING_BLOCKS = {
+            LayeredCauldronBlock.class,
+            AbstractCauldronBlock.class,
+            AnvilBlock.class,
+            BedBlock.class,
+            PressurePlateBlock.class,
+            FenceGateBlock.class,
+            LecternBlock.class,
+            HopperBlock.class,
+            GrindstoneBlock.class,
+            StonecutterBlock.class
+    };
+
+    public static boolean isInstanceOfAny(Block block) {
+        for (Class<?> clazz : WATERLOGGED_MISSING_BLOCKS) {
+            if (clazz.isInstance(block))
+                return true;
+        }
+        return false;
+    }
+
 }

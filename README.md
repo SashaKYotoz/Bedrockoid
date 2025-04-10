@@ -1,10 +1,13 @@
 # Bedrockoid
-Bedrockoid - a Minecraft Mod that implements Minecraft Bedrock Edition exclusive gameplay features into Minecraft Java Edition,
+
+Bedrockoid - a Minecraft Mod that implements Minecraft Bedrock Edition exclusive gameplay features into Minecraft Java
+Edition,
 rather than make Java Edition look like Bedrock Edition
 
 <hr>
 
 ## Features list:
+
 - Leaves change their color if snow is on them or are placed in snowy biomes
 - Snow spawns under trees in snowy biomes
 - Composter collision changes due to items composted in
@@ -21,16 +24,20 @@ rather than make Java Edition look like Bedrock Edition
 - Wet sponge dries out when in dry biome (doesn't dry out instantly like in nether, it takes some time)
 - Stop elytra flying by pressing space on air
 - Cauldron fills naturally if fluid is above it (doesn't fill in instantly, it takes some time)
-- Cauldron are Waterloggable
+- Waterloggablity fixed for cauldron, stonecutter, bed, anvil, grindstone, hopper, lectern, fence gate and pressure
+  plate
 - Plants can be covered in snow
 - Plants can be multiplied by bonemealing
 - Redstone can be connected to pistons
 - Armor stand has arms by default
-- ~~Horses' size changes due to time to grow up~~ (feature was deimplemented due to bug with horse taming)
 
 <hr>
 
 ## Feature implemented in mod are also presented in:
-- [Bedrockify](https://github.com/juancarloscp52/BedrockIfy/) - mod that makes Java Edition looks completely like Bedrock Edition
+
+- [Bedrockify](https://github.com/juancarloscp52/BedrockIfy/) - mod that makes Java Edition looks completely like
+  Bedrock Edition
 - [SnowUnderTrees](https://github.com/bl4ckscor3/SnowUnderTrees/) - mod that places snow under trees
 - [SnowRealMagic](https://github.com/Snownee/SnowRealMagic/) - mod that brings amazing interaction with snow
+- [WilderWild](https://github.com/FrozenBlock/WilderWild/) - mod, which name describe it the best way, making Minecraft
+  world way more unique and interesting

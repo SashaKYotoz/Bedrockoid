@@ -32,18 +32,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(BlockBehaviour.BlockStateBase.class)
 public abstract class BlockStateMixin {
 
-    @Shadow protected abstract BlockState asState();
+    @Shadow
+    protected abstract BlockState asState();
 
     @Inject(method = "updateShape", at = @At("HEAD"))
     private void onUpdateShape(Direction direction, BlockState state, LevelAccessor world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-        if (world.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED) && world.getBlockState(pos).getValue(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (world.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)
+                && world.getBlockState(pos).getValue(BlockStateProperties.WATERLOGGED)
+                && BedrockoidConfig.blocksWaterloggability)
             world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
     }
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void applyWaterloggability(CallbackInfoReturnable<FluidState> cir) {
         BlockBehaviour.BlockStateBase block = (BlockBehaviour.BlockStateBase) ((Object) this);
-        if (block.getBlock() instanceof AbstractCauldronBlock && block.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block.getBlock()) && block.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             cir.setReturnValue(block.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState());
     }
 
@@ -68,14 +71,14 @@ public abstract class BlockStateMixin {
         BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof WetSpongeBlock
                 && BedrockoidConfig.wetSpongesDryOut
-                && random.nextInt(12) == 5
+                && random.nextInt(11) == 5
                 && !level.getBiome(pos).value().hasPrecipitation()
                 && (level.getBiome(pos).value().getBaseTemperature() > 0.75f)) {
             level.setBlock(pos, Blocks.SPONGE.defaultBlockState(), 3);
             level.levelEvent(LevelEvent.PARTICLES_WATER_EVAPORATING, pos, 0);
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
         }
-        if (random.nextInt(4) == 1 && BlockUtils.haveToFillUpCauldron(state, level, pos)) {
+        if (BlockUtils.haveToFillUpCauldron(state, level, pos)) {
             if (state.getBlock() instanceof LayeredCauldronBlock && BedrockoidConfig.cauldronNaturalFilling) {
                 BlockState blockState = state.cycle(BlockStateProperties.LEVEL_CAULDRON);
                 level.setBlockAndUpdate(pos, blockState);

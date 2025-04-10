@@ -15,6 +15,9 @@ import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
+//frozenblock team copyright
+//stating changes: renaming and refactoring of class' methods and values
+//source code: https://github.com/FrozenBlock/WilderWild/blob/1.21.4/src/main/java/net/frozenblock/wilderwild/mixin/snowlogging/worldgen/ServerLevelMixin.java
 @Mixin(ServerLevel.class)
 public class ServerLevelMixin {
     @WrapOperation(method = "tickPrecipitation", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z"))

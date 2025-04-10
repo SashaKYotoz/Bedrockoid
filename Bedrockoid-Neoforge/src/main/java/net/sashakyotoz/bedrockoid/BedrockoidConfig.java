@@ -2,7 +2,6 @@ package net.sashakyotoz.bedrockoid;
 
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.file.FileConfig;
-import org.apache.commons.compress.utils.Lists;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,7 +16,7 @@ public class BedrockoidConfig {
     public static boolean armorStandArms = true;
     public static boolean redstoneConnectsToPiston = true;
     public static boolean snowlogging = true;
-    public static boolean cauldronWaterloggability = true;
+    public static boolean blocksWaterloggability = true;
     public static boolean cauldronNaturalFilling = true;
     public static boolean stopElytraByPressingSpace = true;
     public static boolean wetSpongesDryOut = true;
@@ -68,7 +67,7 @@ public class BedrockoidConfig {
         armorStandArms = config.get(FLAGS + ".bedrockoid.armorStandArms");
         redstoneConnectsToPiston = config.get(FLAGS + ".bedrockoid.redstoneConnectsToPiston");
         snowlogging = config.get(FLAGS + ".bedrockoid.snowlogging");
-        cauldronWaterloggability = config.get(FLAGS + ".bedrockoid.cauldronWaterloggability");
+        blocksWaterloggability = config.get(FLAGS + ".bedrockoid.cauldronWaterloggability");
         cauldronNaturalFilling = config.get(FLAGS + ".bedrockoid.cauldronNaturalFilling");
         stopElytraByPressingSpace = config.get(FLAGS + ".bedrockoid.stopElytraByPressingSpace");
         wetSpongesDryOut = config.get(FLAGS + ".bedrockoid.wetSpongesDryOut");

@@ -1,7 +1,6 @@
 package net.sashakyotoz.bedrockoid;
 
 import eu.midnightdust.lib.config.MidnightConfig;
-import org.apache.commons.compress.utils.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,7 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = FLAGS) public static boolean armorStandArms = true;
     @Entry(category = FLAGS) public static boolean redstoneConnectsToPiston = true;
     @Entry(category = FLAGS) public static boolean snowlogging = true;
-    @Entry(category = FLAGS) public static boolean cauldronWaterloggability = true;
+    @Entry(category = FLAGS) public static boolean blocksWaterloggability = true;
     @Entry(category = FLAGS) public static boolean cauldronNaturalFilling = true;
     @Entry(category = FLAGS) public static boolean stopElytraByPressingSpace = true;
     @Entry(category = FLAGS) public static boolean wetSpongesDryOut = true;

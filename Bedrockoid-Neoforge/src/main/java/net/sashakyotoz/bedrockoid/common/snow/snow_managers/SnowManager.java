@@ -6,9 +6,9 @@ import net.minecraft.world.level.block.state.BlockState;
 
 // Code goes under Copyright (c) 2022 bl4ckscor3
 public interface SnowManager {
-    public boolean placeSnow(WorldGenLevel worldAccess, BlockPos pos);
+    boolean placeSnow(WorldGenLevel worldAccess, BlockPos pos);
 
-    public boolean isSnow(WorldGenLevel worldAccess, BlockPos pos);
+    boolean isSnow(WorldGenLevel worldAccess, BlockPos pos);
 
-    public BlockState getStateAfterMelting(BlockState stateNow, WorldGenLevel worldAccess, BlockPos pos);
+    BlockState getStateAfterMelting(BlockState stateNow, WorldGenLevel worldAccess, BlockPos pos);
 }

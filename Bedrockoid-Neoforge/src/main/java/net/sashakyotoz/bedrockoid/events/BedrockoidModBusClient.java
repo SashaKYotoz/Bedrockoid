@@ -33,7 +33,6 @@ public class BedrockoidModBusClient {
                 Blocks.SPRUCE_LEAVES,
                 Blocks.BIRCH_LEAVES,
                 Blocks.JUNGLE_LEAVES,
-                Blocks.CHERRY_LEAVES,
                 Blocks.ACACIA_LEAVES,
                 Blocks.DARK_OAK_LEAVES,
                 Blocks.MANGROVE_LEAVES,
