@@ -30,7 +30,7 @@ public abstract class BlockMixin {
         Block block = state.getBlock();
         if (block instanceof PlantBlock && block.getStateManager().getProperties().contains(BlockUtils.LAYERS) && BedrockoidConfig.snowlogging)
             this.defaultState = state.with(BlockUtils.LAYERS, 0);
-        if (block instanceof AbstractCauldronBlock && block.getStateManager().getProperties().contains(Properties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block) && block.getStateManager().getProperties().contains(Properties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             this.defaultState = state.with(Properties.WATERLOGGED, false);
     }
 
