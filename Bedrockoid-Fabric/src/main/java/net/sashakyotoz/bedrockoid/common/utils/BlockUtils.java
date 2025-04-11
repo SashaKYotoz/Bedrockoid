@@ -93,6 +93,7 @@ public class BlockUtils {
             FenceGateBlock.class,
             LecternBlock.class,
             HopperBlock.class,
+            BrewingStandBlock.class,
             GrindstoneBlock.class,
             StonecutterBlock.class
     };

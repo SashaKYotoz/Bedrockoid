@@ -18,3 +18,4 @@
 /gamerule snowAccumulationHeight 2
 /gamerule snowAccumulationHeight 1
 /gamerule randomTickSpeed 5
+/weather clear

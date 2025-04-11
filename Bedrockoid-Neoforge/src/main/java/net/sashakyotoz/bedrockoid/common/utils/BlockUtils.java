@@ -87,6 +87,7 @@ public class BlockUtils {
             PressurePlateBlock.class,
             FenceGateBlock.class,
             LecternBlock.class,
+            BrewingStandBlock.class,
             HopperBlock.class,
             GrindstoneBlock.class,
             StonecutterBlock.class

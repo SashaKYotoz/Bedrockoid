@@ -10,7 +10,7 @@
     "blocks.BlockStateMixin",
     "blocks.ComposterBlockMixin",
     "blocks.FlowerBlockMixin",
-    "blocks.LeveledCauldronBlockMixin",
+    "blocks.NotWaterloggableBlockMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowBlockMixin",

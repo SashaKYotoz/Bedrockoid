@@ -11,8 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = {LayeredCauldronBlock.class, AnvilBlock.class, BedBlock.class, GrindstoneBlock.class,
-        StonecutterBlock.class, LecternBlock.class, HopperBlock.class, PressurePlateBlock.class, FenceGateBlock.class})
+@Mixin(value = {LayeredCauldronBlock.class, AnvilBlock.class, BedBlock.class, GrindstoneBlock.class, StonecutterBlock.class,
+        LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, PressurePlateBlock.class, FenceGateBlock.class})
 public class NotWaterloggableBlockMixin implements SimpleWaterloggedBlock {
     @Inject(method = "createBlockStateDefinition", at = @At("HEAD"))
     private void onAppendProperties(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo ci) {

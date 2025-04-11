@@ -28,8 +28,8 @@
       "getCollisionShape": "Lnet/minecraft/class_3962;method_9549(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
       "registerDefaultCompostableItems": "Lnet/minecraft/class_3962;method_17758()V"
     },
-    "net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin": {
-      "appendProperties": "Lnet/minecraft/class_5556;method_9515(Lnet/minecraft/class_2689$class_2690;)V"
+    "net/sashakyotoz/bedrockoid/mixin/blocks/NotWaterloggableBlockMixin": {
+      "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/PlantsMixin": {
       "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
@@ -128,8 +128,8 @@
         "getCollisionShape": "Lnet/minecraft/class_3962;method_9549(Lnet/minecraft/class_2680;Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;Lnet/minecraft/class_3726;)Lnet/minecraft/class_265;",
         "registerDefaultCompostableItems": "Lnet/minecraft/class_3962;method_17758()V"
       },
-      "net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin": {
-        "appendProperties": "Lnet/minecraft/class_5556;method_9515(Lnet/minecraft/class_2689$class_2690;)V"
+      "net/sashakyotoz/bedrockoid/mixin/blocks/NotWaterloggableBlockMixin": {
+        "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/PlantsMixin": {
         "appendProperties": "method_9515(Lnet/minecraft/class_2689$class_2690;)V"
