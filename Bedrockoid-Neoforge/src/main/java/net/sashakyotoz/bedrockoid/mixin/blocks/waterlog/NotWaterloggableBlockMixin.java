@@ -1,22 +1,23 @@
-package net.sashakyotoz.bedrockoid.mixin.blocks;
+package net.sashakyotoz.bedrockoid.mixin.blocks.waterlog;
 
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
-import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
+import net.sashakyotoz.bedrockoid.mixin.blocks.StateDefinitionAccess;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(value = {LayeredCauldronBlock.class, AnvilBlock.class, BedBlock.class, GrindstoneBlock.class, StonecutterBlock.class,
+@Mixin(value = {LayeredCauldronBlock.class, AnvilBlock.class, GrindstoneBlock.class, StonecutterBlock.class,
         LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, PressurePlateBlock.class, FenceGateBlock.class})
 public class NotWaterloggableBlockMixin implements SimpleWaterloggedBlock {
-    @Inject(method = "createBlockStateDefinition", at = @At("HEAD"))
+
+    @Inject(method = "createBlockStateDefinition", at = @At("TAIL"))
     private void onAppendProperties(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo ci) {
-        if (BedrockoidConfig.blocksWaterloggability)
+        if (BedrockoidConfig.blocksWaterloggability && !((StateDefinitionAccess) builder).getProperties().containsKey(BlockStateProperties.WATERLOGGED.getName()))
             builder.add(BlockStateProperties.WATERLOGGED);
     }
 }

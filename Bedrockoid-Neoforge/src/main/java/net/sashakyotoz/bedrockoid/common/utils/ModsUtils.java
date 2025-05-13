@@ -2,6 +2,7 @@ package net.sashakyotoz.bedrockoid.common.utils;
 
 
 import net.neoforged.fml.ModList;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 
 public class ModsUtils {
     public static boolean isSnowRealMagicIn() {
@@ -11,8 +12,12 @@ public class ModsUtils {
     public static boolean isSnowUnderTreesIn() {
         return ModList.get() != null && ModList.get().isLoaded("snowundertrees");
     }
+    public static boolean isComfortsIn() {
+        return ModList.get() != null && ModList.get().isLoaded("comforts");
+    }
+
     public static boolean isSodiumIn() {
-        return ModList.get() != null && ModList.get().isLoaded("sodium");
+        return ModList.get() != null && ModList.get().isLoaded("sodium") && BedrockoidConfig.sodiumTurnOffSnowloggability;
     }
 
     public static boolean isBedrockifyIn() {

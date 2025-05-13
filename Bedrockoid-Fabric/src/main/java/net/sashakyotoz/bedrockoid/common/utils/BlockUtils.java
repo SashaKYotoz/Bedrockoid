@@ -1,6 +1,9 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
 import net.minecraft.block.*;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.color.world.BiomeColors;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.server.world.ServerWorld;
@@ -9,6 +12,7 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.biome.FoliageColors;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockUtils {
@@ -63,12 +67,33 @@ public class BlockUtils {
         return false;
     }
 
-    public static boolean haveLeavesToSlightlyChangeColor(BlockState state, BlockRenderView world, BlockPos pos) {
-        if (world != null && pos != null)
-            return state.getBlock() instanceof LeavesBlock && world.getBiomeFabric(pos) != null
-                    && world.getBiomeFabric(pos).value().getTemperature() < 0.15f
-                    && world.getBiomeFabric(pos).value().hasPrecipitation();
-        return false;
+    public static int leavesSnowyColor(BlockState state, BlockPos pos) {
+        ClientWorld level = MinecraftClient.getInstance().world;
+        if (state.getBlock() instanceof LeavesBlock && level != null && pos != null) {
+            BlockState upperState = level.getBlockState(pos.up());
+            if (upperState.isOf(Blocks.SNOW) || (upperState.getBlock() instanceof LeavesBlock && level.getBlockState(pos.up(2)).isOf(Blocks.SNOW)))
+                return BlockUtils.blendColors(BiomeColors.getFoliageColor(level, pos), 0xFFFFFF, 0.95f);
+            if (level.getBiome(pos).value().getTemperature() < 0.1f && level.getBiome(pos).value().hasPrecipitation()) {
+                return getNeighborBlocks(level, pos) ? BlockUtils.blendColors(BiomeColors.getFoliageColor(level, pos), 0xFFFFFF, 0.4f)
+                        : BlockUtils.blendColors(BiomeColors.getFoliageColor(level, pos), 0xFFFFFF, 0.75f);
+            }
+        }
+        return level != null && pos != null ? BiomeColors.getFoliageColor(level, pos) : FoliageColors.getDefaultColor();
+    }
+
+    private static boolean getNeighborBlocks(ClientWorld world, BlockPos pos) {
+        return world.getBiome(pos.north()).value().getTemperature() > 0.1f
+                || world.getBiome(pos.south()).value().getTemperature() > 0.1f
+                || world.getBiome(pos.east()).value().getTemperature() > 0.1f
+                || world.getBiome(pos.west()).value().getTemperature() > 0.1f;
+    }
+
+    public static int blendColors(int colorA, int colorB, float t) {
+        t = Math.max(0f, Math.min(1f, t));
+        int r = (int) ((((colorA >> 16) & 0xFF) * (1 - t)) + (((colorB >> 16) & 0xFF) * t));
+        int g = (int) ((((colorA >> 8) & 0xFF) * (1 - t)) + (((colorB >> 8) & 0xFF) * t));
+        int b = (int) ((((colorA) & 0xFF) * (1 - t)) + (((colorB) & 0xFF) * t));
+        return (r << 16) | (g << 8) | b;
     }
 
     public static boolean haveToFillUpCauldron(BlockState state, ServerWorld world, BlockPos pos) {

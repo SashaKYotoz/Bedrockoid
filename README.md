@@ -24,7 +24,7 @@ rather than make Java Edition look like Bedrock Edition
 - Wet sponge dries out when in dry biome (doesn't dry out instantly like in nether, it takes some time)
 - Stop elytra flying by pressing space on air
 - Cauldron fills naturally if fluid is above it (doesn't fill in instantly, it takes some time)
-- Waterloggablity fixed for cauldron, stonecutter, bed, anvil, grindstone, hopper, lectern, brewing_stand, fence gate and pressure
+- Waterloggablity fixed for cauldron, stonecutter, bed, anvil, grindstone, hopper, lectern, brewing stand, fence gate and pressure
   plate
 - Plants can be covered in snow
 - Plants can be multiplied by bonemealing

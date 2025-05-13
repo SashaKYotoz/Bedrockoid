@@ -34,6 +34,7 @@ public class BedrockoidConfig {
     public static List<String> disableSnowUnderTreesIn = new ArrayList<>();
     public static boolean snowCoversLeaves = true;
     public static boolean snowCoversVines = true;
+    public static boolean sodiumTurnOffSnowloggability = false;
 
     public static void loadConfig() {
         Path configPath = Paths.get("config/bedrockoid-config.toml");
@@ -59,6 +60,7 @@ public class BedrockoidConfig {
         config.add(FLAGS + ".bedrockoid.snowSpawnsUnderTrees", true);
         config.add(FLAGS + ".bedrockoid.snowCoversLeaves", true);
         config.add(FLAGS + ".bedrockoid.snowCoversVines", true);
+        config.add(FLAGS + ".bedrockoid.sodiumTurnOffSnowloggability", true);
         config.add(LISTS + ".bedrockoid.disableSnowUnderTreesIn", new ArrayList<>());
         config.save();
     }
@@ -84,6 +86,7 @@ public class BedrockoidConfig {
         snowSpawnsUnderTrees = config.get(FLAGS + ".bedrockoid.snowSpawnsUnderTrees");
         snowCoversLeaves = config.get(FLAGS + ".bedrockoid.snowCoversLeaves");
         snowCoversVines = config.get(FLAGS + ".bedrockoid.snowCoversVines");
+        sodiumTurnOffSnowloggability = config.get(FLAGS + ".bedrockoid.sodiumTurnOffSnowloggability");
         disableSnowUnderTreesIn = config.get(LISTS + ".bedrockoid.disableSnowUnderTreesIn");
     }
 }

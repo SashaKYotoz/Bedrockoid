@@ -4,9 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
@@ -31,12 +29,13 @@ public class VanillaManager implements SnowManager {
                     return true;
                 }
             } else {
+                if (state.getBlock() instanceof SugarCaneBlock || level.getBlockState(pos.above()).getBlock() instanceof DoublePlantBlock)
+                    return true;
                 if (BlockUtils.canSnowlog(state))
-                    level.setBlock(pos, state.setValue(BlockUtils.LAYERS, 1), 2);
+                    level.setBlock(pos, state.setValue(BlockUtils.LAYERS, 1), Block.UPDATE_CLIENTS);
                 else
-                    level.setBlock(pos, Blocks.SNOW.defaultBlockState(), 2);
-                if (state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF))
-                    level.setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
+                    level.setBlock(pos, level.getBlockState(pos).hasProperty(BlockUtils.LAYERS) ?
+                            state.setValue(BlockUtils.LAYERS, 1) : Blocks.SNOW.defaultBlockState(), Block.UPDATE_CLIENTS);
                 return true;
             }
         }

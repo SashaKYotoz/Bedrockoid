@@ -3,6 +3,7 @@ package net.sashakyotoz.bedrockoid.mixin.client;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.client.color.block.BlockColorProvider;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.registry.Registries;
@@ -35,16 +36,10 @@ public class BlockColorsMixin {
                     && BlockUtils.isSnowlogged(world.getBlockState(pos.down()))))
                     && BedrockoidConfig.snowlogging)
                 return blockColorProvider == null ? -1 : 0xCCCCCC;
-            if (BedrockoidConfig.snowCoversLeaves) {
-                if (BlockUtils.haveLeavesToChangeColor(state, world, pos))
-                    return blockColorProvider == null ? -1 : (BlockUtils.haveLeavesToChangeColor(state, world, pos)
-                            ? 0xFFFFFF : blockColorProvider.getColor(state, world, pos, tintIndex));
-                else
-                    return blockColorProvider == null ? -1 : (BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos)
-                            ? 0xCCCCCC : blockColorProvider.getColor(state, world, pos, tintIndex));
-            } else
-                return blockColorProvider == null ? -1 : blockColorProvider.getColor(state, world, pos, tintIndex);
+            if (BedrockoidConfig.snowCoversLeaves && state.getBlock() instanceof LeavesBlock)
+                return BlockUtils.leavesSnowyColor(state, pos);
         } else
             return original.call(state, world, pos, tintIndex);
+        return original.call(state, world, pos, tintIndex);
     }
 }

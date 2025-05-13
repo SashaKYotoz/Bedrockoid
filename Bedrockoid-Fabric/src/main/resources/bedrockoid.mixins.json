@@ -15,6 +15,7 @@
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowBlockMixin",
     "blocks.SnowyBlockMixin",
+    "blocks.StateDefinitionAccess",
     "blocks.TntBlockMixin",
     "entities.ArmorStandEntityMixin",
     "entities.EntityMixin",

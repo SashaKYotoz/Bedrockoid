@@ -23,7 +23,7 @@ public class ServerLevelMixin {
     @WrapOperation(method = "tickPrecipitation", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z"))
     public boolean tickPrecipitationA(
             BlockState instance, Block block, Operation<Boolean> original,
-            @Share("bedrockoidRunSnowlogging") LocalBooleanRef runSnowlogging, @Share("bedrockoidSnowloggedLayers") LocalIntRef snowloggedLayers
+            @Share("snowloggingState") LocalBooleanRef runSnowlogging, @Share("snowloggedLayers") LocalIntRef snowloggedLayers
     ) {
         int layers = 0;
         runSnowlogging.set(BlockUtils.canSnowlog(instance) && (layers = instance.getValue(BlockUtils.LAYERS)) < 8 && ModsUtils.isSnowloggingNotOverrided() && BedrockoidConfig.snowlogging);
@@ -34,7 +34,7 @@ public class ServerLevelMixin {
     @WrapOperation(method = "tickPrecipitation", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getValue(Lnet/minecraft/world/level/block/state/properties/Property;)Ljava/lang/Comparable;")
     )
     public Comparable<?> wilderWild$tickPrecipitationB(
-            BlockState instance, Property property, Operation<Comparable> original, @Share("bedrockoidRunSnowlogging") LocalBooleanRef runSnowlogging, @Share("bedrockoidSnowloggedLayers") LocalIntRef snowloggedLayers
+            BlockState instance, Property property, Operation<Comparable> original, @Share("snowloggingState") LocalBooleanRef runSnowlogging, @Share("snowloggedLayers") LocalIntRef snowloggedLayers
     ) {
         return runSnowlogging.get() ? snowloggedLayers.get() : original.call(instance, property);
     }
@@ -43,7 +43,7 @@ public class ServerLevelMixin {
     )
     public Object wilderWild$tickPrecipitationC(
             BlockState instance, Property<?> property, Comparable<?> comparable, Operation<Object> original,
-            @Share("bedrockoidRunSnowlogging") LocalBooleanRef runSnowlogging, @Share("bedrockoidSnowloggedLayers") LocalIntRef snowloggedLayers
+            @Share("snowloggingState") LocalBooleanRef runSnowlogging, @Share("snowloggedLayers") LocalIntRef snowloggedLayers
     ) {
         return original.call(instance, runSnowlogging.get() ? BlockUtils.LAYERS : property, comparable);
     }

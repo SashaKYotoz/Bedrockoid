@@ -33,6 +33,7 @@ public class NeoBusEvents {
             BedrockSnowManager.runForChunks(serverLevel, chunk -> addSnowUnderTrees(serverLevel, chunk, randomTickSpeed));
         }
     }
+
     private static void addSnowUnderTrees(ServerLevel level, LevelChunk chunk, int randomTickSpeed) {
         ChunkPos chunkPos = chunk.getPos();
         int chunkX = chunkPos.getMinBlockX();
@@ -45,7 +46,8 @@ public class NeoBusEvents {
                 if (level.getBlockState(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, randomPos).below()).is(BlockTags.LEAVES)) {
                     BlockPos pos = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, randomPos);
                     Biome biome = level.getBiome(pos).value();
-                    boolean biomeDisabled = BedrockoidConfig.disableSnowUnderTreesIn.contains(level.registryAccess().registry(Registries.BIOME).get().getKey(biome).toString());
+                    boolean biomeDisabled = level.registryAccess().registry(Registries.BIOME).isPresent() &&
+                            BedrockoidConfig.disableSnowUnderTreesIn.contains(level.registryAccess().registry(Registries.BIOME).get().getKey(biome).toString());
 
                     if (!biomeDisabled && BedrockSnowManager.placeSnow(level, pos)) {
                         BlockPos posBelow = pos.below();

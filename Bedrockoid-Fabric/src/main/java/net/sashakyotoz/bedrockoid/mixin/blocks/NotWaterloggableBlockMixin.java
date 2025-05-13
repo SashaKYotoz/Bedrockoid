@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class NotWaterloggableBlockMixin implements Waterloggable {
     @Inject(method = "appendProperties", at = @At("HEAD"))
     private void onAppendProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
-        if (BedrockoidConfig.blocksWaterloggability)
+        if (BedrockoidConfig.blocksWaterloggability && !((StateDefinitionAccess) builder).getProperties().containsKey(Properties.WATERLOGGED.getName()))
             builder.add(Properties.WATERLOGGED);
     }
 }
