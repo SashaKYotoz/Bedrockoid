@@ -29,7 +29,7 @@ public class VanillaManager implements SnowManager {
                     return true;
                 }
             } else {
-                if (state.getBlock() instanceof SugarCaneBlock || level.getBlockState(pos.above()).getBlock() instanceof DoublePlantBlock)
+                if (state.getBlock() instanceof SugarCaneBlock)
                     return true;
                 if (BlockUtils.canSnowlog(state))
                     level.setBlock(pos, state.setValue(BlockUtils.LAYERS, 1), Block.UPDATE_CLIENTS);

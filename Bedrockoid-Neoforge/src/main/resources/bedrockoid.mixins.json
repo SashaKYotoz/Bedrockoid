@@ -19,13 +19,15 @@
     "blocks.TntBlockMixin",
     "blocks.waterlog.BedBlockMixin",
     "blocks.waterlog.NotWaterloggableBlockMixin",
+    "client.sodium.BlockRendererMixin",
     "entities.ArmorStandEntityMixin",
     "entities.EntityMixin",
     "entities.LivingEntityMixin",
     "entities.MobEntityMixin",
     "entities.ServerPlayerInteractionManagerMixin",
     "worldgen.BiomeMixin",
-    "worldgen.ServerLevelMixin"
+    "worldgen.ServerLevelMixin",
+    "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
     "blocks.BlockColorsMixin",

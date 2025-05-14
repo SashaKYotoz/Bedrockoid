@@ -21,10 +21,10 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-//        if ("net.sashakyotoz.bedrockoid.mixin.blocks.waterlog.BedBlockMixin".equals(mixinClassName))
-//            return !ModsUtils.isComfortsIn();
-        if ("net.sashakyotoz.bedrockoid.mixin.blocks.PlantsMixin".equals(mixinClassName))
+        if ("PlantsMixin".contains(mixinClassName))
             return ModsUtils.isSnowloggingNotOverrided();
+        if ("bedrockoid.mixin.client.sodium".contains(mixinClassName))
+            return !ModsUtils.isSodiumIn();
         return true;
     }
 

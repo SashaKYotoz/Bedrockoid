@@ -60,7 +60,7 @@ public class BedrockoidConfig {
         config.add(FLAGS + ".bedrockoid.snowSpawnsUnderTrees", true);
         config.add(FLAGS + ".bedrockoid.snowCoversLeaves", true);
         config.add(FLAGS + ".bedrockoid.snowCoversVines", true);
-        config.add(FLAGS + ".bedrockoid.sodiumTurnOffSnowloggability", true);
+        config.add(FLAGS + ".bedrockoid.sodiumTurnOffSnowloggability", false);
         config.add(LISTS + ".bedrockoid.disableSnowUnderTreesIn", new ArrayList<>());
         config.save();
     }

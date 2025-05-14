@@ -1,9 +1,6 @@
 package net.sashakyotoz.bedrockoid.common.snow.snow_managers;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SnowBlock;
+import net.minecraft.block.*;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
@@ -31,12 +28,13 @@ public class VanillaManager implements SnowManager {
                     return true;
                 }
             } else {
-                if (state.contains(Properties.DOUBLE_BLOCK_HALF))
-                    level.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 3);
+                if (state.getBlock() instanceof SugarCaneBlock)
+                    return true;
                 if (BlockUtils.canSnowlog(state))
-                    level.setBlockState(pos, state.with(BlockUtils.LAYERS, 1), 3);
+                    level.setBlockState(pos, state.with(BlockUtils.LAYERS, 1), Block.NOTIFY_LISTENERS);
                 else
-                    level.setBlockState(pos, Blocks.SNOW.getDefaultState(), 2);
+                    level.setBlockState(pos, level.getBlockState(pos).contains(BlockUtils.LAYERS) ?
+                            state.with(BlockUtils.LAYERS, 1) : Blocks.SNOW.getDefaultState(), Block.NOTIFY_LISTENERS);
                 return true;
             }
         }

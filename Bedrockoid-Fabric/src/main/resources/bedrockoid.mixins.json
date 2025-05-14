@@ -23,7 +23,8 @@
     "entities.MobEntityMixin",
     "entities.ServerPlayerInteractionManagerMixin",
     "worldgen.BiomeMixin",
-    "worldgen.ServerWorldMixin"
+    "worldgen.ServerWorldMixin",
+    "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
     "client.AbstractHorseEntityRendererMixin",
