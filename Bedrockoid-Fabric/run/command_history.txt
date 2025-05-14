@@ -19,3 +19,8 @@
 /gamerule snowAccumulationHeight 1
 /gamerule randomTickSpeed 5
 /weather clear
+/locate biome minecraft:snowy_taiga
+/tp @s 2865 69 169
+/locate biome minecraft:snowy_taiga
+/tp @s -1665 76 -3004
+/place feature bedrockoid:fallen_big_spruce_tree

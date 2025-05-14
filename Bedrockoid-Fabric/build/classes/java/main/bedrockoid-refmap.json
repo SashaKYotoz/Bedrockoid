@@ -45,6 +45,9 @@
       "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z": "Lnet/minecraft/class_2680;method_26164(Lnet/minecraft/class_6862;)Z",
       "isSnow": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z"
     },
+    "net/sashakyotoz/bedrockoid/mixin/blocks/StateDefinitionAccess": {
+      "namedProperties": "field_12319:Ljava/util/Map;"
+    },
     "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
       "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;"
     },
@@ -96,6 +99,10 @@
       "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z": "Lnet/minecraft/class_2680;method_27852(Lnet/minecraft/class_2248;)Z",
       "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;": "Lnet/minecraft/class_2680;method_11657(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)Ljava/lang/Object;",
       "tickIceAndSnow": "Lnet/minecraft/class_3218;method_52370(Lnet/minecraft/class_2338;)V"
+    },
+    "net/sashakyotoz/bedrockoid/mixin/worldgen/SimpleBlockFeatureMixin": {
+      "Lnet/minecraft/block/TallPlantBlock;placeAt(Lnet/minecraft/world/WorldAccess;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;I)V": "Lnet/minecraft/class_2320;method_10021(Lnet/minecraft/class_1936;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;I)V",
+      "generate": "Lnet/minecraft/class_3173;method_13151(Lnet/minecraft/class_5821;)Z"
     }
   },
   "data": {
@@ -144,6 +151,9 @@
       "net/sashakyotoz/bedrockoid/mixin/blocks/SnowyBlockMixin": {
         "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z": "Lnet/minecraft/class_2680;method_26164(Lnet/minecraft/class_6862;)Z",
         "isSnow": "Lnet/minecraft/class_2493;method_35291(Lnet/minecraft/class_2680;)Z"
+      },
+      "net/sashakyotoz/bedrockoid/mixin/blocks/StateDefinitionAccess": {
+        "namedProperties": "field_12319:Ljava/util/Map;"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
         "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;"
@@ -196,6 +206,10 @@
         "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z": "Lnet/minecraft/class_2680;method_27852(Lnet/minecraft/class_2248;)Z",
         "Lnet/minecraft/block/BlockState;with(Lnet/minecraft/state/property/Property;Ljava/lang/Comparable;)Ljava/lang/Object;": "Lnet/minecraft/class_2680;method_11657(Lnet/minecraft/class_2769;Ljava/lang/Comparable;)Ljava/lang/Object;",
         "tickIceAndSnow": "Lnet/minecraft/class_3218;method_52370(Lnet/minecraft/class_2338;)V"
+      },
+      "net/sashakyotoz/bedrockoid/mixin/worldgen/SimpleBlockFeatureMixin": {
+        "Lnet/minecraft/block/TallPlantBlock;placeAt(Lnet/minecraft/world/WorldAccess;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;I)V": "Lnet/minecraft/class_2320;method_10021(Lnet/minecraft/class_1936;Lnet/minecraft/class_2680;Lnet/minecraft/class_2338;I)V",
+        "generate": "Lnet/minecraft/class_3173;method_13151(Lnet/minecraft/class_5821;)Z"
       }
     }
   }

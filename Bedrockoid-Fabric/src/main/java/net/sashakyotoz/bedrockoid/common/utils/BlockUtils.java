@@ -113,6 +113,7 @@ public class BlockUtils {
             LeveledCauldronBlock.class,
             AbstractCauldronBlock.class,
             AnvilBlock.class,
+            BellBlock.class,
             BedBlock.class,
             PressurePlateBlock.class,
             FenceGateBlock.class,

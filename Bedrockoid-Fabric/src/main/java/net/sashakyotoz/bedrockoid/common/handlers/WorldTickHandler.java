@@ -20,9 +20,7 @@ public class WorldTickHandler implements ServerTickEvents.StartWorldTick, Server
     @Override
     public void onStartTick(ServerWorld serverWorld) {
         if (serverWorld.isRaining() && !ModsUtils.isSnowUnderTreesIn()) {
-
             int randomTickSpeed = serverWorld.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);
-
             BedrockSnowManager.runForChunks(serverWorld, chunk -> addSnowUnderTrees(serverWorld, chunk, randomTickSpeed));
         }
     }

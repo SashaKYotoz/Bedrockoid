@@ -24,7 +24,7 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
         if ("PlantsMixin".contains(mixinClassName))
             return ModsUtils.isSnowloggingNotOverrided();
         if ("bedrockoid.mixin.client.sodium".contains(mixinClassName))
-            return !ModsUtils.isSodiumIn();
+            return ModsUtils.isSodiumIn();
         return true;
     }
 

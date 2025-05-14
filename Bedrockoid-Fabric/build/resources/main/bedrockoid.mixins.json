@@ -15,14 +15,17 @@
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowBlockMixin",
     "blocks.SnowyBlockMixin",
+    "blocks.StateDefinitionAccess",
     "blocks.TntBlockMixin",
+    "client.sodium.BlockRendererMixin",
     "entities.ArmorStandEntityMixin",
     "entities.EntityMixin",
     "entities.LivingEntityMixin",
     "entities.MobEntityMixin",
     "entities.ServerPlayerInteractionManagerMixin",
     "worldgen.BiomeMixin",
-    "worldgen.ServerWorldMixin"
+    "worldgen.ServerWorldMixin",
+    "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
     "client.AbstractHorseEntityRendererMixin",
@@ -32,6 +35,7 @@
     "client.SheepWoolFeatureRendererMixin",
     "client.TerrainRenderContextMixin"
   ],
+  "plugin": "net.sashakyotoz.bedrockoid.mixin.MixinConfigPlugin",
   "injectors": {
     "defaultRequire": 1
   }

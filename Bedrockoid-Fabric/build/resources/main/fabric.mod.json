@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "bedrockoid",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "Bedrockoid",
   "description": "Even more Bedrock features for Java Edition",
   "authors": [],
