@@ -2,7 +2,7 @@
   "armorStandArms": true,
   "redstoneConnectsToPiston": true,
   "snowlogging": true,
-  "cauldronWaterloggability": true,
+  "blocksWaterloggability": true,
   "cauldronNaturalFilling": true,
   "stopElytraByPressingSpace": true,
   "wetSpongesDryOut": true,
@@ -21,5 +21,6 @@
   "disableSnowUnderTreesIn": [
     "minecraft:snowy_taiga"
   ],
-  "snowCoversLeaves": true
+  "snowCoversLeaves": true,
+  "snowCoversVines": true
 }

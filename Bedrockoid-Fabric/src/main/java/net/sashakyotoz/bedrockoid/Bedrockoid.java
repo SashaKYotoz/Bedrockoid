@@ -27,8 +27,6 @@ public class Bedrockoid implements ModInitializer {
 
     }
 
-
-
     public static Identifier makeID(String id) {
         return Identifier.of(MOD_ID, id);
     }

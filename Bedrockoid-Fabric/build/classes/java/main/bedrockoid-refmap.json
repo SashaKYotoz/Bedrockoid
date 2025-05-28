@@ -6,7 +6,7 @@
     "net/sashakyotoz/bedrockoid/mixin/blocks/BlockItemMixin": {
       "Lnet/minecraft/block/BlockState;getSoundGroup()Lnet/minecraft/sound/BlockSoundGroup;": "Lnet/minecraft/class_2680;method_26231()Lnet/minecraft/class_2498;",
       "getPlaceSound": "Lnet/minecraft/class_1747;method_19260(Lnet/minecraft/class_2680;)Lnet/minecraft/class_3414;",
-      "place*": "Lnet/minecraft/class_1747;method_7712(Lnet/minecraft/class_1750;)Lnet/minecraft/class_1269;"
+      "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;": "Lnet/minecraft/class_1747;method_7712(Lnet/minecraft/class_1750;)Lnet/minecraft/class_1269;"
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/BlockMixin": {
       "appendProperties": "Lnet/minecraft/class_2248;method_9515(Lnet/minecraft/class_2689$class_2690;)V",
@@ -50,9 +50,6 @@
     },
     "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
       "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;"
-    },
-    "net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin": {
-      "scale(Lnet/minecraft/entity/passive/AbstractHorseEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V": "Lnet/minecraft/class_875;method_3874(Lnet/minecraft/class_1496;Lnet/minecraft/class_4587;F)V"
     },
     "net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin": {
       "getColor": "Lnet/minecraft/class_324;method_1697(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;I)I"
@@ -113,7 +110,7 @@
       "net/sashakyotoz/bedrockoid/mixin/blocks/BlockItemMixin": {
         "Lnet/minecraft/block/BlockState;getSoundGroup()Lnet/minecraft/sound/BlockSoundGroup;": "Lnet/minecraft/class_2680;method_26231()Lnet/minecraft/class_2498;",
         "getPlaceSound": "Lnet/minecraft/class_1747;method_19260(Lnet/minecraft/class_2680;)Lnet/minecraft/class_3414;",
-        "place*": "Lnet/minecraft/class_1747;method_7712(Lnet/minecraft/class_1750;)Lnet/minecraft/class_1269;"
+        "place(Lnet/minecraft/item/ItemPlacementContext;)Lnet/minecraft/util/ActionResult;": "Lnet/minecraft/class_1747;method_7712(Lnet/minecraft/class_1750;)Lnet/minecraft/class_1269;"
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/BlockMixin": {
         "appendProperties": "Lnet/minecraft/class_2248;method_9515(Lnet/minecraft/class_2689$class_2690;)V",
@@ -157,9 +154,6 @@
       },
       "net/sashakyotoz/bedrockoid/mixin/blocks/TntBlockMixin": {
         "onUseWithItem": "Lnet/minecraft/class_2530;method_55765(Lnet/minecraft/class_1799;Lnet/minecraft/class_2680;Lnet/minecraft/class_1937;Lnet/minecraft/class_2338;Lnet/minecraft/class_1657;Lnet/minecraft/class_1268;Lnet/minecraft/class_3965;)Lnet/minecraft/class_9062;"
-      },
-      "net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin": {
-        "scale(Lnet/minecraft/entity/passive/AbstractHorseEntity;Lnet/minecraft/client/util/math/MatrixStack;F)V": "Lnet/minecraft/class_875;method_3874(Lnet/minecraft/class_1496;Lnet/minecraft/class_4587;F)V"
       },
       "net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin": {
         "getColor": "Lnet/minecraft/class_324;method_1697(Lnet/minecraft/class_2680;Lnet/minecraft/class_1920;Lnet/minecraft/class_2338;I)I"

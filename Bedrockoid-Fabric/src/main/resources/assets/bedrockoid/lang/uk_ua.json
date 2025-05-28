@@ -5,7 +5,7 @@
   "bedrockoid.midnightconfig.armorStandArms": "Чи має стійка для обладунків мати руки за замовчуванням",
   "bedrockoid.midnightconfig.redstoneConnectsToPiston": "Чи може редстоун з'єднуватися з поршнем",
   "bedrockoid.midnightconfig.snowlogging": "Чи може сніг покривати рослини",
-  "bedrockoid.midnightconfig.cauldronWaterloggability": "Чи має казан омиватися водою, якщо стоїть у ній",
+  "bedrockoid.midnightconfig.blocksWaterloggability": "Чи має казан омиватися водою, якщо стоїть у ній",
   "bedrockoid.midnightconfig.cauldronNaturalFilling": "Чи може казан заповнюватися, якщо є рідина над ним",
   "bedrockoid.midnightconfig.stopElytraByPressingSpace": "Чи може політ на елітрах зупинятися натисканням кнопки для стрибку",
   "bedrockoid.midnightconfig.wetSpongesDryOut": "Чи має волога губка висихати в сухих біомах",

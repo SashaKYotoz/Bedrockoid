@@ -28,7 +28,6 @@
     "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
-    "client.AbstractHorseEntityRendererMixin",
     "client.BlockColorsMixin",
     "client.BlockRenderManagerMixin",
     "client.MinecraftClientMixin",
