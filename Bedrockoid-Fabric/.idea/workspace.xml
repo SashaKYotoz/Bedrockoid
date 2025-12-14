@@ -5,14 +5,63 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3051b065-29cb-4b88-baaf-236c3b352763" name="Changes" comment="first couple features for fabric">
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/MixinConfigPlugin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/ShieldItemMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/StateDefinitionAccess.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/sodium/BlockRendererMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/worldgen/BiomeMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/worldgen/ServerWorldMixin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/worldgen/SimpleBlockFeatureMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapClasspath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/Bedrockoid-Fabric.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Bedrockoid-Fabric.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/bedrockoid-refmap.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/bedrockoid-refmap.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/bedrockoid/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/bedrockoid/lang/en_us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/assets/bedrockoid/lang/uk_ua.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/assets/bedrockoid/lang/uk_ua.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/bedrockoid.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/bedrockoid.mixins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/fabric.mod.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/run/usercache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/Bedrockoid.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/Bedrockoid.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/BedrockoidConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/BedrockoidConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/client/BedrockoidClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/client/BedrockoidClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/snow/snow_managers/VanillaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/snow/snow_managers/VanillaManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/utils/BlockUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/utils/BlockUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/utils/ReachPlacementUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/utils/ReachPlacementUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/SnowyBlockMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/SnowyBlockMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/world/features/BedrockoidFeatures.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/world/features/BedrockoidFeatures.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/world/features/custom/FallenTreeFeature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/common/world/features/custom/FallenTreeFeature.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/BlockItemMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/BlockItemMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/BlockMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/BlockMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/BlockStateMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/BlockStateMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/FlowerBlockMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/FlowerBlockMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/LeveledCauldronBlockMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/blocks/NotWaterloggableBlockMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/AbstractHorseEntityRendererMixin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/BlockRenderManagerMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/BlockRenderManagerMixin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/MinecraftClientMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/MinecraftClientMixin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/TerrainRenderContextMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/client/TerrainRenderContextMixin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/entities/ServerPlayerInteractionManagerMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/entities/ServerPlayerInteractionManagerMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/entities/LivingEntityMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/sashakyotoz/bedrockoid/mixin/entities/LivingEntityMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/bedrockoid/lang/en_us.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/bedrockoid/lang/en_us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/assets/bedrockoid/lang/uk_ua.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/assets/bedrockoid/lang/uk_ua.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/bedrockoid.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/bedrockoid.mixins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fabric.mod.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,15 +163,22 @@
     &quot;JavaMethodFindUsagesOptions.isOverridingMethods&quot;: &quot;true&quot;,
     &quot;JavaMethodFindUsagesOptions.isSearchForTextOccurrences&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;F:/modsmaking/1.20.1/Bedrockoid/Bedrockoid-Forge&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propCompiler&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -135,7 +191,7 @@
       <recent name="net.sashakyotoz.bedrockoid.common.datagen" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Bedrockoid-Fabric [runServer]">
+  <component name="RunManager" selected="Gradle.Bedrockoid-Fabric [runClient]">
     <configuration name="Bedrockoid-Fabric [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -226,12 +282,20 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Bedrockoid-Fabric [runServer]" />
         <item itemvalue="Gradle.Bedrockoid-Fabric [runClient]" />
         <item itemvalue="Gradle.Bedrockoid-Fabric [build]" />
+        <item itemvalue="Gradle.Bedrockoid-Fabric [runServer]" />
         <item itemvalue="Gradle.Bedrockoid-Fabric [runDatagen]" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.23892.409" />
+        <option value="bundled-js-predefined-d6986cc7102b-e03c56caf84a-JavaScript-IU-252.23892.409" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -241,6 +305,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1740225738581</updated>
+      <workItem from="1761676424280" duration="770000" />
+      <workItem from="1763926321152" duration="668000" />
+      <workItem from="1765394080506" duration="85000" />
+      <workItem from="1765457092338" duration="9872000" />
+      <workItem from="1765489024199" duration="190000" />
+      <workItem from="1765546040642" duration="4714000" />
+      <workItem from="1765650835138" duration="4513000" />
+      <workItem from="1765709934891" duration="324000" />
     </task>
     <task id="LOCAL-00001" summary="first couple features for fabric">
       <option name="closed" value="true" />
@@ -252,6 +324,9 @@
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />

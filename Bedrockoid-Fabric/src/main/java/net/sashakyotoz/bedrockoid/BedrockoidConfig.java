@@ -11,7 +11,7 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = FLAGS) public static boolean armorStandArms = true;
     @Entry(category = FLAGS) public static boolean redstoneConnectsToPiston = true;
     @Entry(category = FLAGS) public static boolean snowlogging = true;
-    @Entry(category = FLAGS) public static boolean cauldronWaterloggability = true;
+    @Entry(category = FLAGS) public static boolean blocksWaterloggability = true;
     @Entry(category = FLAGS) public static boolean cauldronNaturalFilling = true;
     @Entry(category = FLAGS) public static boolean stopElytraByPressingSpace = true;
     @Entry(category = FLAGS) public static boolean wetSpongesDryOut = true;
@@ -23,6 +23,7 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = FLAGS) public static boolean mushroomTreesInSwamp = true;
     @Entry(category = FLAGS) public static boolean shulkersCanBeDyed = true;
     @Entry(category = FLAGS) public static boolean shieldActivatesWhenSneaking = true;
+    @Entry(category = FLAGS) public static boolean shieldActivatesOnlyWhenSneaking = false;
     @Entry(category = FLAGS) public static boolean canPlantsBeBonemeal = true;
     @Entry(category = FLAGS) public static boolean fireAspectImprovements = true;
     @Entry(category = FLAGS) public static boolean composterCollisionFix = true;

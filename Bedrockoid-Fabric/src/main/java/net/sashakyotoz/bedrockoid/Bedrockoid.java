@@ -27,14 +27,11 @@ public class Bedrockoid implements ModInitializer {
 
     }
 
-
-
     public static Identifier makeID(String id) {
         return new Identifier(MOD_ID, id);
     }
 
-    public static <T> T log(T message) {
+    public static <T> void log(T message) {
         LOGGER.info(String.valueOf(message));
-        return message;
     }
 }

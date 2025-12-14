@@ -2,7 +2,6 @@ package net.sashakyotoz.bedrockoid.common.world.features;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
-import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -26,11 +25,11 @@ public class BedrockoidFeatures {
         Registry.register(Registries.FEATURE, Bedrockoid.makeID("snow_under_tree"), SnowUnderTreeFeature.INSTANCE);
         Registry.register(Registries.FEATURE, Bedrockoid.makeID("fallen_tree"), FallenTreeFeature.INSTANCE);
 
-        if (BedrockoidConfig.snowSpawnsUnderTrees){
-            BiomeModifications.addFeature(context -> context.getBiome().getTemperature() < 0.15f && context.getBiome().hasPrecipitation(),
+        if (BedrockoidConfig.snowSpawnsUnderTrees) {
+            BiomeModifications.addFeature(context -> context.getBiome().getTemperature() < 0.155f && context.getBiome().hasPrecipitation(),
                     GenerationStep.Feature.TOP_LAYER_MODIFICATION, SNOW_UNDER_TREES);
         }
-        if (BedrockoidConfig.fallenTrees){
+        if (BedrockoidConfig.fallenTrees) {
             BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.FOREST, BiomeKeys.FLOWER_FOREST),
                     GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_OAK_TREE);
             BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
@@ -47,7 +46,7 @@ public class BedrockoidFeatures {
                     GenerationStep.Feature.VEGETAL_DECORATION, FALLEN_BIG_JUNGLE_TREE);
         }
 
-        if (BedrockoidConfig.mushroomTreesInSwamp){
+        if (BedrockoidConfig.mushroomTreesInSwamp) {
             BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.SWAMP_HUT_HAS_STRUCTURE),
                     GenerationStep.Feature.TOP_LAYER_MODIFICATION, VegetationPlacedFeatures.MUSHROOM_ISLAND_VEGETATION);
         }

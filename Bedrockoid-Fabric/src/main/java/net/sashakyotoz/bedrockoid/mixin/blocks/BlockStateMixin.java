@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -37,16 +38,14 @@ public abstract class BlockStateMixin {
         if (world.getBlockState(pos).getBlock() instanceof AbstractCauldronBlock
                 && world.getBlockState(pos).contains(Properties.WATERLOGGED)
                 && world.getBlockState(pos).get(Properties.WATERLOGGED)
-                && BedrockoidConfig.cauldronWaterloggability)
+                && BedrockoidConfig.blocksWaterloggability)
             world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-        if (BlockUtils.canSnowlog(world.getBlockState(pos)) && world.getBlockState(pos).getFluidState() != null)
-            world.setBlockState(pos, world.getBlockState(pos).with(BlockUtils.LAYERS, 0), Block.NOTIFY_ALL);
     }
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void applyWaterloggability(CallbackInfoReturnable<FluidState> cir) {
         AbstractBlock.AbstractBlockState block = (AbstractBlock.AbstractBlockState) ((Object) this);
-        if (block.getBlock() instanceof AbstractCauldronBlock && block.contains(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block.getBlock()) && block.contains(Properties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             cir.setReturnValue(block.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState());
     }
 
@@ -65,19 +64,22 @@ public abstract class BlockStateMixin {
             return VoxelShapes.union(original, BlockUtils.getSnowEquivalent(blockState).getOutlineShape(world, pos, context));
         return original;
     }
+
     @Inject(method = "randomTick", at = @At("TAIL"))
     private void randomTick(ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof WetSpongeBlock
                 && BedrockoidConfig.wetSpongesDryOut
-                && random.nextInt(26) == 5
+                && !BlockUtils.isTouchingBlock(world, pos,
+                block -> block != null && block.getFluidState().isIn(FluidTags.WATER))
+                && random.nextInt(12) == 5
                 && !world.getBiome(pos).value().hasPrecipitation()
                 && (world.getBiome(pos).value().getTemperature() > 0.75f)) {
             world.setBlockState(pos, Blocks.SPONGE.getDefaultState(), Block.NOTIFY_ALL);
             world.syncWorldEvent(WorldEvents.WET_SPONGE_DRIES_OUT, pos, 0);
             world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);
         }
-        if (random.nextInt(5) == 1 && BlockUtils.haveToFillUpCauldron(state, world, pos)) {
+        if (random.nextInt(4) == 1 && BlockUtils.haveToFillUpCauldron(state, world, pos)) {
             if (state.getBlock() instanceof LeveledCauldronBlock && BedrockoidConfig.cauldronNaturalFilling) {
                 BlockState blockState = state.cycle(Properties.LEVEL_3);
                 world.setBlockState(pos, blockState);

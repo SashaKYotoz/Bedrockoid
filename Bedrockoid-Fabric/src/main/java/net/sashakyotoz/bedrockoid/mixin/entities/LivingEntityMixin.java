@@ -26,7 +26,6 @@ public class LivingEntityMixin {
                         entity.getStackInHand(Hand.OFF_HAND).getItem() instanceof ShieldItem ? Hand.OFF_HAND : Hand.MAIN_HAND);
         }
     }
-
     @Inject(method = "stopUsingItem", at = @At("HEAD"), cancellable = true)
     private void onStopUsingItem(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;

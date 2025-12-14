@@ -5,12 +5,11 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.VineBlock;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.color.world.GrassColors;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
-import net.minecraft.registry.Registries;
+import net.minecraft.state.property.Properties;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
@@ -37,22 +36,15 @@ public class BedrockoidClient implements ClientModInitializer {
         if (ModsUtils.isSodiumIn()) {
             ColorProviderRegistry.BLOCK.register(
                     (state, world, pos, index) -> {
-                        if ((BlockUtils.haveLeavesToChangeColor(state, world, pos)
-                                || BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos)) && BedrockoidConfig.snowCoversLeaves) {
-                            int colour = 0;
-                            if (BlockUtils.haveLeavesToChangeColor(state, world, pos))
-                                colour = 0xFFFFFF;
-                            if (BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos))
-                                colour = 0xCCCCCC;
-                            return colour;
-                        } else
+                        if (BedrockoidConfig.snowCoversLeaves)
+                            return BlockUtils.leavesSnowyColor(state, pos);
+                        else
                             return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
                     },
                     Blocks.OAK_LEAVES,
                     Blocks.SPRUCE_LEAVES,
                     Blocks.BIRCH_LEAVES,
                     Blocks.JUNGLE_LEAVES,
-                    Blocks.CHERRY_LEAVES,
                     Blocks.ACACIA_LEAVES,
                     Blocks.DARK_OAK_LEAVES,
                     Blocks.MANGROVE_LEAVES,
@@ -61,7 +53,11 @@ public class BedrockoidClient implements ClientModInitializer {
             );
             ColorProviderRegistry.BLOCK.register(
                     (state, world, pos, index) -> {
-                        if (BlockUtils.isSnowlogged(state) && BedrockoidConfig.snowlogging)
+                        if ((BlockUtils.isSnowlogged(state)
+                                || (state.contains(Properties.DOUBLE_BLOCK_HALF)
+                                && world != null && pos != null
+                                && BlockUtils.isSnowlogged(world.getBlockState(pos.down()))))
+                                && BedrockoidConfig.snowlogging)
                             return 0xCCCCCC;
                         return world != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
                     },

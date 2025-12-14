@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "id": "bedrockoid",
-  "version": "0.1",
+  "version": "0.1.2",
   "name": "Bedrockoid",
   "description": "Even more Bedrock features for Java Edition",
-  "authors": [],
+  "authors": ["SashaKYotoz"],
   "contact": {},
-  "license": "All-Rights-Reserved",
+  "license": "GPL-3.0 license",
   "icon": "assets/bedrockoid/bedrockoid.png",
   "environment": "*",
   "entrypoints": {

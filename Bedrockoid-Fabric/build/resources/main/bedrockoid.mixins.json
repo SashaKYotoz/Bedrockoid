@@ -6,31 +6,37 @@
   "mixins": [
     "FrostWalkerEnchantmentMixin",
     "ItemMixin",
+    "ShieldItemMixin",
     "blocks.BlockItemMixin",
     "blocks.BlockMixin",
     "blocks.BlockStateMixin",
     "blocks.ComposterBlockMixin",
     "blocks.FlowerBlockMixin",
-    "blocks.LeveledCauldronBlockMixin",
+    "blocks.NotWaterloggableBlockMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowBlockMixin",
     "blocks.SnowyBlockMixin",
+    "blocks.StateDefinitionAccess",
     "blocks.TntBlockMixin",
     "entities.ArmorStandEntityMixin",
     "entities.EntityMixin",
     "entities.LivingEntityMixin",
     "entities.MobEntityMixin",
-    "entities.ServerPlayerInteractionManagerMixin"
+    "entities.ServerPlayerInteractionManagerMixin",
+    "worldgen.BiomeMixin",
+    "worldgen.ServerWorldMixin",
+    "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
-    "client.AbstractHorseEntityRendererMixin",
     "client.BlockColorsMixin",
     "client.BlockRenderManagerMixin",
     "client.MinecraftClientMixin",
     "client.SheepWoolFeatureRendererMixin",
-    "client.TerrainRenderContextMixin"
+    "client.TerrainRenderContextMixin",
+    "client.sodium.BlockRendererMixin"
   ],
+  "plugin": "net.sashakyotoz.bedrockoid.mixin.MixinConfigPlugin",
   "injectors": {
     "defaultRequire": 1
   }
