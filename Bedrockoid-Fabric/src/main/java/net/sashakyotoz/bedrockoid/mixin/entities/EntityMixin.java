@@ -55,8 +55,10 @@ public class EntityMixin {
     @Inject(method = "interact", at = @At("HEAD"))
     private void handleFireAspectInteraction(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         Entity entity = (Entity) ((Object) this);
-        if (entity instanceof TntMinecartEntity minecart && player.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).isPresent()
-                && EnchantmentHelper.getLevel(player.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).get(), player.getStackInHand(hand)) > 0)
-            minecart.prime();
+        if (BedrockoidConfig.entitySharesFire) {
+            if (entity instanceof TntMinecartEntity minecart && player.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).isPresent()
+                    && EnchantmentHelper.getLevel(player.getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).get(), player.getStackInHand(hand)) > 0)
+                minecart.prime();
+        }
     }
 }

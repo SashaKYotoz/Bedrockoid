@@ -24,6 +24,7 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = FLAGS) public static boolean shulkersCanBeDyed = true;
     @Entry(category = FLAGS) public static boolean shieldActivatesWhenSneaking = true;
     @Entry(category = FLAGS) public static boolean canPlantsBeBonemeal = true;
+    @Entry(category = FLAGS) public static boolean canSugarcaneBeBonemeal = true;
     @Entry(category = FLAGS) public static boolean fireAspectImprovements = true;
     @Entry(category = FLAGS) public static boolean composterCollisionFix = true;
     @Entry(category = FLAGS) public static boolean snowSpawnsUnderTrees = true;

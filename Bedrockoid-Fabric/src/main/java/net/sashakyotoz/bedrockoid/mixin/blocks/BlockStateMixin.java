@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -69,9 +70,11 @@ public abstract class BlockStateMixin {
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof WetSpongeBlock
                 && BedrockoidConfig.wetSpongesDryOut
+                && !BlockUtils.isTouchingBlock(world, pos,
+                block -> block != null && block.getFluidState().isIn(FluidTags.WATER))
                 && random.nextInt(12) == 5
                 && !world.getBiome(pos).value().hasPrecipitation()
-                && (world.getBiome(pos).value().getTemperature() > 0.75f)) {
+                && (world.getBiome(pos).value().getTemperature() >= 0.75f)) {
             world.setBlockState(pos, Blocks.SPONGE.getDefaultState(), Block.NOTIFY_ALL);
             world.syncWorldEvent(WorldEvents.WET_SPONGE_DRIES_OUT, pos, 0);
             world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);

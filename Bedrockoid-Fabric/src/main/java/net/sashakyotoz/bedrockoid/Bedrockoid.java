@@ -3,6 +3,7 @@ package net.sashakyotoz.bedrockoid;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import net.sashakyotoz.bedrockoid.common.handlers.WorldTickHandler;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
@@ -32,7 +33,8 @@ public class Bedrockoid implements ModInitializer {
     }
 
     public static <T> T log(T message) {
-        LOGGER.info(String.valueOf(message));
+        if (FabricLoader.getInstance().isDevelopmentEnvironment())
+            LOGGER.info(String.valueOf(message));
         return message;
     }
 }

@@ -24,3 +24,4 @@
 /locate biome minecraft:snowy_taiga
 /tp @s -1665 76 -3004
 /place feature bedrockoid:fallen_big_spruce_tree
+/gamerule randomTickSpeed 5

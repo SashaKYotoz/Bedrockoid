@@ -16,7 +16,7 @@ public class LivingEntityMixin {
     @Inject(method = "tick", at = @At("HEAD"))
     private void onTick(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        if (BedrockoidConfig.shieldActivatesWhenSneaking){
+        if (BedrockoidConfig.shieldActivatesWhenSneaking) {
             if (entity.isSneaking() && !entity.isUsingItem()
                     && (entity.getStackInHand(Hand.OFF_HAND).getItem() instanceof ShieldItem
                     || entity.getStackInHand(Hand.MAIN_HAND).getItem() instanceof ShieldItem) && entity instanceof PlayerEntity player)

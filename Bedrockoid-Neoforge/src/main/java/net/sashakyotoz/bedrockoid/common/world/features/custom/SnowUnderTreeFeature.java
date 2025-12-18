@@ -1,7 +1,6 @@
 package net.sashakyotoz.bedrockoid.common.world.features.custom;
 
 import com.mojang.serialization.Codec;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;

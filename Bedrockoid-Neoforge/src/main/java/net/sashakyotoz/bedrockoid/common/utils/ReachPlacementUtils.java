@@ -38,6 +38,8 @@ public class ReachPlacementUtils {
 
         if (!player.isCrouching())
             return false;
+        if (player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty())
+            return false;
         if (!player.onGround())
             return false;
         if (!client.level.getBlockState(targetPos).canBeReplaced())

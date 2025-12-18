@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -71,9 +72,11 @@ public abstract class BlockStateMixin {
         BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof WetSpongeBlock
                 && BedrockoidConfig.wetSpongesDryOut
-                && random.nextInt(11) == 5
+                && !BlockUtils.isTouchingBlock(level, pos,
+                block -> block != null && block.getFluidState().is(FluidTags.WATER))
+                && random.nextInt(12) == 5
                 && !level.getBiome(pos).value().hasPrecipitation()
-                && (level.getBiome(pos).value().getBaseTemperature() > 0.75f)) {
+                && (level.getBiome(pos).value().getBaseTemperature() >= 0.75f)) {
             level.setBlock(pos, Blocks.SPONGE.defaultBlockState(), 3);
             level.levelEvent(LevelEvent.PARTICLES_WATER_EVAPORATING, pos, 0);
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);

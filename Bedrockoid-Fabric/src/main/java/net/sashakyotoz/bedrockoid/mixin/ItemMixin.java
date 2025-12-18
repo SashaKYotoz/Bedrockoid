@@ -28,19 +28,21 @@ public class ItemMixin {
     @Inject(method = "useOnBlock", at = @At("HEAD"), cancellable = true)
     private void litBlockWithAspect(ItemUsageContext context, CallbackInfoReturnable<ActionResult> cir) {
         ItemStack itemStack = context.getStack();
-        if (context.getPlayer() != null && context.getPlayer().getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).isPresent()
-                && EnchantmentHelper.getLevel(context.getPlayer().getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).get(), itemStack) > 0 && BedrockoidConfig.fireAspectImprovements) {
-            PlayerEntity playerEntity = context.getPlayer();
-            World world = context.getWorld();
-            BlockPos blockPos = context.getBlockPos();
-            BlockState blockState = world.getBlockState(blockPos);
-            if (CampfireBlock.canBeLit(blockState) || CandleBlock.canBeLit(blockState) || CandleCakeBlock.canBeLit(blockState)) {
-                world.playSound(playerEntity, blockPos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
-                world.setBlockState(blockPos, blockState.with(Properties.LIT, Boolean.TRUE), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
-                world.emitGameEvent(playerEntity, GameEvent.BLOCK_CHANGE, blockPos);
-                if (playerEntity != null)
-                    context.getStack().damage(1, playerEntity, context.getHand() == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-                cir.setReturnValue(ActionResult.success(world.isClient()));
+        if (BedrockoidConfig.fireAspectImprovements) {
+            if (context.getPlayer() != null && context.getPlayer().getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).isPresent()
+                    && EnchantmentHelper.getLevel(context.getPlayer().getWorld().getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.FIRE_ASPECT.getValue()).get(), itemStack) > 0) {
+                PlayerEntity playerEntity = context.getPlayer();
+                World world = context.getWorld();
+                BlockPos blockPos = context.getBlockPos();
+                BlockState blockState = world.getBlockState(blockPos);
+                if (CampfireBlock.canBeLit(blockState) || CandleBlock.canBeLit(blockState) || CandleCakeBlock.canBeLit(blockState)) {
+                    world.playSound(playerEntity, blockPos, SoundEvents.ITEM_FLINTANDSTEEL_USE, SoundCategory.BLOCKS, 1.0F, world.getRandom().nextFloat() * 0.4F + 0.8F);
+                    world.setBlockState(blockPos, blockState.with(Properties.LIT, Boolean.TRUE), Block.NOTIFY_ALL | Block.REDRAW_ON_MAIN_THREAD);
+                    world.emitGameEvent(playerEntity, GameEvent.BLOCK_CHANGE, blockPos);
+                    if (playerEntity != null)
+                        context.getStack().damage(1, playerEntity, context.getHand() == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                    cir.setReturnValue(ActionResult.success(world.isClient()));
+                }
             }
         }
     }

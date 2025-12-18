@@ -2,6 +2,7 @@ package net.sashakyotoz.bedrockoid.common.world.features;
 
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.registry.FuelRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.registry.*;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -50,6 +51,8 @@ public class BedrockoidFeatures {
             BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.SWAMP_HUT_HAS_STRUCTURE),
                     GenerationStep.Feature.TOP_LAYER_MODIFICATION, VegetationPlacedFeatures.MUSHROOM_ISLAND_VEGETATION);
         }
+        FuelRegistry.INSTANCE.add(Blocks.BEEHIVE, 5);
+        FuelRegistry.INSTANCE.add(Blocks.BEE_NEST, 30);
     }
 
     //configured features

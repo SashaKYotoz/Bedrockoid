@@ -16,6 +16,7 @@
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowyBlockMixin",
     "blocks.StateDefinitionAccess",
+    "blocks.SugarcaneBlockMixin",
     "blocks.TntBlockMixin",
     "blocks.waterlog.BedBlockMixin",
     "blocks.waterlog.NotWaterloggableBlockMixin",

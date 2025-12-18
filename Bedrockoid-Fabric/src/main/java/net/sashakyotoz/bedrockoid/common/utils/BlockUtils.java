@@ -1,5 +1,6 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
+import com.google.common.base.Predicate;
 import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
@@ -10,8 +11,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.FoliageColors;
 import org.jetbrains.annotations.Nullable;
 
@@ -38,6 +41,14 @@ public class BlockUtils {
         return state != null && state.getProperties() != null
                 && state.contains(LAYERS) && state.getFluidState().isEmpty()
                 && ModsUtils.isSnowloggingNotOverrided();
+    }
+
+    public static boolean isTouchingBlock(World world, BlockPos pos, Predicate<BlockState> predicate) {
+        for (Direction dir : Direction.values()) {
+            BlockState state = world.getBlockState(pos.offset(dir));
+            if (predicate.test(state)) return true;
+        }
+        return false;
     }
 
     public static BlockState getSnowloggedState(BlockState state, BlockState snowState) {

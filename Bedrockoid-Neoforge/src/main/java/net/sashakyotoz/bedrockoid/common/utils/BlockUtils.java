@@ -1,13 +1,16 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
+import com.google.common.base.Predicate;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -35,6 +38,13 @@ public class BlockUtils {
         return state != null && state.getProperties() != null
                 && state.hasProperty(LAYERS) && state.getFluidState().isEmpty()
                 && ModsUtils.isSnowloggingNotOverrided();
+    }
+    public static boolean isTouchingBlock(Level level, BlockPos pos, Predicate<BlockState> predicate) {
+        for (Direction dir : Direction.values()) {
+            BlockState state = level.getBlockState(pos.relative(dir));
+            if (predicate.test(state)) return true;
+        }
+        return false;
     }
 
     @OnlyIn(Dist.CLIENT)

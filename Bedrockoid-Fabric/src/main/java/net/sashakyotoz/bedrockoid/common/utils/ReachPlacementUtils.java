@@ -44,6 +44,8 @@ public class ReachPlacementUtils {
 
         if (!player.isSneaking())
             return false;
+        if (player.getMainHandStack().isEmpty() && player.getOffHandStack().isEmpty())
+            return false;
         if (!player.isOnGround())
             return false;
         if (!client.world.getBlockState(targetPos).isReplaceable())

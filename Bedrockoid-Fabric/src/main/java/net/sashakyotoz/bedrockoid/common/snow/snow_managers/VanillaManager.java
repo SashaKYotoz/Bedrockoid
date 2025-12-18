@@ -1,7 +1,6 @@
 package net.sashakyotoz.bedrockoid.common.snow.snow_managers;
 
 import net.minecraft.block.*;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.StructureWorldAccess;
