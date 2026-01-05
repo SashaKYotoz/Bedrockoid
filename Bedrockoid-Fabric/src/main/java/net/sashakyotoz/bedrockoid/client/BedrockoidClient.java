@@ -41,15 +41,9 @@ public class BedrockoidClient implements ClientModInitializer {
         if (ModsUtils.isSodiumIn() && !ModsUtils.isSnowyLeavesPlusIn()) {
             ColorProviderRegistry.BLOCK.register(
                     (state, world, pos, index) -> {
-                        if (BlockUtils.haveLeavesToChangeColor(state, world, pos)
-                                || BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos)) {
-                            int colour = 0;
-                            if (BlockUtils.haveLeavesToChangeColor(state, world, pos))
-                                colour = 0xFFFFFF;
-                            if (BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos))
-                                colour = 0xCCCCCC;
-                            return colour;
-                        } else
+                        if (BedrockoidConfig.snowCoversLeaves)
+                            return BlockUtils.leavesSnowyColor(state, pos);
+                        else
                             return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.DEFAULT;
                     },
                     Blocks.OAK_LEAVES,

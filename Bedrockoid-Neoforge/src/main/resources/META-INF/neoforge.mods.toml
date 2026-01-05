@@ -7,7 +7,7 @@ config = "bedrockoid.mixins.json"
 file = "META-INF/accesstransformer.cfg"
 [[mods]]
 modId = "bedrockoid"
-version = "0.1.1"
+version = "0.1.2"
 displayName = "Bedrockoid"
 authors = "SashaKYotoz"
 description = "Even more Bedrock features for Java Edition"

@@ -3,8 +3,7 @@ package net.sashakyotoz.bedrockoid.common.utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.AABB;
@@ -18,11 +17,11 @@ import java.util.Optional;
 public class ReachPlacementUtils {
     public static final ReachPlacementUtils INSTANCE = new ReachPlacementUtils();
     private final Minecraft client = Minecraft.getInstance();
-    public static final ResourceLocation PLACEMENT_ICON = Bedrockoid.makeID("textures/gui/reach_around_icon.png");
+    public static final ResourceLocation PLACEMENT_ICON = Bedrockoid.makeID("reach_around_icon");
 
     public void renderIndicator(GuiGraphics drawContext) {
         if (canReachAround())
-            drawContext.blit(RenderType::crosshair,PLACEMENT_ICON, (drawContext.guiWidth() / 2) - 8, (drawContext.guiHeight() / 2) - 8, 0, 0, 15, 15, 15, 15);
+            drawContext.blitSprite(RenderPipelines.CROSSHAIR, PLACEMENT_ICON, (drawContext.guiWidth() / 2) - 15, (drawContext.guiHeight() / 2) - 15, 15, 15);
     }
 
     public boolean canReachAround() {
@@ -35,6 +34,8 @@ public class ReachPlacementUtils {
         final LocalPlayer player = client.player;
         final BlockPos targetPos = getFacingSteppingBlockPos(player);
 
+        if (player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty())
+            return false;
         if (!player.isCrouching())
             return false;
         if (!player.onGround())

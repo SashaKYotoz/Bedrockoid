@@ -1,5 +1,6 @@
 package net.sashakyotoz.bedrockoid.common.snow;
 
+import com.google.common.collect.Iterables;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ChunkHolder;
@@ -34,7 +35,9 @@ public class BedrockSnowManager {
 //            temperatureCheck = (level, pos) -> SereneSeasonsHandler.coldEnoughToSnow(level, level.getBiome(pos), pos, level.getSeaLevel());
 //        else
         temperatureCheck = (level, pos) -> !level.getBiome(pos).value().doesNotSnow(pos, level.getSeaLevel());
-        chunkRunner = (level, action) -> level.getChunkManager().chunkLoadingManager.entryIterator().forEach(chunkHolder -> chunkHolder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_WORLD_CHUNK).ifPresent(action));
+        chunkRunner = (level, action) -> Iterables.unmodifiableIterable(level.getChunkManager().chunkLoadingManager.chunkHolders.values()).forEach(chunkHolder ->
+                chunkHolder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_WORLD_CHUNK).ifPresent(action)
+        );
     }
 
     public static boolean placeSnow(StructureWorldAccess level, BlockPos pos) {
@@ -79,7 +82,7 @@ public class BedrockSnowManager {
         chunkRunner.run(level, chunk -> {
             ChunkPos chunkPos = chunk.getPos();
 
-            if ((level.shouldTick(chunkPos) && cache.chunkLoadingManager.shouldTick(chunkPos)) || cache.chunkLoadingManager.getTicketManager().shouldTickBlocks(chunkPos.toLong())) {
+            if ((level.canSpawnEntitiesAt(chunkPos) && cache.chunkLoadingManager.shouldTick(chunkPos)) || cache.chunkLoadingManager.getLevelManager().shouldTickBlocks(chunkPos.toLong())) {
                 if (level.shouldTickBlocksInChunk(chunkPos.toLong()))
                     action.accept(chunk);
             }

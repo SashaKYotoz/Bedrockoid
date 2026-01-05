@@ -6,10 +6,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AbstractCauldronBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -27,22 +24,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = Block.class, priority = 900)
 public abstract class BlockMixin {
 
-    @Shadow
-    private BlockState defaultBlockState;
+    @Shadow private BlockState defaultBlockState;
 
     @Inject(method = "registerDefaultState", at = @At("TAIL"))
     private void addSnowLayers(BlockState state, CallbackInfo ci) {
         Block block = state.getBlock();
-        if (block instanceof BushBlock && block.getStateDefinition().getProperties().contains(BlockUtils.LAYERS) && BedrockoidConfig.snowlogging)
+        if (block instanceof VegetationBlock && block.getStateDefinition().getProperties().contains(BlockUtils.LAYERS) && BedrockoidConfig.snowlogging)
             this.defaultBlockState = state.setValue(BlockUtils.LAYERS, 0);
-        if (block instanceof AbstractCauldronBlock && block.getStateDefinition().getProperties().contains(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block) && block.getStateDefinition().getProperties().contains(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             this.defaultBlockState = state.setValue(BlockStateProperties.WATERLOGGED, false);
     }
 
     @Inject(method = "createBlockStateDefinition", at = @At("HEAD"))
     private void onAppendProperties(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo ci) {
         Block self = (Block) (Object) this;
-        if (self instanceof BushBlock && ModsUtils.isSnowloggingNotOverrided())
+        if (self instanceof VegetationBlock && ModsUtils.isSnowloggingNotOverrided())
             builder.add(BlockUtils.LAYERS);
         if (self instanceof AbstractCauldronBlock)
             builder.add(BlockStateProperties.WATERLOGGED);
@@ -60,16 +56,9 @@ public abstract class BlockMixin {
     @Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
     private void onGetPlacementState(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> cir) {
         BlockState state = cir.getReturnValue();
-        BlockState contextState = ctx.getLevel().getBlockState(ctx.getClickedPos());
-        if (state != null) {
-            if (state.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability) {
-                FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
-                cir.setReturnValue(state.setValue(BlockStateProperties.WATERLOGGED, fluidState.is(FluidTags.WATER)));
-            }
-            if (BedrockoidConfig.snowlogging && contextState.is(Blocks.SNOW) && BlockUtils.canSnowlog(state))
-                cir.setReturnValue(state.setValue(BlockUtils.LAYERS, contextState.getValue(BlockStateProperties.LAYERS) < 8
-                        ? contextState.getValue(BlockStateProperties.LAYERS)
-                        : state.getValue(BlockUtils.LAYERS)));
+        if (state != null && state.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability) {
+            FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+            cir.setReturnValue(state.setValue(BlockStateProperties.WATERLOGGED, fluidState.is(FluidTags.WATER)));
         }
     }
 }

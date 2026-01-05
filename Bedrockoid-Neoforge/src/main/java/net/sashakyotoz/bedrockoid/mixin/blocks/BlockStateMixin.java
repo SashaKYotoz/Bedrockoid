@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -38,14 +39,14 @@ public abstract class BlockStateMixin {
 
     @Inject(method = "updateShape", at = @At("HEAD"))
     private void onUpdateShape(LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random, CallbackInfoReturnable<BlockState> cir) {
-        if (level instanceof LevelAccessor accessor && level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED) && level.getBlockState(pos).getValue(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (level instanceof LevelAccessor accessor && level.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED) && level.getBlockState(pos).getValue(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             accessor.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
     }
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void applyWaterloggability(CallbackInfoReturnable<FluidState> cir) {
         BlockBehaviour.BlockStateBase block = (BlockBehaviour.BlockStateBase) ((Object) this);
-        if (block.getBlock() instanceof AbstractCauldronBlock && block.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block.getBlock()) && block.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             cir.setReturnValue(block.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState());
     }
 
@@ -70,14 +71,16 @@ public abstract class BlockStateMixin {
         BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof WetSpongeBlock
                 && BedrockoidConfig.wetSpongesDryOut
+                && !BlockUtils.isTouchingBlock(level, pos,
+                block -> block != null && block.getFluidState().is(FluidTags.WATER))
                 && random.nextInt(12) == 5
                 && !level.getBiome(pos).value().hasPrecipitation()
-                && (level.getBiome(pos).value().getBaseTemperature() > 0.75f)) {
+                && (level.getBiome(pos).value().getBaseTemperature() >= 0.75f)) {
             level.setBlock(pos, Blocks.SPONGE.defaultBlockState(), 3);
             level.levelEvent(LevelEvent.PARTICLES_WATER_EVAPORATING, pos, 0);
             level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
         }
-        if (random.nextInt(4) == 1 && BlockUtils.haveToFillUpCauldron(state, level, pos)) {
+        if (BlockUtils.haveToFillUpCauldron(state, level, pos)) {
             if (state.getBlock() instanceof LayeredCauldronBlock && BedrockoidConfig.cauldronNaturalFilling) {
                 BlockState blockState = state.cycle(BlockStateProperties.LEVEL_CAULDRON);
                 level.setBlockAndUpdate(pos, blockState);

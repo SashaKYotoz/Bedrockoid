@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.8.3'
+    id 'fabric-loom' version '1.14.1'
     id 'maven-publish'
 }
 
@@ -24,9 +24,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation include ("maven.modrinth:midnightlib:${project.midnightlib_version}")
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-//    modImplementation "maven.modrinth:snow-real-magic:${project.snow_real_magic_version}"
-//    modImplementation "maven.modrinth:kiwi:11.8.28+fabric"
+    modRuntimeOnly("maven.modrinth:sodium:mc1.21.10-0.7.3-fabric")
+    modCompileOnly("maven.modrinth:sodium:mc1.21.10-0.7.3-fabric")
 }
 
 processResources {

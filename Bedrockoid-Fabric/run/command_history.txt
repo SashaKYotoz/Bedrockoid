@@ -1,2 +1,11 @@
 /enchant @a minecraft:fire_aspect
 /time set day
+/gamerule randomTickSpeed 1000
+/gamerule randomTickSpeed 5
+/locate biome #c:is_cold
+/tp @s 330 68 1185
+/locate biome minecraft:snowy_taiga
+/tp @s 1403 81 2536
+/locate biome minecraft:pale_garden
+/tp @s -887 88 2526
+/place feature bedrockoid:fallen_big_pale_tree

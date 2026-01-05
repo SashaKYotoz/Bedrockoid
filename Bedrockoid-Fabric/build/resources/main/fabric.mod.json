@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "bedrockoid",
-  "version": "0.1",
+  "version": "0.1.1",
   "name": "Bedrockoid",
   "description": "Even more Bedrock features for Java Edition",
   "authors": [],
@@ -24,9 +24,9 @@
     "bedrockoid.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.9",
+    "fabricloader": ">=0.18.1",
     "fabric": "*",
-    "minecraft": "1.21.4"
+    "minecraft": "1.21.10"
   },
   "accessWidener": "bedrockoid.accesswidener"
 }

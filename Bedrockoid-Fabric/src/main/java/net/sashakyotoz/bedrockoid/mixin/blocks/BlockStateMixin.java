@@ -4,6 +4,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -13,7 +14,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.*;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldEvents;
+import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 import net.minecraft.world.tick.ScheduledTickView;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
@@ -27,25 +31,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(AbstractBlock.AbstractBlockState.class)
 public abstract class BlockStateMixin {
-
     @Shadow
     protected abstract BlockState asBlockState();
+
+    @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"))
+    private void onUpdateShape(WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random, CallbackInfoReturnable<BlockState> cir) {
+        if (world instanceof WorldAccess access && world.getBlockState(pos).contains(Properties.WATERLOGGED) && world.getBlockState(pos).get(Properties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
+            if (world.getBlockState(pos).getBlock() instanceof AbstractCauldronBlock
+                    && world.getBlockState(pos).contains(Properties.WATERLOGGED)
+                    && world.getBlockState(pos).get(Properties.WATERLOGGED)
+                    && BedrockoidConfig.blocksWaterloggability)
+                access.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    }
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
     private void applyWaterloggability(CallbackInfoReturnable<FluidState> cir) {
         AbstractBlock.AbstractBlockState block = (AbstractBlock.AbstractBlockState) ((Object) this);
-        if (block.getBlock() instanceof AbstractCauldronBlock && block.contains(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block.getBlock()) && block.contains(Properties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             cir.setReturnValue(block.get(Properties.WATERLOGGED) ? Fluids.WATER.getStill(false) : Fluids.EMPTY.getDefaultState());
-    }
-
-    @Inject(method = "getStateForNeighborUpdate", at = @At("HEAD"))
-    private void onUpdateShape(WorldView world, ScheduledTickView tickView, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, Random random, CallbackInfoReturnable<BlockState> cir) {
-        if (world instanceof WorldAccess access && world.getBlockState(pos).contains(Properties.WATERLOGGED) && world.getBlockState(pos).get(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
-            if (world.getBlockState(pos).getBlock() instanceof AbstractCauldronBlock
-                    && world.getBlockState(pos).contains(Properties.WATERLOGGED)
-                    && world.getBlockState(pos).get(Properties.WATERLOGGED)
-                    && BedrockoidConfig.cauldronWaterloggability)
-                access.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
     }
 
     @ModifyReturnValue(method = "getCollisionShape(Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/ShapeContext;)Lnet/minecraft/util/shape/VoxelShape;", at = @At("RETURN"))
@@ -69,9 +72,11 @@ public abstract class BlockStateMixin {
         BlockState state = world.getBlockState(pos);
         if (state.getBlock() instanceof WetSpongeBlock
                 && BedrockoidConfig.wetSpongesDryOut
+                && !BlockUtils.isTouchingBlock(world, pos,
+                block -> block != null && block.getFluidState().isIn(FluidTags.WATER))
                 && random.nextInt(12) == 5
                 && !world.getBiome(pos).value().hasPrecipitation()
-                && (world.getBiome(pos).value().getTemperature() > 0.75f)) {
+                && (world.getBiome(pos).value().getTemperature() >= 0.75f)) {
             world.setBlockState(pos, Blocks.SPONGE.getDefaultState(), Block.NOTIFY_ALL);
             world.syncWorldEvent(WorldEvents.WET_SPONGE_DRIES_OUT, pos, 0);
             world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + world.getRandom().nextFloat() * 0.2F) * 0.7F);

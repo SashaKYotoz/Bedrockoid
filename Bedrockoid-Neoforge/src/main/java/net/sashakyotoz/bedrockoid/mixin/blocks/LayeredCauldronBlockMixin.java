@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class LayeredCauldronBlockMixin {
     @Inject(method = "createBlockStateDefinition", at = @At("HEAD"))
     private void onAppendProperties(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo ci) {
-        if (BedrockoidConfig.cauldronWaterloggability)
+        if (BedrockoidConfig.blocksWaterloggability)
             builder.add(BlockStateProperties.WATERLOGGED);
     }
 }

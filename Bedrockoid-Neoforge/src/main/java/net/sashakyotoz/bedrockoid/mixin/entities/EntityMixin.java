@@ -49,12 +49,13 @@ public class EntityMixin {
         Entity entity = (Entity) ((Object) this);
         Level level = player.level();
         ItemStack stack = player.getItemInHand(hand);
-        if (entity instanceof MinecartTNT tnt && level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.FIRE_ASPECT).isPresent() &&
-                EnchantmentHelper.getTagEnchantmentLevel(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.FIRE_ASPECT).get(), stack) > 0
-                && BedrockoidConfig.fireAspectImprovements) {
-            stack.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-            tnt.primeFuse();
-            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+        if (BedrockoidConfig.fireAspectImprovements) {
+            if (entity instanceof MinecartTNT tnt && level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.FIRE_ASPECT).isPresent() &&
+                    EnchantmentHelper.getTagEnchantmentLevel(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(Enchantments.FIRE_ASPECT).get(), stack) > 0) {
+                stack.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+                tnt.primeFuse(null);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+            }
         }
     }
 

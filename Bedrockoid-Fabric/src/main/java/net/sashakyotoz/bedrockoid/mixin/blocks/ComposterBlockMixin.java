@@ -2,7 +2,10 @@ package net.sashakyotoz.bedrockoid.mixin.blocks;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.ComposterBlock;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
@@ -24,7 +27,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class ComposterBlockMixin {
     @Shadow
     @Final
-    private static VoxelShape[] LEVEL_TO_COLLISION_SHAPE;
+    private static VoxelShape[] COLLISION_SHAPES_BY_LEVEL;
 
     @Shadow
     @Final
@@ -37,9 +40,9 @@ public abstract class ComposterBlockMixin {
     @WrapMethod(method = "getCollisionShape")
     private VoxelShape fixCollision(BlockState state, BlockView world, BlockPos pos, ShapeContext context, Operation<VoxelShape> original) {
         if (BedrockoidConfig.composterCollisionFix)
-            return LEVEL_TO_COLLISION_SHAPE[state.get(LEVEL)];
+            return COLLISION_SHAPES_BY_LEVEL[state.get(LEVEL)];
         else
-            return LEVEL_TO_COLLISION_SHAPE[0];
+            return COLLISION_SHAPES_BY_LEVEL[0];
     }
 
     @Inject(method = "addToComposter", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/WorldAccess;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z"))

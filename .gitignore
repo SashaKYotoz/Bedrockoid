@@ -20,6 +20,12 @@ Bedrockoid-Fabric/run/saves/
 Bedrockoid-Fabric/run/crash-reports/
 Bedrockoid-Fabric/run/config/
 Bedrockoid-Fabric/src/main/generated/.cache/
+Bedrockoid-Forge/.gradle/
+Bedrockoid-Neoforge/.gradle/
+Bedrockoid-Fabric/.gradle/
+Bedrockoid-Forge/build/
+Bedrockoid-Neoforge/build/
+Bedrockoid-Fabric/build/
 
 # Package Files #
 *.jar

@@ -38,7 +38,6 @@
         "state": {
           "Name": "minecraft:jungle_sapling",
           "Properties": {
-            "snow_layers": "0",
             "stage": "0"
           }
         }

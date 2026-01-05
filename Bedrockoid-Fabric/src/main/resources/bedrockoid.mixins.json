@@ -11,9 +11,12 @@
     "blocks.ComposterBlockMixin",
     "blocks.FlowerBlockMixin",
     "blocks.LeveledCauldronBlockMixin",
+    "blocks.NotWaterloggableBlockMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowyBlockMixin",
+    "blocks.StateDefinitionAccess",
+    "blocks.SugarcaneBlockMixin",
     "blocks.TntBlockMixin",
     "entities.ArmorStandEntityMixin",
     "entities.EntityMixin",
@@ -21,15 +24,17 @@
     "entities.MobEntityMixin",
     "entities.ServerPlayerInteractionManagerMixin",
     "worldgen.BiomeMixin",
-    "worldgen.ServerWorldMixin"
+    "worldgen.ServerWorldMixin",
+    "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
     "client.BlockColorsMixin",
     "client.BlockRenderManagerMixin",
     "client.MinecraftClientMixin",
-    "client.SheepWoolFeatureRendererMixin",
-    "client.TerrainRenderContextMixin"
+    "client.TerrainRenderContextMixin",
+    "client.sodium.BlockRendererMixin"
   ],
+  "plugin": "net.sashakyotoz.bedrockoid.mixin.MixinConfigPlugin",
   "injectors": {
     "defaultRequire": 1
   }

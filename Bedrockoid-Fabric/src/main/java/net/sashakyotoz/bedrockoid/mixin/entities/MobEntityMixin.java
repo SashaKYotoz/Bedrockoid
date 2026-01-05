@@ -21,7 +21,7 @@ public class MobEntityMixin {
         MobEntity entity = (MobEntity) (Object) this;
         if (BedrockoidConfig.shulkersCanBeDyed && entity instanceof ShulkerEntity shulker && player.getStackInHand(hand).getItem() instanceof DyeItem item) {
             if (shulker.getColor() != item.getColor()) {
-                shulker.setVariant(Optional.of(item.getColor()));
+                shulker.setColor(Optional.of(item.getColor()));
                 player.getStackInHand(hand).decrement(1);
                 cir.setReturnValue(ActionResult.CONSUME);
             } else

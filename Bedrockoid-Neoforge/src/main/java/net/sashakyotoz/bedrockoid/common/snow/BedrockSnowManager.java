@@ -1,5 +1,6 @@
 package net.sashakyotoz.bedrockoid.common.snow;
 
+import com.google.common.collect.Iterables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -30,7 +31,7 @@ public class BedrockSnowManager {
 //        else
         snowManager = new VanillaManager();
         temperatureCheck = (level, pos) -> !level.getBiome(pos).value().warmEnoughToRain(pos, level.getSeaLevel());
-        chunkRunner = (level, action) -> level.getChunkSource().chunkMap.getChunks().forEach(chunkHolder -> chunkHolder.getEntityTickingChunkFuture().getNow(ChunkHolder.UNLOADED_LEVEL_CHUNK).ifSuccess(action));
+        chunkRunner = (level, action) -> Iterables.unmodifiableIterable(level.getChunkSource().chunkMap.visibleChunkMap.values()).forEach(chunkHolder -> chunkHolder.getEntityTickingChunkFuture().getNow(ChunkHolder.UNLOADED_LEVEL_CHUNK).ifSuccess(action::accept));
     }
 
     public static boolean placeSnow(WorldGenLevel level, BlockPos pos) {
@@ -75,7 +76,7 @@ public class BedrockSnowManager {
         chunkRunner.run(level, chunk -> {
             ChunkPos chunkPos = chunk.getPos();
 
-            if ((level.isNaturalSpawningAllowed(chunkPos) && cache.chunkMap.anyPlayerCloseEnoughForSpawning(chunkPos)) || cache.chunkMap.getDistanceManager().inBlockTickingRange(chunkPos.toLong())) {
+            if ((level.canSpawnEntitiesInChunk(chunkPos) && cache.chunkMap.anyPlayerCloseEnoughForSpawning(chunkPos)) || cache.chunkMap.getDistanceManager().inBlockTickingRange(chunkPos.toLong())) {
                 if (level.shouldTickBlocksAt(chunkPos.toLong()))
                     action.accept(chunk);
             }

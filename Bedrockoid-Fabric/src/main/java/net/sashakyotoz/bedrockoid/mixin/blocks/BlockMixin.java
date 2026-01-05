@@ -2,7 +2,6 @@ package net.sashakyotoz.bedrockoid.mixin.blocks;
 
 import net.minecraft.block.*;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.FluidTags;
@@ -31,7 +30,7 @@ public abstract class BlockMixin {
         Block block = state.getBlock();
         if (block instanceof PlantBlock && block.getStateManager().getProperties().contains(BlockUtils.LAYERS) && BedrockoidConfig.snowlogging)
             this.defaultState = state.with(BlockUtils.LAYERS, 0);
-        if (block instanceof AbstractCauldronBlock && block.getStateManager().getProperties().contains(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block) && block.getStateManager().getProperties().contains(Properties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             this.defaultState = state.with(Properties.WATERLOGGED, false);
     }
 
@@ -50,7 +49,7 @@ public abstract class BlockMixin {
                 && BedrockoidConfig.snowCoversLeaves
                 && world.getBlockState(pos.down()).isAir()
                 && world.random.nextInt(9) == 4)
-            world.addParticle(ParticleTypes.SNOWFLAKE, pos.getX(), pos.getY(), pos.getZ(), world.random.nextBoolean() ? 0.01f : -0.01f, -0.01f, 0);
+            world.addParticleClient(ParticleTypes.SNOWFLAKE, pos.getX(), pos.getY(), pos.getZ(), world.random.nextBoolean() ? 0.01f : -0.01f, -0.01f, 0);
     }
 
     @Inject(method = "getPlacementState", at = @At("RETURN"), cancellable = true)
@@ -58,7 +57,7 @@ public abstract class BlockMixin {
         BlockState state = cir.getReturnValue();
         BlockState contextState = ctx.getWorld().getBlockState(ctx.getBlockPos());
         if (state != null) {
-            if (state.contains(Properties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability) {
+            if (state.contains(Properties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability) {
                 FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
                 cir.setReturnValue(state.with(Properties.WATERLOGGED, fluidState.isIn(FluidTags.WATER)));
             }

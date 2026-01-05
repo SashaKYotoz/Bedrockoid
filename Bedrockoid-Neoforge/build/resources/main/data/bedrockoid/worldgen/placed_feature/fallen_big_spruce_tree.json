@@ -38,7 +38,6 @@
         "state": {
           "Name": "minecraft:spruce_sapling",
           "Properties": {
-            "snow_layers": "0",
             "stage": "0"
           }
         }

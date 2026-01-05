@@ -1,0 +1,7 @@
+{
+  "type": "bedrockoid:fallen_tree",
+  "feature": "bedrockoid:fallen_big_pale_tree",
+  "biomes": [
+    "minecraft:dark_forest"
+  ]
+}

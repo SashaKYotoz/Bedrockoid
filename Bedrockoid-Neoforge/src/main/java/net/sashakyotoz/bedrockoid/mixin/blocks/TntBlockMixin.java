@@ -32,7 +32,7 @@ public class TntBlockMixin {
             if (stack.getMaxStackSize() == 1)
                 stack.hurtAndBreak(1, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-            TntBlock.explode(level, pos);
+            TntBlock.prime(level, pos);
             level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3 | 8);
             cir.setReturnValue(InteractionResult.SUCCESS);
         }

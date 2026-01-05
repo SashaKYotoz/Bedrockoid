@@ -27,7 +27,7 @@ public class TntBlockMixin {
     @Inject(method = "onUseWithItem", at = @At("HEAD"), cancellable = true)
     private void fireTnt(ItemStack stack, BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
         if (world.getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).isPresent()
-                && EnchantmentHelper.getLevel(player.getWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).get(), stack) > 0 && BedrockoidConfig.fireAspectImprovements) {
+                && EnchantmentHelper.getLevel(player.getEntityWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).get(), stack) > 0 && BedrockoidConfig.fireAspectImprovements) {
             if (stack.getMaxCount() == 1)
                 stack.damage(1, player, hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
             player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));

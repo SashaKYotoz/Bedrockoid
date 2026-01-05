@@ -12,7 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.TntMinecartEntity;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleType;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
@@ -31,9 +30,9 @@ public class EntityMixin {
     private void handleTick(CallbackInfo ci) {
         Entity entity = (Entity) ((Object) this);
         if (entity.isOnFire() && BedrockoidConfig.entitySharesFire) {
-            BlockState state = entity.getWorld().getBlockState(entity.getBlockPos());
+            BlockState state = entity.getEntityWorld().getBlockState(entity.getBlockPos());
             if ((state.getBlock() instanceof CampfireBlock || state.getBlock() instanceof AbstractCandleBlock) && !state.get(Properties.LIT)) {
-                entity.getWorld().setBlockState(entity.getBlockPos(), state.with(Properties.LIT, true));
+                entity.getEntityWorld().setBlockState(entity.getBlockPos(), state.with(Properties.LIT, true));
                 entity.playSoundIfNotSilent(SoundEvents.ITEM_FLINTANDSTEEL_USE);
             }
         }
@@ -55,8 +54,10 @@ public class EntityMixin {
     @Inject(method = "interact", at = @At("HEAD"))
     private void handleFireAspectInteraction(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
         Entity entity = (Entity) ((Object) this);
-        if (entity instanceof TntMinecartEntity minecart && player.getWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).isPresent()
-                && EnchantmentHelper.getLevel(player.getWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).get(), player.getStackInHand(hand)) > 0)
-            minecart.prime();
+        if (BedrockoidConfig.entitySharesFire) {
+            if (entity instanceof TntMinecartEntity minecart && player.getEntityWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).isPresent()
+                    && EnchantmentHelper.getLevel(player.getEntityWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).get(), player.getStackInHand(hand)) > 0)
+                minecart.prime(null);
+        }
     }
 }
