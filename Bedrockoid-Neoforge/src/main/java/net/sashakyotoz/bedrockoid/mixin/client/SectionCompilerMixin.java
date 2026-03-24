@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SectionBufferBuilderPack;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.chunk.RenderSectionRegion;
 import net.minecraft.client.renderer.chunk.SectionCompiler;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.util.RandomSource;

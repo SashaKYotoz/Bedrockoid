@@ -13,7 +13,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.vehicle.MinecartTNT;
+import net.minecraft.world.entity.vehicle.minecart.MinecartTNT;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;

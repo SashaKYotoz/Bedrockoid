@@ -8,10 +8,10 @@ import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.world.rule.GameRules;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
@@ -21,7 +21,7 @@ public class WorldTickHandler implements ServerTickEvents.StartWorldTick, Server
     public void onStartTick(ServerWorld serverWorld) {
         if (serverWorld.isRaining() && !ModsUtils.isSnowUnderTreesIn()) {
 
-            int randomTickSpeed = serverWorld.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);
+            int randomTickSpeed = serverWorld.getGameRules().getValue(GameRules.RANDOM_TICK_SPEED);
 
             BedrockSnowManager.runForChunks(serverWorld, chunk -> addSnowUnderTrees(serverWorld, chunk, randomTickSpeed));
         }

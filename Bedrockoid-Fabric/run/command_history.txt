@@ -9,3 +9,6 @@
 /locate biome minecraft:pale_garden
 /tp @s -887 88 2526
 /place feature bedrockoid:fallen_big_pale_tree
+/locate biome #c:is_cold
+/locate biome #c:is_snowy
+/tp @s -659 106 2367

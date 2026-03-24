@@ -9,14 +9,13 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.FoliageColor;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.api.distmarker.Dist;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockUtils {
@@ -101,7 +100,7 @@ public class BlockUtils {
             world.setBlock(pos, Blocks.WATER_CAULDRON.defaultBlockState()
                     .setValue(BlockStateProperties.LEVEL_CAULDRON, 1).setValue(BlockStateProperties.WATERLOGGED, state.getValue(BlockStateProperties.WATERLOGGED)), 3);
             return true;
-        } else if (world.getFluidState(pos.above()).is(Fluids.LAVA) && state.is(Blocks.CAULDRON) && world.getGameRules().getBoolean(GameRules.RULE_LAVA_SOURCE_CONVERSION)) {
+        } else if (world.getFluidState(pos.above()).is(Fluids.LAVA) && state.is(Blocks.CAULDRON) && world.getGameRules().get(GameRules.LAVA_SOURCE_CONVERSION)) {
             world.setBlock(pos, Blocks.LAVA_CAULDRON.defaultBlockState(), 3);
             return true;
         }

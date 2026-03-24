@@ -40,6 +40,7 @@ public class BedrockoidClient {
     public static void onOverlayDisplay(RenderGuiLayerEvent.Post event) {
         ReachPlacementUtils.INSTANCE.renderIndicator(event.getGuiGraphics());
     }
+
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register(

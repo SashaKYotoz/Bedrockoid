@@ -49,7 +49,7 @@ public abstract class ComposterBlockMixin {
     private static void regulatePushOfEntity(Entity user, BlockState state, WorldAccess world, BlockPos pos, ItemStack stack, CallbackInfoReturnable<BlockState> cir) {
         if (user != null && user.getBlockPos().equals(pos) && BedrockoidConfig.composterCollisionFix) {
             user.setVelocity(0, 0.15f, 0);
-            user.velocityModified = true;
+            user.velocityDirty = true;
         }
     }
 

@@ -1,7 +1,7 @@
 package net.sashakyotoz.bedrockoid.common.snow.snow_managers;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -10,13 +10,14 @@ import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 
 public class VanillaManager implements SnowManager {
     @Override
     public boolean placeSnow(WorldGenLevel level, BlockPos pos) {
-        int accumulationHeight = level instanceof Level l && l.getServer() != null ? l.getServer().getGameRules().getInt(GameRules.RULE_SNOW_ACCUMULATION_HEIGHT) : 1;
+        int accumulationHeight = level instanceof ServerLevel l ? l.getGameRules().get(GameRules.MAX_SNOW_ACCUMULATION_HEIGHT) : 1;
 
         if (accumulationHeight > 0 && BedrockSnowManager.canSnow(level, pos)) {
             BlockState state = level.getBlockState(pos);

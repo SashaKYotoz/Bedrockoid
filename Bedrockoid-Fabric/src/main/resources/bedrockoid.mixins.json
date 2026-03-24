@@ -31,7 +31,7 @@
     "client.BlockColorsMixin",
     "client.BlockRenderManagerMixin",
     "client.MinecraftClientMixin",
-    "client.TerrainRenderContextMixin",
+    "client.SectionBuilderMixin",
     "client.sodium.BlockRendererMixin"
   ],
   "plugin": "net.sashakyotoz.bedrockoid.mixin.MixinConfigPlugin",

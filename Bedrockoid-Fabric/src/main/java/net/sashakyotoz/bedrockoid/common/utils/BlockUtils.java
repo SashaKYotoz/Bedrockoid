@@ -13,9 +13,9 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockRenderView;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.FoliageColors;
+import net.minecraft.world.rule.GameRules;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockUtils {
@@ -113,7 +113,7 @@ public class BlockUtils {
         else if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.CAULDRON)) {
             world.setBlockState(pos, Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 1).with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED)));
             return true;
-        } else if (world.getFluidState(pos.up()).isOf(Fluids.LAVA) && state.isOf(Blocks.CAULDRON) && world.getGameRules().getBoolean(GameRules.LAVA_SOURCE_CONVERSION)) {
+        } else if (world.getFluidState(pos.up()).isOf(Fluids.LAVA) && state.isOf(Blocks.CAULDRON) && world.getGameRules().getValue(GameRules.LAVA_SOURCE_CONVERSION)) {
             world.setBlockState(pos, Blocks.LAVA_CAULDRON.getDefaultState());
             return true;
         }

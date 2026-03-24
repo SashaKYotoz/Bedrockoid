@@ -5,7 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -17,11 +17,11 @@ import java.util.Optional;
 public class ReachPlacementUtils {
     public static final ReachPlacementUtils INSTANCE = new ReachPlacementUtils();
     private final Minecraft client = Minecraft.getInstance();
-    public static final ResourceLocation PLACEMENT_ICON = Bedrockoid.makeID("reach_around_icon");
+    public static final Identifier PLACEMENT_ICON = Bedrockoid.makeID("reach_around_icon");
 
     public void renderIndicator(GuiGraphics drawContext) {
         if (canReachAround())
-            drawContext.blitSprite(RenderPipelines.CROSSHAIR, PLACEMENT_ICON, (drawContext.guiWidth() / 2) - 15, (drawContext.guiHeight() / 2) - 15, 15, 15);
+            drawContext.blitSprite(RenderPipelines.CROSSHAIR, PLACEMENT_ICON, (drawContext.guiWidth() - 15) / 2, (drawContext.guiHeight() - 15) / 2, 15, 15);
     }
 
     public boolean canReachAround() {

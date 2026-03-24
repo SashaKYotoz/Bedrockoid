@@ -5,12 +5,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.SnowyDirtBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -26,7 +26,7 @@ public class NeoBusEvents {
         Level level = event.getLevel();
         if (level instanceof ServerLevel serverLevel && serverLevel.isRaining() && !ModsUtils.isSnowUnderTreesIn()) {
 
-            int randomTickSpeed = serverLevel.getGameRules().getInt(GameRules.RULE_RANDOMTICKING);
+            int randomTickSpeed = serverLevel.getGameRules().get(GameRules.RANDOM_TICK_SPEED);
 
             BedrockSnowManager.runForChunks(serverLevel, chunk -> addSnowUnderTrees(serverLevel, chunk, randomTickSpeed));
         }

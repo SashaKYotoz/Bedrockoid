@@ -3,16 +3,16 @@ net.neoforged.fml.startup.Client
 
 # NeoForge Run-Type Program Arguments
 --version
-21.10.64
+21.11.27-beta
 --assetIndex
-27
+29
 --assetsDir
 C:\\Users\\oleksandr\\.gradle\\caches\\neoformruntime\\assets
 --fml.mcVersion
-1.21.10
+1.21.11
 --fml.neoForgeVersion
-21.10.64
+21.11.27-beta
 --fml.neoFormVersion
-20251010.172816
+20251209.172050
 
 # User Supplied Program Arguments

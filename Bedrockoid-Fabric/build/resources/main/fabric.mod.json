@@ -24,9 +24,9 @@
     "bedrockoid.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.18.1",
+    "fabricloader": ">=0.18.3",
     "fabric": "*",
-    "minecraft": "1.21.10"
+    "minecraft": "1.21.11"
   },
   "accessWidener": "bedrockoid.accesswidener"
 }
