@@ -36,6 +36,8 @@ public class BedrockoidConfig {
     public static boolean snowCoversLeaves = true;
     public static boolean snowCoversVines = true;
     public static boolean sodiumTurnOffSnowloggability = false;
+    public static boolean chargedCreeperDropsEveryHead = false;
+    public static int maximumHeadsAmountCreeperDrop = 1;
 
     public static void loadConfig() {
         Path configPath = Paths.get("config/bedrockoid-config.toml");
@@ -63,6 +65,8 @@ public class BedrockoidConfig {
         config.add(FLAGS + ".bedrockoid.snowCoversLeaves", true);
         config.add(FLAGS + ".bedrockoid.snowCoversVines", true);
         config.add(FLAGS + ".bedrockoid.sodiumTurnOffSnowloggability", false);
+        config.add(FLAGS + ".bedrockoid.chargedCreeperDropsEveryHead", false);
+        config.add(FLAGS + ".bedrockoid.maximumHeadsAmountCreeperDrop", 1);
         config.add(LISTS + ".bedrockoid.disableSnowUnderTreesIn", new ArrayList<>());
         config.save();
     }
@@ -90,6 +94,8 @@ public class BedrockoidConfig {
         snowCoversLeaves = config.get(FLAGS + ".bedrockoid.snowCoversLeaves");
         snowCoversVines = config.get(FLAGS + ".bedrockoid.snowCoversVines");
         sodiumTurnOffSnowloggability = config.get(FLAGS + ".bedrockoid.sodiumTurnOffSnowloggability");
+        chargedCreeperDropsEveryHead = config.get(FLAGS + ".bedrockoid.chargedCreeperDropsEveryHead");
+        maximumHeadsAmountCreeperDrop = config.get(FLAGS + ".bedrockoid.maximumHeadsAmountCreeperDrop");
         disableSnowUnderTreesIn = config.get(LISTS + ".bedrockoid.disableSnowUnderTreesIn");
     }
 }

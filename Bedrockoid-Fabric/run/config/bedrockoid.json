@@ -15,12 +15,13 @@
   "shulkersCanBeDyed": true,
   "shieldActivatesWhenSneaking": true,
   "canPlantsBeBonemeal": true,
+  "canSugarcaneBeBonemeal": true,
   "fireAspectImprovements": true,
   "composterCollisionFix": true,
   "snowSpawnsUnderTrees": true,
-  "disableSnowUnderTreesIn": [
-    "minecraft:snowy_taiga"
-  ],
+  "disableSnowUnderTreesIn": [],
   "snowCoversLeaves": true,
-  "snowCoversVines": true
+  "snowCoversVines": true,
+  "chargedCreeperDropsEveryHead": false,
+  "maximumHeadsAmountCreeperDrop": 4
 }

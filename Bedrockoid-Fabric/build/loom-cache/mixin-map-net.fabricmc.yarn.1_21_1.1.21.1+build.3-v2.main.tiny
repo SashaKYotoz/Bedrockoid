@@ -5,6 +5,7 @@ FIELD	net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin	Lnet/minecraft
 FIELD	net/sashakyotoz/bedrockoid/mixin/client/BlockColorsMixin	Lnet/minecraft/util/collection/IdList;	providers	field_1995
 FIELD	net/sashakyotoz/bedrockoid/mixin/client/MinecraftClientMixin	Lnet/minecraft/client/network/ClientPlayerEntity;	player	field_1724
 FIELD	net/sashakyotoz/bedrockoid/mixin/client/MinecraftClientMixin	Lnet/minecraft/util/hit/HitResult;	crosshairTarget	field_1765
+FIELD	net/sashakyotoz/bedrockoid/mixin/entities/CreeperEntityMixin	I	headsDropped	field_7226
 METHOD	net/sashakyotoz/bedrockoid/mixin/blocks/BlockStateMixin	()Lnet/minecraft/block/BlockState;	asBlockState	method_26233
 METHOD	net/sashakyotoz/bedrockoid/mixin/blocks/ComposterBlockMixin	(FLnet/minecraft/item/ItemConvertible;)V	registerCompostableItem	method_17753
 METHOD	net/sashakyotoz/bedrockoid/mixin/blocks/SugarcaneBlockMixin	(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z	canPlaceAt	method_9558
@@ -12,3 +13,4 @@ METHOD	net/sashakyotoz/bedrockoid/mixin/client/BlockRenderManagerMixin	(Lnet/min
 METHOD	net/sashakyotoz/bedrockoid/mixin/client/BlockRenderManagerMixin	(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/BlockRenderView;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;)V	renderDamage	method_23071
 METHOD	net/sashakyotoz/bedrockoid/mixin/client/sodium/BlockRendererMixin	(Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/util/math/BlockPos;)V	renderModel	renderModel
 METHOD	net/sashakyotoz/bedrockoid/mixin/client/TerrainRenderContextMixin	(Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/client/render/model/BakedModel;Lnet/minecraft/client/util/math/MatrixStack;)V	tessellateBlock	tessellateBlock
+METHOD	net/sashakyotoz/bedrockoid/mixin/entities/CreeperEntityMixin	()Z	shouldRenderOverlay	method_6872

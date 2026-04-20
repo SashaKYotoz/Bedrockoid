@@ -24,5 +24,7 @@
   "bedrockoid.midnightconfig.snowSpawnsUnderTrees": "Чи може сніг бути розміщеним під деревами",
   "bedrockoid.midnightconfig.disableSnowUnderTreesIn": "Список біомів, де заблоковано розміщення снігу під деревами",
   "bedrockoid.midnightconfig.snowCoversLeaves": "Чи має листя сніжитися й змінювати колір",
-  "bedrockoid.midnightconfig.snowCoversVines": "Чи має лоза сніжитися й змінювати колір"
+  "bedrockoid.midnightconfig.snowCoversVines": "Чи має лоза сніжитися й змінювати колір",
+  "bedrockoid.midnightconfig.chargedCreeperDropsEveryHead": "Чи може заряджений кріпер вибивати кожну головну з підірваних мобів",
+  "bedrockoid.midnightconfig.maximumHeadsAmountCreeperDrop": "Визначає максимальну кількість голів, які може вибити заряджений кріпер"
 }

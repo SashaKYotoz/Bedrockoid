@@ -1,27 +1,3 @@
-/enchant @a minecraft:fire_aspect
-/gamerule randomTickSpeed 100
-/enchant @a minecraft:frost_walker 2
-/locate biome minecraft:cherry_grove
-/tp @s -2050 63 1622
-/locate biome minecraft:ocean
-/tp @s -1459 81 985
-/setblock ~ ~ ~ minecraft:acacia_fence
-/time set day
-/tp 0 100 0
-/tp 9000 100 0
-/locate biome minecraft:snowy_plains
-/tp @s 2812 80 212
-/fill 2890 80 282 2869 74 302 minecraft:short_grass replace snow
-/time set day
-/weather rain 1d
-/gamerule randomTickSpeed 100
-/gamerule snowAccumulationHeight 2
-/gamerule snowAccumulationHeight 1
-/gamerule randomTickSpeed 5
-/weather clear
-/locate biome minecraft:snowy_taiga
-/tp @s 2865 69 169
-/locate biome minecraft:snowy_taiga
-/tp @s -1665 76 -3004
 /place feature bedrockoid:fallen_big_spruce_tree
-/gamerule randomTickSpeed 5
+/place feature bedrockoid:fallen_big_jungle_tree
+/summon minecraft:lightning_bolt

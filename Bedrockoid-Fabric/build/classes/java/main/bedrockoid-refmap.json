@@ -70,6 +70,9 @@
     "net/sashakyotoz/bedrockoid/mixin/entities/ArmorStandEntityMixin": {
       "shouldShowArms": "Lnet/minecraft/class_1531;method_6929()Z"
     },
+    "net/sashakyotoz/bedrockoid/mixin/entities/CreeperEntityMixin": {
+      "shouldDropHead": "Lnet/minecraft/class_1548;method_7008()Z"
+    },
     "net/sashakyotoz/bedrockoid/mixin/entities/EntityMixin": {
       "(Lnet/minecraft/particle/ParticleType;Lnet/minecraft/block/BlockState;)Lnet/minecraft/particle/BlockStateParticleEffect;": "(Lnet/minecraft/class_2396;Lnet/minecraft/class_2680;)Lnet/minecraft/class_2388;",
       "baseTick": "Lnet/minecraft/class_1297;method_5670()V",
@@ -173,6 +176,9 @@
       },
       "net/sashakyotoz/bedrockoid/mixin/entities/ArmorStandEntityMixin": {
         "shouldShowArms": "Lnet/minecraft/class_1531;method_6929()Z"
+      },
+      "net/sashakyotoz/bedrockoid/mixin/entities/CreeperEntityMixin": {
+        "shouldDropHead": "Lnet/minecraft/class_1548;method_7008()Z"
       },
       "net/sashakyotoz/bedrockoid/mixin/entities/EntityMixin": {
         "(Lnet/minecraft/particle/ParticleType;Lnet/minecraft/block/BlockState;)Lnet/minecraft/particle/BlockStateParticleEffect;": "(Lnet/minecraft/class_2396;Lnet/minecraft/class_2680;)Lnet/minecraft/class_2388;",

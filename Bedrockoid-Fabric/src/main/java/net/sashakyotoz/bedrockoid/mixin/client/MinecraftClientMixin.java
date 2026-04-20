@@ -34,12 +34,14 @@ public abstract class MinecraftClientMixin extends ReentrantThreadExecutor<Runna
 
     @Inject(method = "doItemUse", at = @At("HEAD"))
     private void crosshairTargetHandling(CallbackInfo ci) {
-        if (this.player == null || ModsUtils.isBedrockifyIn() || !BedrockoidConfig.reachAroundPlacement)
-            return;
-        if (ReachPlacementUtils.INSTANCE.canReachAround()) {
-            final ClientPlayerEntity player = this.player;
-            final BlockPos targetPos = ReachPlacementUtils.getFacingSteppingBlockPos(player);
-            this.crosshairTarget = new BlockHitResult(new Vec3d(targetPos.getX(), player.getY(), targetPos.getZ()), player.getHorizontalFacing(), targetPos, false);
+        if (BedrockoidConfig.reachAroundPlacement) {
+            if (this.player == null || ModsUtils.isBedrockifyIn())
+                return;
+            if (ReachPlacementUtils.INSTANCE.canReachAround()) {
+                final ClientPlayerEntity player = this.player;
+                final BlockPos targetPos = ReachPlacementUtils.getFacingSteppingBlockPos(player);
+                this.crosshairTarget = new BlockHitResult(new Vec3d(targetPos.getX(), player.getY(), targetPos.getZ()), player.getHorizontalFacing(), targetPos, false);
+            }
         }
     }
 }

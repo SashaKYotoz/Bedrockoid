@@ -32,6 +32,7 @@ public class BedrockoidClient {
 
     @SubscribeEvent
     public static void onOverlayDisplay(RenderGuiLayerEvent.Post event) {
-        ReachPlacementUtils.INSTANCE.renderIndicator(event.getGuiGraphics());
+        if (BedrockoidConfig.reachAroundPlacement)
+            ReachPlacementUtils.INSTANCE.renderIndicator(event.getGuiGraphics());
     }
 }

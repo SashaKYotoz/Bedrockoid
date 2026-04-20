@@ -20,7 +20,9 @@ public class BedrockoidClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> ReachPlacementUtils.INSTANCE.renderIndicator(drawContext));
+        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> {
+            if (BedrockoidConfig.reachAroundPlacement) ReachPlacementUtils.INSTANCE.renderIndicator(drawContext);
+        });
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             //juancarloscp52 copyright
             //stating changes: 'if' condition changes to integrate mod's config

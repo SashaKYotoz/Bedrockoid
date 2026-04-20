@@ -20,6 +20,7 @@
     "blocks.TntBlockMixin",
     "client.sodium.BlockRendererMixin",
     "entities.ArmorStandEntityMixin",
+    "entities.CreeperEntityMixin",
     "entities.EntityMixin",
     "entities.LivingEntityMixin",
     "entities.MobEntityMixin",

@@ -2,7 +2,7 @@
   "armorStandArms": true,
   "redstoneConnectsToPiston": true,
   "snowlogging": true,
-  "cauldronWaterloggability": true,
+  "blocksWaterloggability": true,
   "cauldronNaturalFilling": true,
   "stopElytraByPressingSpace": true,
   "wetSpongesDryOut": true,
@@ -15,10 +15,13 @@
   "shulkersCanBeDyed": true,
   "shieldActivatesWhenSneaking": true,
   "canPlantsBeBonemeal": true,
+  "canSugarcaneBeBonemeal": true,
   "fireAspectImprovements": true,
   "composterCollisionFix": true,
   "snowSpawnsUnderTrees": true,
   "disableSnowUnderTreesIn": [],
   "snowCoversLeaves": true,
-  "snowCoversVines": true
+  "snowCoversVines": true,
+  "chargedCreeperDropsEveryHead": true,
+  "maximumHeadsAmountCreeperDrop": 1
 }
