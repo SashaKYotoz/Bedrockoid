@@ -6,7 +6,6 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.AbstractCauldronBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -31,11 +30,11 @@ public abstract class BlockMixin {
     @Shadow
     private BlockState defaultBlockState;
     @Inject(method = "registerDefaultState", at = @At("TAIL"))
-    private void addSnowLayers(BlockState state, CallbackInfo ci) {
+    private void addExtraStates(BlockState state, CallbackInfo ci) {
         Block block = state.getBlock();
         if (block instanceof BushBlock && block.getStateDefinition().getProperties().contains(BlockUtils.LAYERS) && BedrockoidConfig.snowlogging)
             this.defaultBlockState = state.setValue(BlockUtils.LAYERS, 0);
-        if (block instanceof AbstractCauldronBlock && block.getStateDefinition().getProperties().contains(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability)
+        if (BlockUtils.isInstanceOfAny(block) && block.getStateDefinition().getProperties().contains(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
             this.defaultBlockState = state.setValue(BlockStateProperties.WATERLOGGED, false);
     }
 
@@ -44,8 +43,11 @@ public abstract class BlockMixin {
         Block self = (Block) (Object) this;
         if (self instanceof BushBlock && ModsUtils.isSnowloggingNotOverrided())
             builder.add(BlockUtils.LAYERS);
-        if (self instanceof AbstractCauldronBlock)
-            builder.add(BlockStateProperties.WATERLOGGED);
+        if (self instanceof AbstractCauldronBlock){
+            try {
+                builder.add(BlockStateProperties.WATERLOGGED);
+            } catch (IllegalArgumentException ignored) {}
+        }
     }
 
     @Inject(method = "animateTick", at = @At("HEAD"))
@@ -62,7 +64,7 @@ public abstract class BlockMixin {
         BlockState state = cir.getReturnValue();
         BlockState contextState = ctx.getLevel().getBlockState(ctx.getClickedPos());
         if (state != null) {
-            if (state.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.cauldronWaterloggability) {
+            if (state.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability) {
                 FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
                 cir.setReturnValue(state.setValue(BlockStateProperties.WATERLOGGED, fluidState.is(FluidTags.WATER)));
             }

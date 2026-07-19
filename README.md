@@ -29,6 +29,7 @@ rather than make Java Edition look like Bedrock Edition
 - Plants can be multiplied by bonemealing
 - Redstone can be connected to pistons
 - Armor stand has arms by default
+- Charged creeper drops each killed mobs' heads or as many as declared in mod's config
 
 <hr>
 

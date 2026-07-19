@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -18,17 +17,11 @@ public class BedrockoidModBusClient {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register(
-                (state, world, pos, index) -> {
-                    if ((BlockUtils.haveLeavesToChangeColor(state, world, pos)
-                            || BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos)) && BedrockoidConfig.snowCoversLeaves) {
-                        int colour = 0;
-                        if (BlockUtils.haveLeavesToChangeColor(state, world, pos))
-                            colour = 0xFFFFFF;
-                        if (BlockUtils.haveLeavesToSlightlyChangeColor(state, world, pos))
-                            colour = 0xCCCCCC;
-                        return colour;
-                    } else
-                        return world != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.getDefaultColor();
+                (state, level, pos, index) -> {
+                    if (BedrockoidConfig.snowCoversLeaves)
+                        return BlockUtils.leavesSnowyColor(state, pos);
+                    else
+                        return level != null && pos != null ? BiomeColors.getAverageFoliageColor(level, pos) : FoliageColor.getDefaultColor();
                 },
                 Blocks.OAK_LEAVES,
                 Blocks.SPRUCE_LEAVES,
@@ -42,15 +35,12 @@ public class BedrockoidModBusClient {
         );
         event.register(
                 (state, world, pos, index) -> {
-                    if ((BlockUtils.isSnowlogged(state)
-                            || (state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF)
-                            && world != null && pos != null
-                            && BlockUtils.isSnowlogged(world.getBlockState(pos.below()))))
-                            && BedrockoidConfig.snowlogging)
+                    if (BlockUtils.isSnowlogged(state) || (world != null && pos != null
+                            && BlockUtils.isSnowlogged(world.getBlockState(pos.below()))) && BedrockoidConfig.snowlogging)
                         return 0xCCCCCC;
                     return world != null ? BiomeColors.getAverageGrassColor(world, pos) : GrassColor.getDefaultColor();
                 },
-                Blocks.GLASS,
+                Blocks.GRASS,
                 Blocks.TALL_GRASS,
                 Blocks.FERN,
                 Blocks.LARGE_FERN

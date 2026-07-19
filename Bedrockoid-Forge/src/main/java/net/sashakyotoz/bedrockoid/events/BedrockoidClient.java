@@ -1,21 +1,13 @@
 package net.sashakyotoz.bedrockoid.events;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
-import net.minecraft.world.level.FoliageColor;
-import net.minecraft.world.level.GrassColor;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
-import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ReachPlacementUtils;
 

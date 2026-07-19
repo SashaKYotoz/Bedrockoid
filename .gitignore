@@ -10,16 +10,16 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-Bedrockoid-Neoforge/
-Bedrockoid-Fabric/.idea/
-Bedrockoid-Fabric/run/
-Bedrockoid-Fabric/build/
-Bedrockoid-Fabric/src/main/generated/.cache/
-Bedrockoid-Fabric/.gradle/
-Bedrockoid-Forge/.idea/
-Bedrockoid-Forge/run/
-Bedrockoid-Forge/build/
-Bedrockoid-Forge/.gradle/
+/Bedrockoid-Neoforge
+/Bedrockoid-Fabric/.idea
+/Bedrockoid-Fabric/run
+/Bedrockoid-Fabric/build
+/Bedrockoid-Fabric/src/main/generated/.cache
+/Bedrockoid-Fabric/.gradle
+/Bedrockoid-Forge/.idea
+/Bedrockoid-Forge/run
+/Bedrockoid-Forge/build
+/Bedrockoid-Forge/.gradle
 
 # Package Files #
 *.jar

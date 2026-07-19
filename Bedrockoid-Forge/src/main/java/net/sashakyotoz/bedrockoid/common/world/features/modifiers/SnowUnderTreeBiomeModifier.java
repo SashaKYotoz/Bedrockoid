@@ -17,7 +17,7 @@ public record SnowUnderTreeBiomeModifier(Holder<PlacedFeature> snowUnderTreesFea
         if (phase == Phase.ADD && BedrockoidConfig.snowSpawnsUnderTrees) {
             ClimateSettingsBuilder climate = builder.getClimateSettings();
 
-            if (climate.hasPrecipitation() && climate.getTemperature() < 0.15F)
+            if (climate.hasPrecipitation() && climate.getTemperature() <= 0.15F)
                 builder.getGenerationSettings().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION.ordinal(), snowUnderTreesFeature);
         }
     }

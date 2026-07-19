@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(ServerLevel.class)
-public class ServerWorldMixin {
+public class ServerLevelMixin {
     @WrapOperation(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/world/level/block/Block;)Z", ordinal = 1))
     public boolean tickPrecipitationA(
             BlockState instance, Block block, Operation<Boolean> original,
