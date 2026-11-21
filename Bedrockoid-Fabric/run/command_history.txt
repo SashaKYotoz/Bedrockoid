@@ -1,3 +1,0 @@
-/place feature bedrockoid:fallen_big_spruce_tree
-/place feature bedrockoid:fallen_big_jungle_tree
-/summon minecraft:lightning_bolt
