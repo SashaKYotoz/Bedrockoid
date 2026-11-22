@@ -17,6 +17,7 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = FLAGS) public static boolean wetSpongesDryOut = true;
     @Entry(category = FLAGS) public static boolean entitySharesFire = true;
     @Entry(category = FLAGS) public static boolean fallenTrees = true;
+    @Entry(category = FLAGS) public static boolean bigFallenTrees = true;
     @Entry(category = FLAGS) public static boolean reachAroundPlacement = true;
     @Entry(category = FLAGS) public static boolean sheepFurColorFix = true;
     @Entry(category = FLAGS) public static boolean frostwalkerBoost = true;
@@ -31,6 +32,6 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = LISTS) public static List<String> disableSnowUnderTreesIn = new ArrayList<>();
     @Entry(category = FLAGS) public static boolean snowCoversLeaves = true;
     @Entry(category = FLAGS) public static boolean snowCoversVines = true;
-    @Entry(category = FLAGS) public static boolean chargedCreeperDropsEveryHead = true;
+    @Entry(category = FLAGS) public static boolean chargedCreeperDropsEveryHead = false;
     @Entry(category = FLAGS) public static int maximumHeadsAmountCreeperDrop = 1;
 }

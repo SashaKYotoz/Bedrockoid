@@ -13,8 +13,6 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 
-// Code used below is port of SnowUnderTreesFeature from SnowUnderTrees to fabric
-// goes under Copyright (c) 2022 bl4ckscor3
 public class SnowUnderTreeFeature extends Feature<DefaultFeatureConfig> {
 
     public static final Feature<DefaultFeatureConfig> INSTANCE = new SnowUnderTreeFeature(DefaultFeatureConfig.CODEC);

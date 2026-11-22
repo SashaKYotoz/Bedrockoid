@@ -5,53 +5,36 @@ import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-import net.sashakyotoz.bedrockoid.BedrockoidConfig;
-import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
+import net.sashakyotoz.bedrockoid.Bedrockoid;
+import net.sashakyotoz.bedrockoid.client.SnowColors;
 
-@EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = Bedrockoid.MOD_ID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class BedrockoidModBusClient {
-
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
-        event.register(
-                (state, level, pos, index) -> {
-                    if (BedrockoidConfig.snowCoversLeaves)
-                        return BlockUtils.leavesSnowyColor(state, pos);
-                    else
-                        return level != null && pos != null ? BiomeColors.getAverageFoliageColor(level, pos) : FoliageColor.getDefaultColor();
-                },
+        event.register((state, level, pos, index) -> SnowColors.leaves(state, level, pos, SnowColors.averageFoliage(level, pos)),
                 Blocks.OAK_LEAVES,
-                Blocks.SPRUCE_LEAVES,
-                Blocks.BIRCH_LEAVES,
                 Blocks.JUNGLE_LEAVES,
                 Blocks.ACACIA_LEAVES,
-                Blocks.DARK_OAK_LEAVES,
-                Blocks.MANGROVE_LEAVES,
-                Blocks.AZALEA_LEAVES,
-                Blocks.FLOWERING_AZALEA_LEAVES
-        );
-        event.register(
-                (state, world, pos, index) -> {
-                    if (BlockUtils.isSnowlogged(state) || (world != null && pos != null
-                            && BlockUtils.isSnowlogged(world.getBlockState(pos.below()))) && BedrockoidConfig.snowlogging)
-                        return 0xCCCCCC;
-                    return world != null ? BiomeColors.getAverageGrassColor(world, pos) : GrassColor.getDefaultColor();
-                },
-                Blocks.GLASS,
+                Blocks.DARK_OAK_LEAVES);
+        event.register((state, level, pos, index) -> SnowColors.leaves(state, level, pos, FoliageColor.getEvergreenColor()),
+                Blocks.SPRUCE_LEAVES);
+        event.register((state, level, pos, index) -> SnowColors.leaves(state, level, pos, FoliageColor.getBirchColor()),
+                Blocks.BIRCH_LEAVES);
+        event.register((state, level, pos, index) -> SnowColors.leaves(state, level, pos, FoliageColor.getMangroveColor()),
+                Blocks.MANGROVE_LEAVES);
+        event.register((state, level, pos, index) -> SnowColors.plant(state, level, pos, SnowColors.averageGrass(level, pos, GrassColor.getDefaultColor())),
+                Blocks.SHORT_GRASS,
+                Blocks.FERN);
+        event.register((state, level, pos, index) -> SnowColors.plant(state, level, pos, SnowColors.averageGrass(level, SnowColors.lowerHalf(state, pos), -1)),
                 Blocks.TALL_GRASS,
-                Blocks.FERN,
-                Blocks.LARGE_FERN
-        );
-        event.register(
-                (state, world, pos, index) -> {
-                    if (BlockUtils.canVinesBeCoveredInSnow(state, world, pos) && BedrockoidConfig.snowCoversVines)
-                        return 0xCCCCCC;
-                    return world != null && pos != null ? BiomeColors.getAverageFoliageColor(world, pos) : FoliageColor.getDefaultColor();
-                },
-                Blocks.VINE
-        );
+                Blocks.LARGE_FERN);
+        event.register((state, level, pos, index) -> SnowColors.plant(state, level, pos, level != null && pos != null ? BiomeColors.getAverageGrassColor(level, pos) : -1),
+                Blocks.SUGAR_CANE);
+        event.register((state, level, pos, index) -> SnowColors.vine(state, level, pos), Blocks.VINE);
     }
 }

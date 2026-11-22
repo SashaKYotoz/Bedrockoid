@@ -25,7 +25,7 @@ public abstract class SheepWoolFeatureRendererMixin extends FeatureRenderer<Shee
 
     @Inject(method = "render*", at = @At("RETURN"))
     private void renderWoolColorAfterShearing(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int light, SheepEntity sheepEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
-        if (ModsUtils.isBedrockifyIn() || !BedrockoidConfig.sheepFurColorFix)
+        if (ModsUtils.isBedrockifyIn() || !BedrockoidConfig.sheepFurColorFix || !sheepEntity.isSheared() || sheepEntity.isInvisible())
             return;
         else {
             int color;
@@ -41,7 +41,7 @@ public abstract class SheepWoolFeatureRendererMixin extends FeatureRenderer<Shee
                     int t = SheepEntity.getRgbColor(DyeColor.byId(q));
                     color = ColorHelper.Argb.lerp(r, s, t);
                 }
-                //don't mind me on this :)
+
                 if (sheepEntity.getName().getString().equals("SashaKYotoz")) {
                     DyeColor[] cycle = new DyeColor[] {
                             DyeColor.LIGHT_BLUE,

@@ -1,6 +1,6 @@
 package net.sashakyotoz.bedrockoid.mixin;
 
-import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
+import net.neoforged.fml.loading.LoadingModList;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -8,10 +8,9 @@ import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
 import java.util.List;
 import java.util.Set;
 
-public class MixinConfigPlugin implements IMixinConfigPlugin {
+public class MixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
-
     }
 
     @Override
@@ -21,16 +20,17 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if ("PlantsMixin".contains(mixinClassName))
-            return ModsUtils.isSnowloggingNotOverrided();
-        if ("bedrockoid.mixin.client.sodium".contains(mixinClassName))
-            return ModsUtils.isSodiumIn();
+        if (mixinClassName.contains(".client.sodium."))
+            return isLoaded("sodium");
+        if (mixinClassName.endsWith(".PlantsMixin"))
+            return !isLoaded("snowrealmagic") && !isLoaded("wilderwild");
+        if (mixinClassName.endsWith(".FlowerBlockMixin"))
+            return !isLoaded("bedrockify");
         return true;
     }
 
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-
     }
 
     @Override
@@ -40,11 +40,14 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-
     }
 
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
+    }
 
+    private static boolean isLoaded(String modId) {
+        LoadingModList modList = LoadingModList.get();
+        return modList != null && modList.getModFileById(modId) != null;
     }
 }

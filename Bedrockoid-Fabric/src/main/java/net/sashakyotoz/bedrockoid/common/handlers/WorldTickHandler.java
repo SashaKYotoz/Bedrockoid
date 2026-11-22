@@ -19,8 +19,9 @@ import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 public class WorldTickHandler implements ServerTickEvents.StartWorldTick, ServerTickEvents.EndWorldTick {
     @Override
     public void onStartTick(ServerWorld serverWorld) {
-        if (serverWorld.isRaining() && !ModsUtils.isSnowUnderTreesIn()) {
+        if (BedrockoidConfig.snowSpawnsUnderTrees && serverWorld.isRaining() && !ModsUtils.isSnowUnderTreesIn()) {
             int randomTickSpeed = serverWorld.getGameRules().getInt(GameRules.RANDOM_TICK_SPEED);
+
             BedrockSnowManager.runForChunks(serverWorld, chunk -> addSnowUnderTrees(serverWorld, chunk, randomTickSpeed));
         }
     }
@@ -36,8 +37,8 @@ public class WorldTickHandler implements ServerTickEvents.StartWorldTick, Server
 
                 if (world.getBlockState(world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, randomPos).down()).isIn(BlockTags.LEAVES)) {
                     BlockPos pos = world.getTopPosition(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, randomPos);
-                    Biome biome = world.getBiome(pos).value();
-                    boolean biomeDisabled = BedrockoidConfig.disableSnowUnderTreesIn.contains(world.getRegistryManager().get(RegistryKeys.BIOME).getKey(biome).toString());
+                    String biomeId = world.getBiome(pos).getKey().map(key -> key.getValue().toString()).orElse("");
+                    boolean biomeDisabled = BedrockoidConfig.disableSnowUnderTreesIn.contains(biomeId);
 
                     if (!biomeDisabled && BedrockSnowManager.placeSnow(world, pos)) {
                         BlockPos posBelow = pos.down();
@@ -53,7 +54,5 @@ public class WorldTickHandler implements ServerTickEvents.StartWorldTick, Server
 
     @Override
     public void onEndTick(ServerWorld serverWorld) {
-//        if (ModsUtils.isSereneSeasonsIn())
-//            SereneSeasonsHandler.tryMeltSnowUnderTrees(serverWorld);
     }
 }

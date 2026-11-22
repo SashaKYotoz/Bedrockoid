@@ -11,6 +11,7 @@
   "bedrockoid.midnightconfig.wetSpongesDryOut": "Can be wet sponges dried out in dry biomes",
   "bedrockoid.midnightconfig.entitySharesFire": "Can entities in fire light campfires and candles",
   "bedrockoid.midnightconfig.fallenTrees": "Have fallen trees to be spawned",
+  "bedrockoid.midnightconfig.bigFallenTrees": "Have big 2x2 fallen trees to be spawned",
   "bedrockoid.midnightconfig.reachAroundPlacement": "Can Bedrock Edition reach around placement be used",
   "bedrockoid.midnightconfig.sheepFurColorFix": "Have sheep's fur color to be fixed",
   "bedrockoid.midnightconfig.frostwalkerBoost": "Have frostwalker enchantment be boosted",

@@ -1,8 +1,8 @@
 {
   "type": "neoforge:add_features",
-  "features": "minecraft:mushroom_island_vegetation",
+  "features": "bedrockoid:swamp_huge_mushroom",
   "biomes": [
     "minecraft:swamp"
   ],
-  "step": "local_modifications"
+  "step": "vegetal_decoration"
 }

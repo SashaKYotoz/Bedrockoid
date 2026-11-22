@@ -1,47 +1,51 @@
 package net.sashakyotoz.bedrockoid.mixin.blocks.waterlog;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
-import net.sashakyotoz.bedrockoid.mixin.blocks.StateDefinitionAccess;
+import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.Set;
+@Mixin(value = {LayeredCauldronBlock.class, AnvilBlock.class, GrindstoneBlock.class, StonecutterBlock.class, BedBlock.class,
+        LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, BasePressurePlateBlock.class, FenceGateBlock.class, BellBlock.class})
+public abstract class NotWaterloggableBlockMixin implements SimpleWaterloggedBlock {
+    @Override
+    public boolean canPlaceLiquid(@Nullable Player player, BlockGetter level, BlockPos pos, BlockState state, Fluid fluid) {
+        return BedrockoidConfig.blocksWaterloggability
+                && BlockUtils.hasExtraWaterlogging(state.getBlock())
+                && !state.getValue(BlockStateProperties.WATERLOGGED)
+                && fluid == Fluids.WATER;
+    }
 
-@Mixin(value = {LayeredCauldronBlock.class, AnvilBlock.class, GrindstoneBlock.class, StonecutterBlock.class,
-        LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, PressurePlateBlock.class, FenceGateBlock.class})
-public class NotWaterloggableBlockMixin implements SimpleWaterloggedBlock {
-
-    @Unique
-    private static final Set<Class<?>> bedrockoid$WATERLOG_TARGETS = Set.of(
-            LayeredCauldronBlock.class, AnvilBlock.class, GrindstoneBlock.class, StonecutterBlock.class,
-            LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, PressurePlateBlock.class, FenceGateBlock.class
-    );
-
-    @Inject(method = "createBlockStateDefinition", at = @At("TAIL"))
-    private void onAppendProperties(StateDefinition.Builder<Block, BlockState> builder, CallbackInfo ci) {
-        if (!BedrockoidConfig.blocksWaterloggability) return;
-        if (((StateDefinitionAccess) builder).getProperties().containsKey(BlockStateProperties.WATERLOGGED.getName())) return;
-
-        // When a subclass of a targeted block (e.g. Dragon Survival's DragonPressurePlates)
-        // calls super.createBlockStateDefinition(), this mixin fires and adds WATERLOGGED.
-        // If the subclass also implements SimpleWaterloggedBlock, it will try to add
-        // WATERLOGGED again after super returns, causing a "duplicate property" crash.
-        // Skip for such subclasses and let them handle registration themselves.
-        Block self = (Block) (Object) this;
-        Class<?> cls = self.getClass();
-        if (!bedrockoid$WATERLOG_TARGETS.contains(cls)) {
-            for (Class<?> iface : cls.getInterfaces()) {
-                if (iface == SimpleWaterloggedBlock.class) return;
-            }
+    @Override
+    public boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidState) {
+        if (!this.canPlaceLiquid(null, level, pos, state, fluidState.getType()))
+            return false;
+        if (!level.isClientSide()) {
+            level.setBlock(pos, state.setValue(BlockStateProperties.WATERLOGGED, true), 3);
+            level.scheduleTick(pos, fluidState.getType(), fluidState.getType().getTickDelay(level));
         }
+        return true;
+    }
 
-        builder.add(BlockStateProperties.WATERLOGGED);
+    @Override
+    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor level, BlockPos pos, BlockState state) {
+        if (!BlockUtils.isExtraWaterlogged(state))
+            return ItemStack.EMPTY;
+        level.setBlock(pos, state.setValue(BlockStateProperties.WATERLOGGED, false), 3);
+        if (!state.canSurvive(level, pos))
+            level.destroyBlock(pos, true);
+        return new ItemStack(Items.WATER_BUCKET);
     }
 }

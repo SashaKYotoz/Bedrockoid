@@ -10,12 +10,18 @@ import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.world.biome.BiomeKeys;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.Heightmap;
+import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
+import net.minecraft.world.gen.placementmodifier.CountPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
 import net.minecraft.world.gen.placementmodifier.PlacementModifier;
+import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 import net.sashakyotoz.bedrockoid.Bedrockoid;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.FallenTreeFeature;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.SnowUnderTreeFeature;
+import net.sashakyotoz.bedrockoid.common.world.features.custom.SwampHugeMushroomFeature;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.configs.FallenTreeFeatureConfig;
 
 import java.util.List;
@@ -25,6 +31,7 @@ public class BedrockoidFeatures {
         Bedrockoid.log("Registering Features for modid : " + Bedrockoid.MOD_ID);
         Registry.register(Registries.FEATURE, Bedrockoid.makeID("snow_under_tree"), SnowUnderTreeFeature.INSTANCE);
         Registry.register(Registries.FEATURE, Bedrockoid.makeID("fallen_tree"), FallenTreeFeature.INSTANCE);
+        Registry.register(Registries.FEATURE, Bedrockoid.makeID("swamp_huge_mushroom"), SwampHugeMushroomFeature.INSTANCE);
 
         if (BedrockoidConfig.snowSpawnsUnderTrees) {
             BiomeModifications.addFeature(context -> context.getBiome().getTemperature() < 0.15f && context.getBiome().hasPrecipitation(),
@@ -48,15 +55,15 @@ public class BedrockoidFeatures {
         }
 
         if (BedrockoidConfig.mushroomTreesInSwamp) {
-            BiomeModifications.addFeature(BiomeSelectors.tag(BiomeTags.SWAMP_HUT_HAS_STRUCTURE),
-                    GenerationStep.Feature.TOP_LAYER_MODIFICATION, VegetationPlacedFeatures.MUSHROOM_ISLAND_VEGETATION);
+            BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SWAMP),
+                    GenerationStep.Feature.VEGETAL_DECORATION, SWAMP_HUGE_MUSHROOM);
         }
         FuelRegistry.INSTANCE.add(Blocks.BEEHIVE, 5);
         FuelRegistry.INSTANCE.add(Blocks.BEE_NEST, 30);
     }
 
-    //configured features
     public static final RegistryKey<ConfiguredFeature<?, ?>> SNOW_UNDER_TREES_CF = createCF("snow_under_trees");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> SWAMP_HUGE_MUSHROOM_CF = createCF("swamp_huge_mushroom");
 
     public static final RegistryKey<ConfiguredFeature<?, ?>> FALLEN_OAK_TREE_CF = createCF("fallen_oak_tree");
     public static final RegistryKey<ConfiguredFeature<?, ?>> FALLEN_DARK_OAK_TREE_CF = createCF("fallen_dark_oak_tree");
@@ -72,6 +79,7 @@ public class BedrockoidFeatures {
 
     public static void boostrapCF(Registerable<ConfiguredFeature<?, ?>> context) {
         registerCF(context, SNOW_UNDER_TREES_CF, SnowUnderTreeFeature.INSTANCE, DefaultFeatureConfig.INSTANCE);
+        registerCF(context, SWAMP_HUGE_MUSHROOM_CF, SwampHugeMushroomFeature.INSTANCE, DefaultFeatureConfig.INSTANCE);
 
         registerCF(context, FALLEN_OAK_TREE_CF, FallenTreeFeature.INSTANCE, new FallenTreeFeatureConfig(BlockStateProvider.of(Blocks.OAK_LOG), false));
         registerCF(context, FALLEN_DARK_OAK_TREE_CF, FallenTreeFeature.INSTANCE, new FallenTreeFeatureConfig(BlockStateProvider.of(Blocks.DARK_OAK_LOG), true));
@@ -87,8 +95,8 @@ public class BedrockoidFeatures {
         context.register(key, new ConfiguredFeature<>(feature, config));
     }
 
-    //placed features
     public static final RegistryKey<PlacedFeature> SNOW_UNDER_TREES = createPF("snow_under_trees");
+    public static final RegistryKey<PlacedFeature> SWAMP_HUGE_MUSHROOM = createPF("swamp_huge_mushroom");
 
     public static final RegistryKey<PlacedFeature> FALLEN_OAK_TREE = createPF("fallen_oak_tree");
     public static final RegistryKey<PlacedFeature> FALLEN_DARK_OAK_TREE = createPF("fallen_dark_oak_tree");
@@ -105,6 +113,9 @@ public class BedrockoidFeatures {
     public static void boostrapPF(Registerable<PlacedFeature> context) {
         var configLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
         registerPF(context, SNOW_UNDER_TREES, configLookup.getOrThrow(SNOW_UNDER_TREES_CF));
+        registerPF(context, SWAMP_HUGE_MUSHROOM, configLookup.getOrThrow(SWAMP_HUGE_MUSHROOM_CF),
+                CountPlacementModifier.of(1), SquarePlacementModifier.of(),
+                HeightmapPlacementModifier.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES), BiomePlacementModifier.of());
 
         registerPF(context, FALLEN_OAK_TREE, configLookup.getOrThrow(FALLEN_OAK_TREE_CF),
                 VegetationPlacedFeatures.treeModifiersWithWouldSurvive(PlacedFeatures.createCountExtraModifier(0, 0.25f, 1), Blocks.OAK_SAPLING));

@@ -11,7 +11,6 @@ import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.world.features.BiomeModifiers;
 
-//copyright bl4ckscor3 MIT License https://github.com/bl4ckscor3/SnowUnderTrees/
 public record SnowUnderTreeBiomeModifier(Holder<PlacedFeature> snowUnderTreesFeature) implements BiomeModifier {
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {

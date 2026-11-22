@@ -1,45 +1,50 @@
 package net.sashakyotoz.bedrockoid.mixin.blocks;
 
 import net.minecraft.block.*;
-import net.minecraft.state.StateManager;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.WorldAccess;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
+import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Set;
 
 @Mixin(value = {LeveledCauldronBlock.class, AnvilBlock.class, BedBlock.class, GrindstoneBlock.class, StonecutterBlock.class,
-        LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, BellBlock.class, PressurePlateBlock.class, FenceGateBlock.class})
-public class NotWaterloggableBlockMixin implements Waterloggable {
+        LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, BellBlock.class, AbstractPressurePlateBlock.class, FenceGateBlock.class})
+public abstract class NotWaterloggableBlockMixin implements Waterloggable {
+    @Override
+    public boolean canFillWithFluid(@Nullable PlayerEntity player, BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
+        return BedrockoidConfig.blocksWaterloggability
+                && BlockUtils.hasExtraWaterlogging(state.getBlock())
+                && !state.get(Properties.WATERLOGGED)
+                && fluid == Fluids.WATER;
+    }
 
-    @Unique
-    private static final Set<Class<?>> bedrockoid$WATERLOG_TARGETS = Set.of(
-            LeveledCauldronBlock.class, AnvilBlock.class, BedBlock.class, GrindstoneBlock.class, StonecutterBlock.class,
-            LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, BellBlock.class, PressurePlateBlock.class, FenceGateBlock.class
-    );
-
-    @Inject(method = "appendProperties", at = @At("HEAD"))
-    private void onAppendProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
-        if (!BedrockoidConfig.blocksWaterloggability) return;
-        if (((StateDefinitionAccess) builder).getProperties().containsKey(Properties.WATERLOGGED.getName())) return;
-
-        // When a subclass of a targeted block calls super.appendProperties(),
-        // this mixin fires and adds WATERLOGGED. If the subclass also implements
-        // Waterloggable, it will try to add WATERLOGGED again after super returns,
-        // causing a "duplicate property" crash.
-        // Skip for such subclasses and let them handle registration themselves.
-        Block self = (Block) (Object) this;
-        Class<?> cls = self.getClass();
-        if (!bedrockoid$WATERLOG_TARGETS.contains(cls)) {
-            for (Class<?> iface : cls.getInterfaces()) {
-                if (iface == Waterloggable.class) return;
-            }
+    @Override
+    public boolean tryFillWithFluid(WorldAccess world, BlockPos pos, BlockState state, FluidState fluidState) {
+        if (!this.canFillWithFluid(null, world, pos, state, fluidState.getFluid()))
+            return false;
+        if (!world.isClient()) {
+            world.setBlockState(pos, state.with(Properties.WATERLOGGED, true), Block.NOTIFY_ALL);
+            world.scheduleFluidTick(pos, fluidState.getFluid(), fluidState.getFluid().getTickRate(world));
         }
+        return true;
+    }
 
-        builder.add(Properties.WATERLOGGED);
+    @Override
+    public ItemStack tryDrainFluid(@Nullable PlayerEntity player, WorldAccess world, BlockPos pos, BlockState state) {
+        if (!BlockUtils.isExtraWaterlogged(state))
+            return ItemStack.EMPTY;
+        world.setBlockState(pos, state.with(Properties.WATERLOGGED, false), Block.NOTIFY_ALL);
+        if (!state.canPlaceAt(world, pos))
+            world.breakBlock(pos, true);
+        return new ItemStack(Items.WATER_BUCKET);
     }
 }

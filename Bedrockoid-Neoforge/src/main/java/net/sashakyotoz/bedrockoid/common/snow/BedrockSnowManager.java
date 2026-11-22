@@ -18,16 +18,12 @@ import net.sashakyotoz.bedrockoid.common.snow.snow_managers.VanillaManager;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-//copyright bl4ckscor3 MIT License https://github.com/bl4ckscor3/SnowUnderTrees/
 public class BedrockSnowManager {
     private static SnowManager snowManager;
     private static ChunkRunner chunkRunner;
     private static BiFunction<WorldGenLevel, BlockPos, Boolean> temperatureCheck;
 
     public static void init() {
-//        if (ModsUtils.isSnowRealMagicIn())
-//            snowManager = new SnowRealMagicManager();
-//        else
         snowManager = new VanillaManager();
         temperatureCheck = (level, pos) -> !level.getBiome(pos).value().warmEnoughToRain(pos);
         chunkRunner = (level, action) -> level.getChunkSource().chunkMap.getChunks().forEach(chunkHolder -> chunkHolder.getEntityTickingChunkFuture().getNow(ChunkHolder.UNLOADED_LEVEL_CHUNK).ifSuccess(action));
@@ -66,7 +62,7 @@ public class BedrockSnowManager {
     }
 
     private static boolean isInBuildRangeAndDarkEnough(WorldGenLevel level, BlockPos pos) {
-        return pos.getY() >= level.getMinBuildHeight() && pos.getY() <= level.getHeight() && level.getBrightness(LightLayer.BLOCK, pos) < 10;
+        return pos.getY() >= level.getMinBuildHeight() && pos.getY() < level.getMaxBuildHeight() && level.getBrightness(LightLayer.BLOCK, pos) < 10;
     }
 
     public static void runForChunks(ServerLevel level, Consumer<LevelChunk> action) {

@@ -10,11 +10,14 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.AbstractCauldronBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.level.block.WetSpongeBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -32,69 +35,62 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BlockBehaviour.BlockStateBase.class)
 public abstract class BlockStateMixin {
-
     @Shadow
     protected abstract BlockState asState();
 
     @Inject(method = "updateShape", at = @At("HEAD"))
-    private void onUpdateShape(Direction direction, BlockState state, LevelAccessor world, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
-        if (world.getBlockState(pos).hasProperty(BlockStateProperties.WATERLOGGED)
-                && world.getBlockState(pos).getValue(BlockStateProperties.WATERLOGGED)
-                && BedrockoidConfig.blocksWaterloggability)
-            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+    private void bedrockoid$scheduleWaterTick(Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir) {
+        if (BedrockoidConfig.blocksWaterloggability && BlockUtils.isExtraWaterlogged(this.asState()))
+            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
     }
 
     @Inject(method = "getFluidState", at = @At("HEAD"), cancellable = true)
-    private void applyWaterloggability(CallbackInfoReturnable<FluidState> cir) {
-        BlockBehaviour.BlockStateBase block = (BlockBehaviour.BlockStateBase) ((Object) this);
-        if (BlockUtils.isInstanceOfAny(block.getBlock()) && block.hasProperty(BlockStateProperties.WATERLOGGED) && BedrockoidConfig.blocksWaterloggability)
-            cir.setReturnValue(block.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState());
+    private void bedrockoid$applyWaterloggability(CallbackInfoReturnable<FluidState> cir) {
+        BlockState state = this.asState();
+        if (BedrockoidConfig.blocksWaterloggability && BlockUtils.hasExtraWaterlogging(state.getBlock()))
+            cir.setReturnValue(state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState());
     }
 
     @ModifyReturnValue(method = "getShape(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/phys/shapes/CollisionContext;)Lnet/minecraft/world/phys/shapes/VoxelShape;", at = @At("RETURN"))
-    private VoxelShape getCollisionShape(VoxelShape original, BlockGetter world, BlockPos pos, CollisionContext context) {
-        BlockState blockState = this.asState();
-        if (BlockUtils.isSnowlogged(blockState) && !ModsUtils.isSodiumIn())
-            return Shapes.or(original, BlockUtils.getSnowEquivalent(blockState).getCollisionShape(world, pos, context));
+    private VoxelShape bedrockoid$snowShape(VoxelShape original, BlockGetter level, BlockPos pos, CollisionContext context) {
+        BlockState state = this.asState();
+        if (BlockUtils.isSnowlogged(state) && !ModsUtils.isSodiumIn())
+            return Shapes.or(original, BlockUtils.getSnowEquivalent(state).getCollisionShape(level, pos, context));
         return original;
     }
 
     @ModifyReturnValue(method = "getVisualShape", at = @At("RETURN"))
-    private VoxelShape getVisualShape(VoxelShape original, BlockGetter world, BlockPos pos, CollisionContext context) {
-        BlockState blockState = this.asState();
-        if (BlockUtils.isSnowlogged(blockState) && !ModsUtils.isSodiumIn())
-            return Shapes.or(original, BlockUtils.getSnowEquivalent(blockState).getShape(world, pos, context));
+    private VoxelShape bedrockoid$snowVisualShape(VoxelShape original, BlockGetter level, BlockPos pos, CollisionContext context) {
+        BlockState state = this.asState();
+        if (BlockUtils.isSnowlogged(state) && !ModsUtils.isSodiumIn())
+            return Shapes.or(original, BlockUtils.getSnowEquivalent(state).getShape(level, pos, context));
         return original;
     }
 
     @Inject(method = "randomTick", at = @At("TAIL"))
-    private void randomTick(ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo ci) {
+    private void bedrockoid$randomTick(ServerLevel level, BlockPos pos, RandomSource random, CallbackInfo ci) {
         BlockState state = level.getBlockState(pos);
-        if (state.getBlock() instanceof WetSpongeBlock
-                && BedrockoidConfig.wetSpongesDryOut
-                && !BlockUtils.isTouchingBlock(level, pos,
-                block -> block != null && block.getFluidState().is(FluidTags.WATER))
-                && random.nextInt(12) == 5
-                && !level.getBiome(pos).value().hasPrecipitation()
-                && (level.getBiome(pos).value().getBaseTemperature() >= 0.75f)) {
-            level.setBlock(pos, Blocks.SPONGE.defaultBlockState(), 3);
-            level.levelEvent(LevelEvent.PARTICLES_WATER_EVAPORATING, pos, 0);
-            level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
-        }
-        if (BlockUtils.haveToFillUpCauldron(state, level, pos)) {
-            if (state.getBlock() instanceof LayeredCauldronBlock && BedrockoidConfig.cauldronNaturalFilling) {
-                BlockState blockState = state.cycle(BlockStateProperties.LEVEL_CAULDRON);
-                level.setBlockAndUpdate(pos, blockState);
-                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(blockState));
+        Block block = state.getBlock();
+        if (block instanceof WetSpongeBlock) {
+            if (BedrockoidConfig.wetSpongesDryOut
+                    && random.nextInt(12) == 5
+                    && !level.getBiome(pos).value().hasPrecipitation()
+                    && level.getBiome(pos).value().getBaseTemperature() >= 0.75f
+                    && !BlockUtils.isTouchingBlock(level, pos, neighbor -> neighbor != null && neighbor.getFluidState().is(FluidTags.WATER))) {
+                level.setBlock(pos, Blocks.SPONGE.defaultBlockState(), 3);
+                level.levelEvent(LevelEvent.PARTICLES_WATER_EVAPORATING, pos, 0);
+                level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + level.getRandom().nextFloat() * 0.2F) * 0.7F);
             }
+        } else if (block instanceof AbstractCauldronBlock && BedrockoidConfig.cauldronNaturalFilling && random.nextInt(4) == 1) {
+            BlockUtils.fillCauldronNaturally(state, level, pos);
         }
     }
 
     @Inject(method = "isRandomlyTicking", at = @At("HEAD"), cancellable = true)
-    private void hasRandomTicks(CallbackInfoReturnable<Boolean> cir) {
-        BlockBehaviour.BlockStateBase block = (BlockBehaviour.BlockStateBase) ((Object) this);
-        if ((block.getBlock() instanceof WetSpongeBlock && BedrockoidConfig.wetSpongesDryOut)
-                || (block.getBlock() instanceof AbstractCauldronBlock && BedrockoidConfig.cauldronNaturalFilling))
+    private void bedrockoid$extraRandomTicks(CallbackInfoReturnable<Boolean> cir) {
+        Block block = this.asState().getBlock();
+        if ((block instanceof WetSpongeBlock && BedrockoidConfig.wetSpongesDryOut)
+                || (block instanceof AbstractCauldronBlock && BedrockoidConfig.cauldronNaturalFilling))
             cir.setReturnValue(true);
     }
 }

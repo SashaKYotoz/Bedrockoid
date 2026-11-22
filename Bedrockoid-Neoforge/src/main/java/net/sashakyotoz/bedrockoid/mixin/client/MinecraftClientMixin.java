@@ -18,9 +18,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import javax.annotation.Nullable;
 
-//juancarloscp52 copyright
-//stating changes: 'if' condition modifications to use mod's config, use of official mapping
-//source code: https://github.com/juancarloscp52/BedrockIfy/blob/1.21/src/main/java/me/juancarloscp52/bedrockify/mixin/client/features/reacharoundPlacement/MinecraftClientMixin.java
 @Mixin(Minecraft.class)
 public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<Runnable> {
     public MinecraftClientMixin(String string) {

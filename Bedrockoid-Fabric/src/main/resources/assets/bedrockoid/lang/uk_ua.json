@@ -11,6 +11,7 @@
   "bedrockoid.midnightconfig.wetSpongesDryOut": "Чи має волога губка висихати в сухих біомах",
   "bedrockoid.midnightconfig.entitySharesFire": "Чи можуть істоти переносити вогонь на блоки",
   "bedrockoid.midnightconfig.fallenTrees": "Чи мають повалені дерева спавнитися",
+  "bedrockoid.midnightconfig.bigFallenTrees": "Чи мають з'являтися великі повалені дерева 2x2",
   "bedrockoid.midnightconfig.reachAroundPlacement": "Чи має використовуватися розміщення блоків як у Bedrock Edition",
   "bedrockoid.midnightconfig.sheepFurColorFix": "Чи має овеча вовна відмальовуватися правильно",
   "bedrockoid.midnightconfig.frostwalkerBoost": "Чи має зачарування льодохід бути поліпшеним",

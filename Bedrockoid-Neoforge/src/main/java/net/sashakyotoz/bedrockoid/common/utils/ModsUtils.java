@@ -1,31 +1,57 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
-
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.LoadingModList;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class ModsUtils {
+    private static final Map<String, Boolean> LOADED = new ConcurrentHashMap<>();
+
+    public static boolean isLoaded(String modId) {
+        Boolean cached = LOADED.get(modId);
+        if (cached != null)
+            return cached;
+        boolean loaded;
+        ModList modList = ModList.get();
+        if (modList != null) {
+            loaded = modList.isLoaded(modId);
+        } else {
+            LoadingModList loadingModList = LoadingModList.get();
+            loaded = loadingModList != null && loadingModList.getModFileById(modId) != null;
+        }
+        LOADED.put(modId, loaded);
+        return loaded;
+    }
+
     public static boolean isSnowRealMagicIn() {
-        return ModList.get() != null && ModList.get().isLoaded("snowrealmagic");
+        return isLoaded("snowrealmagic");
     }
 
     public static boolean isSnowUnderTreesIn() {
-        return ModList.get() != null && ModList.get().isLoaded("snowundertrees");
+        return isLoaded("snowundertrees");
     }
+
     public static boolean isComfortsIn() {
-        return ModList.get() != null && ModList.get().isLoaded("comforts");
+        return isLoaded("comforts");
+    }
+
+    public static boolean isSodiumLoaded() {
+        return isLoaded("sodium");
     }
 
     public static boolean isSodiumIn() {
-        return ModList.get() != null && ModList.get().isLoaded("sodium") && BedrockoidConfig.sodiumTurnOffSnowloggability;
+        return isSodiumLoaded() && BedrockoidConfig.sodiumTurnOffSnowloggability;
     }
 
     public static boolean isBedrockifyIn() {
-        return ModList.get() != null && ModList.get().isLoaded("bedrockify");
+        return isLoaded("bedrockify");
     }
 
     public static boolean isWilderWildIn() {
-        return ModList.get() != null && ModList.get().isLoaded("wilderwild");
+        return isLoaded("wilderwild");
     }
 
     public static boolean isSnowloggingNotOverrided() {

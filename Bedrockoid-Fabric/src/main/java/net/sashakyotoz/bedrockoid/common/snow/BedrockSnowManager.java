@@ -24,9 +24,6 @@ public class BedrockSnowManager {
     private static BiFunction<StructureWorldAccess, BlockPos, Boolean> temperatureCheck;
 
     public static void init() {
-//        if (ModsUtils.isSnowRealMagicIn())
-//            snowManager = new SnowRealMagicManager();
-//        else
             snowManager = new VanillaManager();
         temperatureCheck = (level, pos) -> !level.getBiome(pos).value().doesNotSnow(pos);
         chunkRunner = (level, action) -> level.getChunkManager().chunkLoadingManager.entryIterator().forEach(chunkHolder -> chunkHolder.getEntityTickingFuture().getNow(ChunkHolder.UNLOADED_WORLD_CHUNK).ifPresent(action));
@@ -65,7 +62,7 @@ public class BedrockSnowManager {
     }
 
     private static boolean isInBuildRangeAndDarkEnough(StructureWorldAccess level, BlockPos pos) {
-        return pos.getY() >= level.getBottomY() && pos.getY() <= level.getTopY() && level.getLightLevel(LightType.BLOCK, pos) < 10;
+        return pos.getY() >= level.getBottomY() && pos.getY() < level.getTopY() && level.getLightLevel(LightType.BLOCK, pos) < 10;
     }
 
     public static void runForChunks(ServerWorld level, Consumer<WorldChunk> action) {

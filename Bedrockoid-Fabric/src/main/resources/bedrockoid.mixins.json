@@ -4,7 +4,10 @@
   "package": "net.sashakyotoz.bedrockoid.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "FrostedIceBlockMixin",
     "ItemMixin",
+    "ReplaceDiskEnchantmentEffectMixin",
+    "blocks.BedBlockMixin",
     "blocks.BlockItemMixin",
     "blocks.BlockMixin",
     "blocks.BlockStateMixin",
@@ -13,12 +16,11 @@
     "blocks.NotWaterloggableBlockMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
-    "blocks.SnowBlockMixin",
     "blocks.SnowyBlockMixin",
     "blocks.StateDefinitionAccess",
     "blocks.SugarcaneBlockMixin",
     "blocks.TntBlockMixin",
-    "client.sodium.BlockRendererMixin",
+    "blocks.WorldMixin",
     "entities.ArmorStandEntityMixin",
     "entities.CreeperEntityMixin",
     "entities.EntityMixin",
@@ -30,11 +32,11 @@
     "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
-    "client.BlockColorsMixin",
     "client.BlockRenderManagerMixin",
     "client.MinecraftClientMixin",
     "client.SheepWoolFeatureRendererMixin",
-    "client.TerrainRenderContextMixin"
+    "client.TerrainRenderContextMixin",
+    "client.sodium.BlockRendererMixin"
   ],
   "plugin": "net.sashakyotoz.bedrockoid.mixin.MixinConfigPlugin",
   "injectors": {
