@@ -18,6 +18,7 @@
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowyBlockMixin",
     "blocks.StateDefinitionAccess",
+    "blocks.SugarcaneBlockMixin",
     "blocks.TntBlockMixin",
     "blocks.WorldMixin",
     "entities.ArmorStandEntityMixin",

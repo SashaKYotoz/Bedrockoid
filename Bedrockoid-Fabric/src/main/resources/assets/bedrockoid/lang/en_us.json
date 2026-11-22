@@ -18,6 +18,7 @@
   "bedrockoid.midnightconfig.mushroomTreesInSwamp": "Can be mushroom trees spawn in swamp",
   "bedrockoid.midnightconfig.shulkersCanBeDyed": "Can living shulkers be dyed",
   "bedrockoid.midnightconfig.canPlantsBeBonemeal": "Can plants be duped by bonemealing",
+  "bedrockoid.midnightconfig.canSugarcaneBeBonemeal": "Can sugar cane be duped by bonemealing",
   "bedrockoid.midnightconfig.shieldActivatesWhenSneaking": "Can shield be activated if sneaking",
   "bedrockoid.midnightconfig.shieldActivatesOnlyWhenSneaking": "Can shield be activated only if sneaking",
   "bedrockoid.midnightconfig.fireAspectImprovements": "Can item with fire aspect fire tnt, campfires and candles",

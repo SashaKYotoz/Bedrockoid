@@ -17,18 +17,12 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(SugarCaneBlock.class)
 public abstract class SugarcaneBlockMixin implements BonemealableBlock {
-    @Unique
-    private static final int bedrockoid$MAX_HEIGHT = 3;
-
     @Override
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
         if (!BedrockoidConfig.canSugarcaneBeBonemeal)
             return false;
-        BlockPos top = bedrockoid$findTop(level, pos, state.getBlock());
-        BlockPos above = top.above();
-        return bedrockoid$heightBelow(level, top, state.getBlock()) < bedrockoid$MAX_HEIGHT
-                && !level.isOutsideBuildHeight(above)
-                && level.getBlockState(above).isAir();
+        BlockPos above = bedrockoid$findTop(level, pos, state.getBlock()).above();
+        return !level.isOutsideBuildHeight(above) && level.getBlockState(above).isAir();
     }
 
     @Override
@@ -39,16 +33,9 @@ public abstract class SugarcaneBlockMixin implements BonemealableBlock {
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         Block block = state.getBlock();
-        BlockPos top = bedrockoid$findTop(level, pos, block);
-        int height = bedrockoid$heightBelow(level, top, block);
-        BlockPos.MutableBlockPos cursor = top.mutable();
-        while (height < bedrockoid$MAX_HEIGHT) {
-            cursor.move(Direction.UP);
-            if (level.isOutsideBuildHeight(cursor) || !level.getBlockState(cursor).isAir())
-                break;
-            level.setBlock(cursor, block.defaultBlockState(), 3);
-            height++;
-        }
+        BlockPos above = bedrockoid$findTop(level, pos, block).above();
+        if (!level.isOutsideBuildHeight(above) && level.getBlockState(above).isAir())
+            level.setBlock(above, block.defaultBlockState(), 3);
     }
 
     @Unique
@@ -57,16 +44,5 @@ public abstract class SugarcaneBlockMixin implements BonemealableBlock {
         while (level.getBlockState(cursor.above()).is(block))
             cursor.move(Direction.UP);
         return cursor.immutable();
-    }
-
-    @Unique
-    private static int bedrockoid$heightBelow(BlockGetter level, BlockPos top, Block block) {
-        int height = 0;
-        BlockPos.MutableBlockPos cursor = top.mutable();
-        while (level.getBlockState(cursor).is(block)) {
-            height++;
-            cursor.move(Direction.DOWN);
-        }
-        return height;
     }
 }
