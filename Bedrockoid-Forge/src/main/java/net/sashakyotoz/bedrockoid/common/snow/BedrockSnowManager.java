@@ -17,21 +17,13 @@ import net.sashakyotoz.bedrockoid.common.snow.snow_managers.VanillaManager;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-// Code goes under Copyright (c) 2022 bl4ckscor3
 public class BedrockSnowManager {
     private static SnowManager snowManager;
     private static ChunkRunner chunkRunner;
     private static BiFunction<WorldGenLevel, BlockPos, Boolean> temperatureCheck;
 
     public static void init() {
-//        if (ModsUtils.isSnowRealMagicIn())
-//            snowManager = new SnowRealMagicManager();
-//        else
-            snowManager = new VanillaManager();
-
-//        if (isSereneSeasonsLoaded)
-//            temperatureCheck = (level, pos) -> SereneSeasonsHandler.coldEnoughToSnow(level, level.getBiome(pos), pos, level.getSeaLevel());
-//        else
+        snowManager = new VanillaManager();
         temperatureCheck = (level, pos) -> !level.getBiome(pos).value().warmEnoughToRain(pos);
         chunkRunner = (level, action) -> level.getChunkSource().chunkMap.getChunks().forEach(chunkHolder -> chunkHolder.getEntityTickingChunkFuture().getNow(ChunkHolder.UNLOADED_LEVEL_CHUNK).ifLeft(action));
     }
@@ -69,7 +61,7 @@ public class BedrockSnowManager {
     }
 
     private static boolean isInBuildRangeAndDarkEnough(WorldGenLevel level, BlockPos pos) {
-        return pos.getY() >= level.getMinBuildHeight() && pos.getY() <= level.getHeight() && level.getBrightness(LightLayer.BLOCK, pos) < 10;
+        return pos.getY() >= level.getMinBuildHeight() && pos.getY() < level.getMaxBuildHeight() && level.getBrightness(LightLayer.BLOCK, pos) < 10;
     }
 
     public static void runForChunks(ServerLevel level, Consumer<LevelChunk> action) {

@@ -1,7 +1,7 @@
 {
   "bedrockoid.midnightconfig.title": "Конфігурації Bedrockoid",
   "bedrockoid.midnightconfig.category.flags": "Bedrockoid Функції",
-  "bedrockoid.midnightconfig.category.lists":"Bedrockoid Списки виключення",
+  "bedrockoid.midnightconfig.category.lists": "Bedrockoid Списки виключення",
   "bedrockoid.midnightconfig.armorStandArms": "Чи має стійка для обладунків мати руки за замовчуванням",
   "bedrockoid.midnightconfig.redstoneConnectsToPiston": "Чи може редстоун з'єднуватися з поршнем",
   "bedrockoid.midnightconfig.snowlogging": "Чи може сніг покривати рослини",
@@ -11,6 +11,7 @@
   "bedrockoid.midnightconfig.wetSpongesDryOut": "Чи має волога губка висихати в сухих біомах",
   "bedrockoid.midnightconfig.entitySharesFire": "Чи можуть істоти переносити вогонь на блоки",
   "bedrockoid.midnightconfig.fallenTrees": "Чи мають повалені дерева спавнитися",
+  "bedrockoid.midnightconfig.bigFallenTrees": "Чи мають з'являтися великі повалені дерева 2x2",
   "bedrockoid.midnightconfig.reachAroundPlacement": "Чи має використовуватися розміщення блоків як у Bedrock Edition",
   "bedrockoid.midnightconfig.sheepFurColorFix": "Чи має овеча вовна відмальовуватися правильно",
   "bedrockoid.midnightconfig.frostwalkerBoost": "Чи має зачарування льодохід бути поліпшеним",

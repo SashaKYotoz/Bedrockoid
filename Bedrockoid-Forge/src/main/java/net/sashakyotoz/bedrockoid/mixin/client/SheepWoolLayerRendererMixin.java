@@ -23,7 +23,7 @@ public abstract class SheepWoolLayerRendererMixin extends RenderLayer<Sheep, She
 
     @Inject(method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/world/entity/animal/Sheep;FFFFFF)V", at = @At("RETURN"))
     private void renderWoolColorAfterShearing(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int light, Sheep sheepEntity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch, CallbackInfo ci) {
-        if (ModsUtils.isBedrockifyIn() || !BedrockoidConfig.sheepFurColorFix)
+        if (ModsUtils.isBedrockifyIn() || !BedrockoidConfig.sheepFurColorFix || !sheepEntity.isSheared() || sheepEntity.isInvisible())
             return;
         else {
             float s;

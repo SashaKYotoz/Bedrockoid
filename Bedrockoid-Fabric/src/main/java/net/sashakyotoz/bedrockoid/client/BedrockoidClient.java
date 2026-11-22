@@ -5,75 +5,66 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.color.world.GrassColors;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
-import net.minecraft.state.property.Properties;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
-import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ReachPlacementUtils;
 
 public class BedrockoidClient implements ClientModInitializer {
+    private static final int MIN_FLIGHT_TICKS = 10;
     private int timeFlying = 0;
+    private boolean jumpWasPressed = false;
 
     @Override
     public void onInitializeClient() {
         HudRenderCallback.EVENT.register((drawContext, tickDelta) -> ReachPlacementUtils.INSTANCE.renderIndicator(drawContext));
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (BedrockoidConfig.stopElytraByPressingSpace) {
-                if (!ModsUtils.isBedrockifyIn() && client.player != null && client.player.isFallFlying() && timeFlying > 10 && client.options.jumpKey.isPressed()) {
-                    client.player.stopFallFlying();
-                    client.player.networkHandler.sendPacket(new ClientCommandC2SPacket(client.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
-                }
-                if (!ModsUtils.isBedrockifyIn() && client.player != null && client.player.isFallFlying() && !client.options.jumpKey.isPressed())
-                    timeFlying++;
-                else
-                    timeFlying = 0;
-            }
-        });
-        if (ModsUtils.isSodiumIn()) {
-            ColorProviderRegistry.BLOCK.register(
-                    (state, world, pos, index) -> {
-                        if (BedrockoidConfig.snowCoversLeaves)
-                            return BlockUtils.leavesSnowyColor(state, pos);
-                        else
-                            return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
-                    },
-                    Blocks.OAK_LEAVES,
-                    Blocks.SPRUCE_LEAVES,
-                    Blocks.BIRCH_LEAVES,
-                    Blocks.JUNGLE_LEAVES,
-                    Blocks.ACACIA_LEAVES,
-                    Blocks.DARK_OAK_LEAVES,
-                    Blocks.MANGROVE_LEAVES,
-                    Blocks.AZALEA_LEAVES,
-                    Blocks.FLOWERING_AZALEA_LEAVES
-            );
-            ColorProviderRegistry.BLOCK.register(
-                    (state, world, pos, index) -> {
-                        if ((BlockUtils.isSnowlogged(state)
-                                || (state.contains(Properties.DOUBLE_BLOCK_HALF)
-                                && world != null && pos != null
-                                && BlockUtils.isSnowlogged(world.getBlockState(pos.down()))))
-                                && BedrockoidConfig.snowlogging)
-                            return 0xCCCCCC;
-                        return world != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
-                    },
-                    Blocks.GLASS,
-                    Blocks.TALL_GRASS,
-                    Blocks.FERN,
-                    Blocks.LARGE_FERN
-            );
-            ColorProviderRegistry.BLOCK.register(
-                    (state, world, pos, index) -> {
-                        if (BlockUtils.canVinesBeCoveredInSnow(state, world, pos) && BedrockoidConfig.snowCoversVines)
-                            return 0xCCCCCC;
-                        return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.getDefaultColor();
-                    },
-                    Blocks.VINE
-            );
+        ClientTickEvents.END_CLIENT_TICK.register(this::handleElytra);
+        registerColors();
+    }
+
+    private void handleElytra(MinecraftClient client) {
+        ClientPlayerEntity player = client.player;
+        boolean jumpPressed = client.options.jumpKey.isPressed();
+        if (player == null || !BedrockoidConfig.stopElytraByPressingSpace || ModsUtils.isBedrockifyIn() || !player.isFallFlying()) {
+            timeFlying = 0;
+            jumpWasPressed = jumpPressed;
+            return;
         }
+        timeFlying++;
+        if (jumpPressed && !jumpWasPressed && timeFlying > MIN_FLIGHT_TICKS) {
+            player.stopFallFlying();
+            player.networkHandler.sendPacket(new ClientCommandC2SPacket(player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
+            timeFlying = 0;
+        }
+        jumpWasPressed = jumpPressed;
+    }
+
+    private static void registerColors() {
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> SnowColors.leaves(state, world, pos, SnowColors.averageFoliage(world, pos)),
+                Blocks.OAK_LEAVES,
+                Blocks.JUNGLE_LEAVES,
+                Blocks.ACACIA_LEAVES,
+                Blocks.DARK_OAK_LEAVES);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> SnowColors.leaves(state, world, pos, FoliageColors.getSpruceColor()),
+                Blocks.SPRUCE_LEAVES);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> SnowColors.leaves(state, world, pos, FoliageColors.getBirchColor()),
+                Blocks.BIRCH_LEAVES);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> SnowColors.leaves(state, world, pos, FoliageColors.getMangroveColor()),
+                Blocks.MANGROVE_LEAVES);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> SnowColors.plant(state, world, pos, SnowColors.averageGrass(world, pos, GrassColors.getDefaultColor())),
+                Blocks.GRASS,
+                Blocks.FERN);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> SnowColors.plant(state, world, pos, SnowColors.averageGrass(world, SnowColors.lowerHalf(state, pos), -1)),
+                Blocks.TALL_GRASS,
+                Blocks.LARGE_FERN);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> SnowColors.plant(state, world, pos, world != null && pos != null ? BiomeColors.getGrassColor(world, pos) : -1),
+                Blocks.SUGAR_CANE);
+        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> SnowColors.vine(state, world, pos),
+                Blocks.VINE);
     }
 }

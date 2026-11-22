@@ -7,6 +7,7 @@
     "FrostWalkerEnchantmentMixin",
     "ItemMixin",
     "ShieldItemMixin",
+    "blocks.BedBlockMixin",
     "blocks.BlockItemMixin",
     "blocks.BlockMixin",
     "blocks.BlockStateMixin",
@@ -15,10 +16,10 @@
     "blocks.NotWaterloggableBlockMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
-    "blocks.SnowBlockMixin",
     "blocks.SnowyBlockMixin",
     "blocks.StateDefinitionAccess",
     "blocks.TntBlockMixin",
+    "blocks.WorldMixin",
     "entities.ArmorStandEntityMixin",
     "entities.EntityMixin",
     "entities.LivingEntityMixin",
@@ -29,7 +30,6 @@
     "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
-    "client.BlockColorsMixin",
     "client.BlockRenderManagerMixin",
     "client.MinecraftClientMixin",
     "client.SheepWoolFeatureRendererMixin",

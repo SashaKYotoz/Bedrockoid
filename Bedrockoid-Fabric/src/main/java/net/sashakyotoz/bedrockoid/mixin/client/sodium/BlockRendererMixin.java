@@ -15,9 +15,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-//frozenblock team copyright
-//stating changes: renaming and refactoring of class' methods and values
-//source code: https://github.com/FrozenBlock/WilderWild/blob/1.20.1/src/main/java/net/frozenblock/wilderwild/mixin/client/sodium/BlockRendererMixin.java
 @Mixin(BlockRenderer.class)
 public abstract class BlockRendererMixin {
 

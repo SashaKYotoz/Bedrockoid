@@ -9,10 +9,7 @@ import net.minecraft.world.StructureWorldAccess;
 public class SnowRealMagicManager implements SnowManager {
     @Override
     public boolean placeSnow(StructureWorldAccess level, BlockPos pos) {
-//        if (BedrockSnowManager.canSnow(level, pos))
-//            return Hooks.convert(level, pos, level.getBlockState(pos), 1, 2, SnowCommonConfig.placeSnowOnBlockNaturally);
-//        else
-            return false;
+        return false;
     }
 
     @Override
@@ -24,9 +21,6 @@ public class SnowRealMagicManager implements SnowManager {
 
     @Override
     public BlockState getStateAfterMelting(BlockState stateNow, StructureWorldAccess level, BlockPos pos) {
-//        if (stateNow.getBlock() instanceof SnowVariant snowVariant)
-//            return snowVariant.getRaw(stateNow, level, pos);
-
         return Blocks.AIR.getDefaultState();
     }
 }

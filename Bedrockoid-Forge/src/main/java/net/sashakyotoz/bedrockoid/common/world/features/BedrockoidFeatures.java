@@ -7,9 +7,11 @@ import net.minecraftforge.registries.RegistryObject;
 import net.sashakyotoz.bedrockoid.Bedrockoid;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.FallenTreeFeature;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.SnowUnderTreeFeature;
+import net.sashakyotoz.bedrockoid.common.world.features.custom.SwampHugeMushroomFeature;
 
 public class BedrockoidFeatures {
     public static final DeferredRegister<Feature<?>> REGISTRY = DeferredRegister.create(ForgeRegistries.FEATURES, Bedrockoid.MOD_ID);
     public static final RegistryObject<Feature<?>> SNOW_UNDER_TREE = REGISTRY.register("snow_under_tree", () -> SnowUnderTreeFeature.INSTANCE);
     public static final RegistryObject<Feature<?>> FALLEN_TREE = REGISTRY.register("fallen_tree", () -> FallenTreeFeature.INSTANCE);
+    public static final RegistryObject<Feature<?>> SWAMP_HUGE_MUSHROOM = REGISTRY.register("swamp_huge_mushroom", () -> SwampHugeMushroomFeature.INSTANCE);
 }

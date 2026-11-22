@@ -13,6 +13,7 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.world.features.custom.configs.FallenTreeFeatureConfig;
 
 public class FallenTreeFeature extends Feature<FallenTreeFeatureConfig> {
@@ -28,6 +29,8 @@ public class FallenTreeFeature extends Feature<FallenTreeFeatureConfig> {
         StructureWorldAccess world = context.getWorld();
         BlockPos pos = context.getOrigin();
         Random random = context.getRandom();
+        if (!BedrockoidConfig.fallenTrees || (context.getConfig().isDoubleTrunk() && !BedrockoidConfig.bigFallenTrees))
+            return false;
         BlockState trunk = context.getConfig().logType().get(random, context.getOrigin());
         if (!context.getConfig().isDoubleTrunk()) {
             int size = random.nextInt(3) + 3;
@@ -140,7 +143,6 @@ public class FallenTreeFeature extends Feature<FallenTreeFeatureConfig> {
                     );
 
                     if (badTerrain) {
-                        // If this occurs early, try rotating direction; otherwise fail
                         if (i < 3) {
                             return generateFallenTrunk2x2(
                                     world,

@@ -31,7 +31,7 @@ public abstract class BlockRendererMixin {
             Vector3fc origin = ctx.origin();
             context.update(
                     ctx.pos(),
-                    new BlockPos((int) origin.x(), (int) origin.y(), (int) origin.z()),
+                    BlockPos.containing(origin.x(), origin.y(), origin.z()),
                     snowedState,
                     snowModel,
                     ctx.seed(),

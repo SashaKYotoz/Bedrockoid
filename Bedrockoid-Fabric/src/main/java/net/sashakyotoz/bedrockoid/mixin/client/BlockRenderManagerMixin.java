@@ -15,9 +15,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-//frozenblock team copyright
-//stating changes: use of yarn mappings
-//source code: https://github.com/FrozenBlock/WilderWild/blob/master/src/main/java/net/frozenblock/wilderwild/mixin/snowlogging/client/BlockRenderDispatcherMixin.java
 @Mixin(BlockRenderManager.class)
 public abstract class BlockRenderManagerMixin {
 

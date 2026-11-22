@@ -35,7 +35,6 @@ public abstract class ComposterBlockMixin {
 
     @Shadow
     private static void add(float p_51921_, ItemLike like) {
-
     }
 
     @WrapMethod(method = "getCollisionShape")

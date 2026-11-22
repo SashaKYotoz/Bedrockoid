@@ -17,6 +17,7 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = FLAGS) public static boolean wetSpongesDryOut = true;
     @Entry(category = FLAGS) public static boolean entitySharesFire = true;
     @Entry(category = FLAGS) public static boolean fallenTrees = true;
+    @Entry(category = FLAGS) public static boolean bigFallenTrees = true;
     @Entry(category = FLAGS) public static boolean reachAroundPlacement = true;
     @Entry(category = FLAGS) public static boolean sheepFurColorFix = true;
     @Entry(category = FLAGS) public static boolean frostwalkerBoost = true;
