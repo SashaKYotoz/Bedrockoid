@@ -4,20 +4,19 @@
   "version": "${version}",
   "name": "Bedrockoid",
   "description": "Even more Bedrock features for Java Edition",
-  "authors": [],
+  "authors": [
+    "SashaKYotoz"
+  ],
   "contact": {},
-  "license": "All-Rights-Reserved",
+  "license": "GPL-3.0",
   "icon": "assets/bedrockoid/bedrockoid.png",
   "environment": "*",
   "entrypoints": {
-    "client": [
-      "net.sashakyotoz.bedrockoid.client.BedrockoidClient"
-    ],
     "main": [
       "net.sashakyotoz.bedrockoid.Bedrockoid"
     ],
-    "fabric-datagen": [
-      "net.sashakyotoz.bedrockoid.common.datagen.BedrockoidDatagen"
+    "client": [
+      "net.sashakyotoz.bedrockoid.client.BedrockoidClient"
     ]
   },
   "mixins": [
@@ -25,8 +24,9 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*",
-    "minecraft": "${minecraft_version}"
-  },
-  "accessWidener": "bedrockoid.accesswidener"
+    "fabric-api": "*",
+    "midnightlib": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=25"
+  }
 }

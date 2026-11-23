@@ -3,23 +3,22 @@ loaderVersion = "[4,)"
 license = "GPL-3.0 license"
 [[mixins]]
 config = "bedrockoid.mixins.json"
-[[accessTransformers]]
-file = "META-INF/accesstransformer.cfg"
 [[mods]]
 modId = "bedrockoid"
-version = "0.1.2"
+version = "0.2"
 displayName = "Bedrockoid"
 authors = "SashaKYotoz"
 description = "Even more Bedrock features for Java Edition"
+logoFile = "assets/bedrockoid/bedrockoid.png"
 [[dependencies.bedrockoid]]
 modId = "neoforge"
-mandatory = true
-versionRange = "[21,)"
+type = "required"
+versionRange = "[26.1.2,)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies.bedrockoid]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.21.11]"
+type = "required"
+versionRange = "[26.1.2,26.2)"
 ordering = "NONE"
 side = "BOTH"

@@ -1,65 +1,56 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.sashakyotoz.bedrockoid.Bedrockoid;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class ReachPlacementUtils {
     public static final ReachPlacementUtils INSTANCE = new ReachPlacementUtils();
-    private final Minecraft client = Minecraft.getInstance();
     public static final Identifier PLACEMENT_ICON = Bedrockoid.makeID("reach_around_icon");
+    private static final int ICON_SIZE = 15;
 
-    public void renderIndicator(GuiGraphics drawContext) {
+    public void renderIndicator(GuiGraphicsExtractor graphics) {
         if (canReachAround())
-            drawContext.blitSprite(RenderPipelines.CROSSHAIR, PLACEMENT_ICON, (drawContext.guiWidth() - 15) / 2, (drawContext.guiHeight() - 15) / 2, 15, 15);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, PLACEMENT_ICON, (graphics.guiWidth() - ICON_SIZE) / 2, (graphics.guiHeight() - ICON_SIZE) / 2, ICON_SIZE, ICON_SIZE);
     }
 
     public boolean canReachAround() {
+        if (!BedrockoidConfig.reachAroundPlacement || ModsUtils.isBedrockifyIn())
+            return false;
+        Minecraft client = Minecraft.getInstance();
         if (client.player == null || client.level == null || client.hitResult == null)
             return false;
-
-        if (!client.hitResult.getType().equals(HitResult.Type.MISS))
+        if (client.hitResult.getType() != HitResult.Type.MISS)
             return false;
-
-        final LocalPlayer player = client.player;
-        final BlockPos targetPos = getFacingSteppingBlockPos(player);
-
+        LocalPlayer player = client.player;
+        if (!player.isCrouching() || !player.onGround())
+            return false;
         if (player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty())
             return false;
-        if (!player.isCrouching())
+        if (!client.level.getBlockState(getFacingSteppingBlockPos(player)).canBeReplaced())
             return false;
-        if (!player.onGround())
-            return false;
-        if (!client.level.getBlockState(targetPos).canBeReplaced())
-            return false;
-
         return getRaycastIntersection(player).isPresent();
     }
 
-    public static BlockPos getFacingSteppingBlockPos(@NotNull net.minecraft.world.entity.Entity player) {
+    public static BlockPos getFacingSteppingBlockPos(@NotNull Entity player) {
         return player.getOnPos().relative(player.getDirection());
     }
 
-    /**
-     * Draws a vector from the player's eyes to the end of the reach distance, in the direction the player is facing. We can use this to check if the block is valid for placement.
-     *
-     * @return The position of the intersection between the raycast and the surface of the target block.
-     * @author axialeaa
-     */
     private Optional<Vec3> getRaycastIntersection(@NotNull LocalPlayer player) {
         Vec3 rayStartPos = player.getEyePosition();
-        Vec3 rayEndPos = player.getViewVector(1.0F).scale(4.5f).add(rayStartPos);
-
+        Vec3 rayEndPos = player.getViewVector(1.0F).scale(player.blockInteractionRange()).add(rayStartPos);
         return new AABB(getFacingSteppingBlockPos(player)).clip(rayStartPos, rayEndPos);
     }
 }

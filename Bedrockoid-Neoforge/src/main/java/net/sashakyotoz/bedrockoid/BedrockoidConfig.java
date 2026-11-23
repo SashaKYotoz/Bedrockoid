@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BedrockoidConfig {
-    public static FileConfig config;
+    public static final Path CONFIG_PATH = Paths.get("config", "bedrockoid-config.toml");
     public static final String FLAGS = "flags";
     public static final String LISTS = "lists";
+    public static FileConfig config;
 
     public static boolean armorStandArms = true;
     public static boolean redstoneConnectsToPiston = true;
@@ -23,8 +24,8 @@ public class BedrockoidConfig {
     public static boolean entitySharesFire = true;
     public static boolean fallenTrees = true;
     public static boolean reachAroundPlacement = true;
-    public static boolean sheepFurColorFix = true;
     public static boolean frostwalkerBoost = true;
+    public static boolean mushroomTreesInSwamp = true;
     public static boolean shulkersCanBeDyed = true;
     public static boolean shieldActivatesWhenSneaking = true;
     public static boolean canPlantsBeBonemeal = true;
@@ -37,59 +38,77 @@ public class BedrockoidConfig {
     public static boolean snowCoversVines = true;
     public static boolean sodiumTurnOffSnowloggability = false;
 
-    public static void loadConfig() {
-        Path configPath = Paths.get("config/bedrockoid-config.toml");
-        config = CommentedFileConfig.builder(configPath).autoreload().autosave().sync().build();
+    private static boolean loaded = false;
+
+    public static synchronized void loadConfig() {
+        if (loaded)
+            return;
+        config = CommentedFileConfig.builder(CONFIG_PATH).autoreload().autosave().sync().build();
         config.load();
-        config.add(FLAGS + ".bedrockoid.armorStandArms", true);
-        config.add(FLAGS + ".bedrockoid.redstoneConnectsToPiston", true);
-        config.add(FLAGS + ".bedrockoid.snowlogging", true);
-        config.add(FLAGS + ".bedrockoid.blocksWaterloggability", true);
-        config.add(FLAGS + ".bedrockoid.cauldronNaturalFilling", true);
-        config.add(FLAGS + ".bedrockoid.stopElytraByPressingSpace", true);
-        config.add(FLAGS + ".bedrockoid.wetSpongesDryOut", true);
-        config.add(FLAGS + ".bedrockoid.entitySharesFire", true);
-        config.add(FLAGS + ".bedrockoid.fallenTrees", true);
-        config.add(FLAGS + ".bedrockoid.reachAroundPlacement", true);
-        config.add(FLAGS + ".bedrockoid.sheepFurColorFix", true);
-        config.add(FLAGS + ".bedrockoid.frostwalkerBoost", true);
-        config.add(FLAGS + ".bedrockoid.shulkersCanBeDyed", true);
-        config.add(FLAGS + ".bedrockoid.shieldActivatesWhenSneaking", true);
-        config.add(FLAGS + ".bedrockoid.canPlantsBeBonemeal", true);
-        config.add(FLAGS + ".bedrockoid.canSugarcaneBeBonemeal", true);
-        config.add(FLAGS + ".bedrockoid.fireAspectImprovements", true);
-        config.add(FLAGS + ".bedrockoid.composterCollisionFix", true);
-        config.add(FLAGS + ".bedrockoid.snowSpawnsUnderTrees", true);
-        config.add(FLAGS + ".bedrockoid.snowCoversLeaves", true);
-        config.add(FLAGS + ".bedrockoid.snowCoversVines", true);
-        config.add(FLAGS + ".bedrockoid.sodiumTurnOffSnowloggability", false);
-        config.add(LISTS + ".bedrockoid.disableSnowUnderTreesIn", new ArrayList<>());
+        addFlag("armorStandArms", true);
+        addFlag("redstoneConnectsToPiston", true);
+        addFlag("snowlogging", true);
+        addFlag("blocksWaterloggability", true);
+        addFlag("cauldronNaturalFilling", true);
+        addFlag("stopElytraByPressingSpace", true);
+        addFlag("wetSpongesDryOut", true);
+        addFlag("entitySharesFire", true);
+        addFlag("fallenTrees", true);
+        addFlag("reachAroundPlacement", true);
+        addFlag("frostwalkerBoost", true);
+        addFlag("mushroomTreesInSwamp", true);
+        addFlag("shulkersCanBeDyed", true);
+        addFlag("shieldActivatesWhenSneaking", true);
+        addFlag("canPlantsBeBonemeal", true);
+        addFlag("canSugarcaneBeBonemeal", true);
+        addFlag("fireAspectImprovements", true);
+        addFlag("composterCollisionFix", true);
+        addFlag("snowSpawnsUnderTrees", true);
+        addFlag("snowCoversLeaves", true);
+        addFlag("snowCoversVines", true);
+        addFlag("sodiumTurnOffSnowloggability", false);
+        config.add(LISTS + ".bedrockoid.disableSnowUnderTreesIn", new ArrayList<String>());
         config.save();
+        loaded = true;
     }
 
     public static void init() {
-        armorStandArms = config.get(FLAGS + ".bedrockoid.armorStandArms");
-        redstoneConnectsToPiston = config.get(FLAGS + ".bedrockoid.redstoneConnectsToPiston");
-        snowlogging = config.get(FLAGS + ".bedrockoid.snowlogging");
-        blocksWaterloggability = config.get(FLAGS + ".bedrockoid.blocksWaterloggability");
-        cauldronNaturalFilling = config.get(FLAGS + ".bedrockoid.cauldronNaturalFilling");
-        stopElytraByPressingSpace = config.get(FLAGS + ".bedrockoid.stopElytraByPressingSpace");
-        wetSpongesDryOut = config.get(FLAGS + ".bedrockoid.wetSpongesDryOut");
-        entitySharesFire = config.get(FLAGS + ".bedrockoid.entitySharesFire");
-        fallenTrees = config.get(FLAGS + ".bedrockoid.fallenTrees");
-        reachAroundPlacement = config.get(FLAGS + ".bedrockoid.reachAroundPlacement");
-        sheepFurColorFix = config.get(FLAGS + ".bedrockoid.sheepFurColorFix");
-        frostwalkerBoost = config.get(FLAGS + ".bedrockoid.frostwalkerBoost");
-        shulkersCanBeDyed = config.get(FLAGS + ".bedrockoid.shulkersCanBeDyed");
-        shieldActivatesWhenSneaking = config.get(FLAGS + ".bedrockoid.shieldActivatesWhenSneaking");
-        canPlantsBeBonemeal = config.get(FLAGS + ".bedrockoid.canPlantsBeBonemeal");
-        canSugarcaneBeBonemeal = config.get(FLAGS + ".bedrockoid.canSugarcaneBeBonemeal");
-        fireAspectImprovements = config.get(FLAGS + ".bedrockoid.fireAspectImprovements");
-        composterCollisionFix = config.get(FLAGS + ".bedrockoid.composterCollisionFix");
-        snowSpawnsUnderTrees = config.get(FLAGS + ".bedrockoid.snowSpawnsUnderTrees");
-        snowCoversLeaves = config.get(FLAGS + ".bedrockoid.snowCoversLeaves");
-        snowCoversVines = config.get(FLAGS + ".bedrockoid.snowCoversVines");
-        sodiumTurnOffSnowloggability = config.get(FLAGS + ".bedrockoid.sodiumTurnOffSnowloggability");
-        disableSnowUnderTreesIn = config.get(LISTS + ".bedrockoid.disableSnowUnderTreesIn");
+        armorStandArms = flag("armorStandArms", true);
+        redstoneConnectsToPiston = flag("redstoneConnectsToPiston", true);
+        snowlogging = flag("snowlogging", true);
+        blocksWaterloggability = flag("blocksWaterloggability", true);
+        cauldronNaturalFilling = flag("cauldronNaturalFilling", true);
+        stopElytraByPressingSpace = flag("stopElytraByPressingSpace", true);
+        wetSpongesDryOut = flag("wetSpongesDryOut", true);
+        entitySharesFire = flag("entitySharesFire", true);
+        fallenTrees = flag("fallenTrees", true);
+        reachAroundPlacement = flag("reachAroundPlacement", true);
+        frostwalkerBoost = flag("frostwalkerBoost", true);
+        mushroomTreesInSwamp = flag("mushroomTreesInSwamp", true);
+        shulkersCanBeDyed = flag("shulkersCanBeDyed", true);
+        shieldActivatesWhenSneaking = flag("shieldActivatesWhenSneaking", true);
+        canPlantsBeBonemeal = flag("canPlantsBeBonemeal", true);
+        canSugarcaneBeBonemeal = flag("canSugarcaneBeBonemeal", true);
+        fireAspectImprovements = flag("fireAspectImprovements", true);
+        composterCollisionFix = flag("composterCollisionFix", true);
+        snowSpawnsUnderTrees = flag("snowSpawnsUnderTrees", true);
+        snowCoversLeaves = flag("snowCoversLeaves", true);
+        snowCoversVines = flag("snowCoversVines", true);
+        sodiumTurnOffSnowloggability = flag("sodiumTurnOffSnowloggability", false);
+        Object biomes = config.get(LISTS + ".bedrockoid.disableSnowUnderTreesIn");
+        List<String> parsed = new ArrayList<>();
+        if (biomes instanceof List<?> list)
+            for (Object entry : list)
+                parsed.add(String.valueOf(entry));
+        disableSnowUnderTreesIn = parsed;
+    }
+
+    private static void addFlag(String name, Object defaultValue) {
+        config.add(FLAGS + ".bedrockoid." + name, defaultValue);
+    }
+
+    private static boolean flag(String name, boolean defaultValue) {
+        Object value = config.get(FLAGS + ".bedrockoid." + name);
+        return value instanceof Boolean bool ? bool : defaultValue;
     }
 }

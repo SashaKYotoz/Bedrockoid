@@ -16,18 +16,20 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 @Mixin(Minecraft.class)
 public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<Runnable> {
-    public MinecraftClientMixin(String string) {
-        super(string);
+    public MinecraftClientMixin(String name, boolean propagatesCrashes) {
+        super(name, propagatesCrashes);
     }
 
     @Shadow
     public LocalPlayer player;
 
-    @Shadow @Nullable public HitResult hitResult;
+    @Shadow
+    @Nullable
+    public HitResult hitResult;
 
     @Inject(method = "startUseItem", at = @At("HEAD"))
     private void crosshairTargetHandling(CallbackInfo ci) {

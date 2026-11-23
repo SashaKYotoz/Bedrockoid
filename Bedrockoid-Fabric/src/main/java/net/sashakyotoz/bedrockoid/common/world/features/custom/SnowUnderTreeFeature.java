@@ -1,56 +1,58 @@
 package net.sashakyotoz.bedrockoid.common.world.features.custom;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SnowyBlock;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.DefaultFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
+import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 
-// Code used below is port of SnowUnderTreesFeature from SnowUnderTrees to fabric
-// goes under Copyright (c) 2022 bl4ckscor3
-public class SnowUnderTreeFeature extends Feature<DefaultFeatureConfig> {
+public class SnowUnderTreeFeature extends Feature<NoneFeatureConfiguration> {
 
-    public static final Feature<DefaultFeatureConfig> INSTANCE = new SnowUnderTreeFeature(DefaultFeatureConfig.CODEC);
+    public static final Feature<NoneFeatureConfiguration> INSTANCE = new SnowUnderTreeFeature(NoneFeatureConfiguration.CODEC);
 
-    public SnowUnderTreeFeature(Codec<DefaultFeatureConfig> configCodec) {
+    public SnowUnderTreeFeature(Codec<NoneFeatureConfiguration> configCodec) {
         super(configCodec);
     }
 
     @Override
-    public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
-        BlockPos pos = context.getOrigin();
-        StructureWorldAccess world = context.getWorld();
-        BlockPos.Mutable mPos = new BlockPos.Mutable();
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
+        BlockPos pos = ctx.origin();
+        WorldGenLevel level = ctx.level();
+        BlockPos.MutableBlockPos mPos = new BlockPos.MutableBlockPos();
 
-        for (int xi = 0; xi < 16; xi++) {
-            for (int zi = 0; zi < 16; zi++) {
-                int x = pos.getX() + xi;
-                int z = pos.getZ() + zi;
+        if (!ModsUtils.isSnowUnderTreesIn()) {
+            for (int xi = 0; xi < 16; xi++) {
+                for (int zi = 0; zi < 16; zi++) {
+                    int x = pos.getX() + xi;
+                    int z = pos.getZ() + zi;
 
-                mPos.set(x, world.getTopY(Heightmap.Type.MOTION_BLOCKING, x, z) - 1, z);
+                    mPos.set(x, level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) - 1, z);
 
-                if (world.getBlockState(mPos).isIn(BlockTags.LEAVES)) {
-                    mPos.set(x, world.getTopY(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, x, z), z);
+                    if (level.getBlockState(mPos).is(BlockTags.LEAVES)) {
+                        mPos.set(x, level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z), z);
 
-                    if (BedrockSnowManager.placeSnow(world, mPos)) {
-                        BlockState stateBelow;
+                        if (BedrockSnowManager.placeSnow(level, mPos)) {
+                            BlockState stateBelow;
 
-                        mPos.move(Direction.DOWN);
-                        stateBelow = world.getBlockState(mPos);
+                            mPos.move(Direction.DOWN);
+                            stateBelow = level.getBlockState(mPos);
 
-                        if (stateBelow.contains(SnowyBlock.SNOWY))
-                            world.setBlockState(mPos, stateBelow.with(SnowyBlock.SNOWY, true), 2);
+                            if (stateBelow.hasProperty(BlockStateProperties.SNOWY))
+                                level.setBlock(mPos, stateBelow.setValue(BlockStateProperties.SNOWY, true), 2);
+                        }
                     }
                 }
             }
         }
+
         return true;
     }
 }

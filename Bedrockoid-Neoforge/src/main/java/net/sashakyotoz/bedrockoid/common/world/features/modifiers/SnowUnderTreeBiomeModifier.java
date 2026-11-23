@@ -11,14 +11,13 @@ import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.world.features.BiomeModifiers;
 
-//copyright bl4ckscor3 MIT License https://github.com/bl4ckscor3/SnowUnderTrees/
 public record SnowUnderTreeBiomeModifier(Holder<PlacedFeature> snowUnderTreesFeature) implements BiomeModifier {
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase == Phase.ADD && BedrockoidConfig.snowSpawnsUnderTrees) {
             ClimateSettingsBuilder climate = builder.getClimateSettings();
 
-            if (climate.hasPrecipitation() && climate.getTemperature() < 0.15F)
+            if (climate.hasPrecipitation() && climate.getTemperature() <= 0.15F)
                 builder.getGenerationSettings().addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION.ordinal(), snowUnderTreesFeature);
         }
     }

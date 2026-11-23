@@ -1,74 +1,56 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.RenderPipelines;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.sashakyotoz.bedrockoid.Bedrockoid;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-/**
- * Handles rendering and positioning for placement of block
- *
- * @author juancarloscp52
- */
-//juancarloscp52 copyright
-//stating changes: rendering of texture instead of fill bar
-//source code: https://github.com/juancarloscp52/BedrockIfy/blob/1.21/src/main/java/me/juancarloscp52/bedrockify/client/features/reacharoundPlacement/ReachAroundPlacement.java
 public class ReachPlacementUtils {
     public static final ReachPlacementUtils INSTANCE = new ReachPlacementUtils();
-    private final MinecraftClient client = MinecraftClient.getInstance();
     public static final Identifier PLACEMENT_ICON = Bedrockoid.makeID("reach_around_icon");
+    private static final int ICON_SIZE = 15;
 
-    public void renderIndicator(DrawContext drawContext) {
+    public void renderIndicator(GuiGraphicsExtractor graphics) {
         if (canReachAround())
-            drawContext.drawGuiTexture(RenderPipelines.CROSSHAIR, PLACEMENT_ICON, (drawContext.getScaledWindowWidth() - 15) / 2, ((drawContext.getScaledWindowHeight() - 15) / 2) + 1, 15, 15);
+            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, PLACEMENT_ICON, (graphics.guiWidth() - ICON_SIZE) / 2, (graphics.guiHeight() - ICON_SIZE) / 2, ICON_SIZE, ICON_SIZE);
     }
 
     public boolean canReachAround() {
-        if (client.player == null || client.world == null || client.crosshairTarget == null)
+        if (!BedrockoidConfig.reachAroundPlacement || ModsUtils.isBedrockifyIn())
             return false;
-
-        if (!client.crosshairTarget.getType().equals(HitResult.Type.MISS))
+        Minecraft client = Minecraft.getInstance();
+        if (client.player == null || client.level == null || client.hitResult == null)
             return false;
-
-        final ClientPlayerEntity player = client.player;
-        final BlockPos targetPos = getFacingSteppingBlockPos(player);
-
-        if (!player.isSneaking())
+        if (client.hitResult.getType() != HitResult.Type.MISS)
             return false;
-        if (player.getMainHandStack().isEmpty() && player.getOffHandStack().isEmpty())
+        LocalPlayer player = client.player;
+        if (!player.isCrouching() || !player.onGround())
             return false;
-        if (!player.isOnGround())
+        if (player.getMainHandItem().isEmpty() && player.getOffhandItem().isEmpty())
             return false;
-        if (!client.world.getBlockState(targetPos).isReplaceable())
+        if (!client.level.getBlockState(getFacingSteppingBlockPos(player)).canBeReplaced())
             return false;
-
         return getRaycastIntersection(player).isPresent();
     }
 
     public static BlockPos getFacingSteppingBlockPos(@NotNull Entity player) {
-        return player.getSteppingPos().offset(player.getHorizontalFacing());
+        return player.getOnPos().relative(player.getDirection());
     }
 
-    /**
-     * Draws a vector from the player's eyes to the end of the reach distance, in the direction the player is facing. We can use this to check if the block is valid for placement.
-     *
-     * @return The position of the intersection between the raycast and the surface of the target block.
-     * @author axialeaa
-     */
-    private Optional<Vec3d> getRaycastIntersection(@NotNull ClientPlayerEntity player) {
-        Vec3d rayStartPos = player.getEyePos();
-        Vec3d rayEndPos = player.getRotationVec(1.0F).multiply(player.getBlockInteractionRange()).add(rayStartPos);
-
-        return new Box(getFacingSteppingBlockPos(player)).raycast(rayStartPos, rayEndPos);
+    private Optional<Vec3> getRaycastIntersection(@NotNull LocalPlayer player) {
+        Vec3 rayStartPos = player.getEyePosition();
+        Vec3 rayEndPos = player.getViewVector(1.0F).scale(player.blockInteractionRange()).add(rayStartPos);
+        return new AABB(getFacingSteppingBlockPos(player)).clip(rayStartPos, rayEndPos);
     }
 }

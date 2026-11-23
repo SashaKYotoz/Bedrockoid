@@ -9,10 +9,8 @@ import java.util.List;
 import java.util.Set;
 
 public class MixinConfigPlugin implements IMixinConfigPlugin {
-
     @Override
     public void onLoad(String mixinPackage) {
-
     }
 
     @Override
@@ -22,16 +20,17 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
-        if ("PlantsMixin".contains(mixinClassName))
+        if (mixinClassName.contains(".client.sodium."))
+            return ModsUtils.isSodiumLoaded();
+        if (mixinClassName.endsWith(".PlantsMixin"))
             return ModsUtils.isSnowloggingNotOverrided();
-        if ("bedrockoid.mixin.client.sodium".contains(mixinClassName))
-            return ModsUtils.isSodiumIn();
+        if (mixinClassName.endsWith(".FlowerBlockMixin"))
+            return !ModsUtils.isBedrockifyIn();
         return true;
     }
 
     @Override
     public void acceptTargets(Set<String> myTargets, Set<String> otherTargets) {
-
     }
 
     @Override
@@ -41,11 +40,9 @@ public class MixinConfigPlugin implements IMixinConfigPlugin {
 
     @Override
     public void preApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-
     }
 
     @Override
     public void postApply(String targetClassName, ClassNode targetClass, String mixinClassName, IMixinInfo mixinInfo) {
-
     }
 }

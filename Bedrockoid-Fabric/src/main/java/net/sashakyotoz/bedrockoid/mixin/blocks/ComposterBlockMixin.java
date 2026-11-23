@@ -2,59 +2,46 @@ package net.sashakyotoz.bedrockoid.mixin.blocks;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ComposterBlock.class)
 public abstract class ComposterBlockMixin {
     @Shadow
     @Final
-    private static VoxelShape[] COLLISION_SHAPES_BY_LEVEL;
+    private static VoxelShape[] SHAPES;
 
     @Shadow
     @Final
-    public static IntProperty LEVEL;
-
-    @Shadow
-    private static void registerCompostableItem(float levelIncreaseChance, ItemConvertible item) {
-    }
+    public static IntegerProperty LEVEL;
 
     @WrapMethod(method = "getCollisionShape")
-    private VoxelShape fixCollision(BlockState state, BlockView world, BlockPos pos, ShapeContext context, Operation<VoxelShape> original) {
+    private VoxelShape bedrockoid$fixCollision(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context, Operation<VoxelShape> original) {
         if (BedrockoidConfig.composterCollisionFix)
-            return COLLISION_SHAPES_BY_LEVEL[state.get(LEVEL)];
-        else
-            return COLLISION_SHAPES_BY_LEVEL[0];
+            return SHAPES[state.getValue(LEVEL)];
+        return original.call(state, level, pos, context);
     }
 
-    @Inject(method = "addToComposter", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/WorldAccess;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z"))
-    private static void regulatePushOfEntity(Entity user, BlockState state, WorldAccess world, BlockPos pos, ItemStack stack, CallbackInfoReturnable<BlockState> cir) {
-        if (user != null && user.getBlockPos().equals(pos) && BedrockoidConfig.composterCollisionFix) {
-            user.setVelocity(0, 0.15f, 0);
-            user.velocityDirty = true;
+    @Inject(method = "addItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/LevelAccessor;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z"))
+    private static void bedrockoid$liftEntity(Entity user, BlockState state, LevelAccessor level, BlockPos pos, ItemStack stack, CallbackInfoReturnable<BlockState> cir) {
+        if (user != null && user.getOnPos().equals(pos) && BedrockoidConfig.composterCollisionFix) {
+            user.setDeltaMovement(0, 0.15f, 0);
+            user.hurtMarked = true;
         }
-    }
-
-    @Inject(method = "registerDefaultCompostableItems", at = @At("TAIL"))
-    private static void registerExtraCompostableItems(CallbackInfo ci) {
-        registerCompostableItem(0.15f, Blocks.GRASS_BLOCK);
     }
 }

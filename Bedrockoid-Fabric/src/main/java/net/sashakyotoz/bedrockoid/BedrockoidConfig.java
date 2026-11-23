@@ -30,4 +30,5 @@ public class BedrockoidConfig extends MidnightConfig {
     @Entry(category = LISTS) public static List<String> disableSnowUnderTreesIn = new ArrayList<>();
     @Entry(category = FLAGS) public static boolean snowCoversLeaves = true;
     @Entry(category = FLAGS) public static boolean snowCoversVines = true;
+    @Entry(category = FLAGS) public static boolean sodiumTurnOffSnowloggability = false;
 }

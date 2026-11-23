@@ -17,12 +17,12 @@ public class Bedrockoid {
 
     public Bedrockoid(IEventBus modEventBus) {
         BedrockoidConfig.loadConfig();
-        BedrockSnowManager.init();
         BedrockoidConfig.init();
-
+        BedrockSnowManager.init();
         BedrockoidFeatures.REGISTRY.register(modEventBus);
         BiomeModifiers.BIOME_MODIFIER_SERIALIZERS.register(modEventBus);
     }
+
     public static Identifier makeID(String id) {
         return Identifier.fromNamespaceAndPath(MOD_ID, id);
     }

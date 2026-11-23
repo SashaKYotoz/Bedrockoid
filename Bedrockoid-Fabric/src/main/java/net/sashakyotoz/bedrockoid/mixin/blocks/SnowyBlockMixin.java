@@ -2,25 +2,23 @@ package net.sashakyotoz.bedrockoid.mixin.blocks;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SnowyBlock;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.SnowyBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-//frozenblock team copyright
-//stating changes: use of yarn mappings
-//source code: https://github.com/FrozenBlock/WilderWild/blob/master/src/main/java/net/frozenblock/wilderwild/mixin/snowlogging/SnowyDirtBlockMixin.java
+
 @Mixin(SnowyBlock.class)
 public class SnowyBlockMixin {
     @WrapOperation(
-            method = "isSnow",
+            method = "isSnowySetting",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/block/BlockState;isIn(Lnet/minecraft/registry/tag/TagKey;)Z"
+                    target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/TagKey;)Z"
             )
     )
-    private static boolean isSnowySetting(BlockState instance, TagKey tagKey, Operation<Boolean> original) {
+    private static boolean bedrockoid$isSnowySetting(BlockState instance, TagKey<?> tagKey, Operation<Boolean> original) {
         return original.call(instance, tagKey) || BlockUtils.isSnowlogged(instance);
     }
 }

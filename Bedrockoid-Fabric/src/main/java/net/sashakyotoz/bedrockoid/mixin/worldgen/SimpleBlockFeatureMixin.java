@@ -1,12 +1,13 @@
 package net.sashakyotoz.bedrockoid.mixin.worldgen;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.gen.feature.SimpleBlockFeature;
-import net.minecraft.world.gen.feature.SimpleBlockFeatureConfig;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.SimpleBlockFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,14 +16,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(SimpleBlockFeature.class)
 public class SimpleBlockFeatureMixin {
-    @Inject(method = "generate", at = @At(value = "INVOKE", target = "Lnet/minecraft/block/TallPlantBlock;placeAt(Lnet/minecraft/world/WorldAccess;Lnet/minecraft/block/BlockState;Lnet/minecraft/util/math/BlockPos;I)V"), cancellable = true)
-    private void fixDoublePlantPlacement(FeatureContext<SimpleBlockFeatureConfig> context, CallbackInfoReturnable<Boolean> cir) {
-        StructureWorldAccess world = context.getWorld();
-        BlockPos pos = context.getOrigin();
-        BlockState blockstate = context.getConfig().toPlace().get(context.getRandom(), pos);
-        if (world.getBiome(pos).value().hasPrecipitation()
-                && world.getBiome(pos).value().getTemperature() < 0.1f
-                && blockstate.isOf(Blocks.LARGE_FERN) && BedrockoidConfig.snowlogging)
+    @Inject(method = "place", at = @At("HEAD"), cancellable = true)
+    private void bedrockoid$skipLargeFernsInSnow(FeaturePlaceContext<SimpleBlockConfiguration> context, CallbackInfoReturnable<Boolean> cir) {
+        if (!BedrockoidConfig.snowlogging || !(context.config().toPlace() instanceof SimpleStateProvider provider))
+            return;
+        WorldGenLevel level = context.level();
+        BlockPos pos = context.origin();
+        if (!provider.getState(level, context.random(), pos).is(Blocks.LARGE_FERN))
+            return;
+        Biome biome = level.getBiome(pos).value();
+        if (biome.hasPrecipitation() && biome.getBaseTemperature() < 0.1f)
             cir.setReturnValue(false);
     }
 }

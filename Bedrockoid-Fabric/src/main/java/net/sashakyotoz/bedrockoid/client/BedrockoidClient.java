@@ -2,83 +2,44 @@ package net.sashakyotoz.bedrockoid.client;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.network.packet.c2s.play.ClientCommandC2SPacket;
-import net.minecraft.state.property.Properties;
-import net.minecraft.world.biome.FoliageColors;
-import net.minecraft.world.biome.GrassColors;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.protocol.game.ServerboundPlayerCommandPacket;
+import net.minecraft.world.entity.Pose;
+import net.sashakyotoz.bedrockoid.Bedrockoid;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
-import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ReachPlacementUtils;
 
 public class BedrockoidClient implements ClientModInitializer {
+    private static final int MIN_FLIGHT_TICKS = 10;
     private int timeFlying = 0;
+    private boolean jumpWasDown = false;
 
     @Override
     public void onInitializeClient() {
-        HudRenderCallback.EVENT.register((drawContext, tickDelta) -> ReachPlacementUtils.INSTANCE.renderIndicator(drawContext));
-        ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            //juancarloscp52 copyright
-            //stating changes: 'if' condition changes to integrate mod's config
-            //source code: https://github.com/juancarloscp52/BedrockIfy/blob/1.21/src/main/java/me/juancarloscp52/bedrockify/client/BedrockifyClient.java
-            if (BedrockoidConfig.stopElytraByPressingSpace && !ModsUtils.isBedrockifyIn()) {
-                if (client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && timeFlying > 10 && client.options.jumpKey.isPressed()) {
-                    client.player.getAbilities().flying = false;
-                    client.player.sendAbilitiesUpdate();
-                    client.player.networkHandler.sendPacket(new ClientCommandC2SPacket(client.player, ClientCommandC2SPacket.Mode.START_FALL_FLYING));
-                }
-                if (client.player != null && client.player.getPose().equals(EntityPose.GLIDING) && !client.options.jumpKey.isPressed())
-                    timeFlying++;
-                else
-                    timeFlying = 0;
-            }
-        });
-        if (ModsUtils.isSodiumIn() && !ModsUtils.isSnowyLeavesPlusIn()) {
-            ColorProviderRegistry.BLOCK.register(
-                    (state, world, pos, index) -> {
-                        if (BedrockoidConfig.snowCoversLeaves)
-                            return BlockUtils.leavesSnowyColor(state, pos);
-                        else
-                            return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.DEFAULT;
-                    },
-                    Blocks.OAK_LEAVES,
-                    Blocks.SPRUCE_LEAVES,
-                    Blocks.BIRCH_LEAVES,
-                    Blocks.JUNGLE_LEAVES,
-                    Blocks.ACACIA_LEAVES,
-                    Blocks.DARK_OAK_LEAVES,
-                    Blocks.MANGROVE_LEAVES,
-                    Blocks.AZALEA_LEAVES,
-                    Blocks.FLOWERING_AZALEA_LEAVES
-            );
-            ColorProviderRegistry.BLOCK.register(
-                    (state, world, pos, index) -> {
-                        if ((BlockUtils.isSnowlogged(state)
-                                || (state.contains(Properties.DOUBLE_BLOCK_HALF)
-                                && world != null && pos != null
-                                && BlockUtils.isSnowlogged(world.getBlockState(pos.down()))))
-                                && BedrockoidConfig.snowlogging)
-                            return 0xCCCCCC;
-                        return world != null ? BiomeColors.getGrassColor(world, pos) : GrassColors.getDefaultColor();
-                    },
-                    Blocks.GLASS,
-                    Blocks.TALL_GRASS,
-                    Blocks.FERN,
-                    Blocks.LARGE_FERN
-            );
-            ColorProviderRegistry.BLOCK.register(
-                    (state, world, pos, index) -> {
-                        if (BlockUtils.canVinesBeCoveredInSnow(state, world, pos) && BedrockoidConfig.snowCoversVines)
-                            return 0xCCCCCC;
-                        return world != null ? BiomeColors.getFoliageColor(world, pos) : FoliageColors.DEFAULT;
-                    },
-                    Blocks.VINE
-            );
+        HudElementRegistry.attachElementAfter(VanillaHudElements.CROSSHAIR, Bedrockoid.makeID("reach_around_indicator"),
+                (graphics, deltaTracker) -> ReachPlacementUtils.INSTANCE.renderIndicator(graphics));
+        ClientTickEvents.END_CLIENT_TICK.register(this::handleElytra);
+    }
+
+    private void handleElytra(Minecraft client) {
+        LocalPlayer player = client.player;
+        boolean jumpDown = client.options.keyJump.isDown();
+        if (player == null || !BedrockoidConfig.stopElytraByPressingSpace || ModsUtils.isBedrockifyIn() || player.getPose() != Pose.FALL_FLYING) {
+            this.timeFlying = 0;
+            this.jumpWasDown = jumpDown;
+            return;
         }
+        this.timeFlying++;
+        if (jumpDown && !this.jumpWasDown && this.timeFlying > MIN_FLIGHT_TICKS) {
+            player.getAbilities().flying = false;
+            player.onUpdateAbilities();
+            player.connection.send(new ServerboundPlayerCommandPacket(player, ServerboundPlayerCommandPacket.Action.START_FALL_FLYING));
+            this.timeFlying = 0;
+        }
+        this.jumpWasDown = jumpDown;
     }
 }

@@ -1,30 +1,38 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
 import net.fabricmc.loader.api.FabricLoader;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 
-public class ModsUtils {
+public final class ModsUtils {
+    private ModsUtils() {
+    }
+
+    public static boolean isLoaded(String modId) {
+        return FabricLoader.getInstance().isModLoaded(modId);
+    }
+
     public static boolean isSnowRealMagicIn() {
-        return FabricLoader.getInstance().isModLoaded("snowrealmagic");
+        return isLoaded("snowrealmagic");
     }
 
     public static boolean isSnowUnderTreesIn() {
-        return FabricLoader.getInstance().isModLoaded("snowundertrees");
+        return isLoaded("snowundertrees");
     }
 
-    public static boolean isBedrockifyIn() {
-        return FabricLoader.getInstance().isModLoaded("bedrockify");
+    public static boolean isSodiumLoaded() {
+        return isLoaded("sodium");
     }
 
     public static boolean isSodiumIn() {
-        return FabricLoader.getInstance().isModLoaded("sodium");
+        return isSodiumLoaded() && BedrockoidConfig.sodiumTurnOffSnowloggability;
     }
 
-    public static boolean isSnowyLeavesPlusIn() {
-        return FabricLoader.getInstance().isModLoaded("snowyleavesplus");
+    public static boolean isBedrockifyIn() {
+        return isLoaded("bedrockify");
     }
 
     public static boolean isWilderWildIn() {
-        return FabricLoader.getInstance().isModLoaded("wilderwild");
+        return isLoaded("wilderwild");
     }
 
     public static boolean isSnowloggingNotOverrided() {

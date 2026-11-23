@@ -1,39 +1,48 @@
 package net.sashakyotoz.bedrockoid.mixin.blocks;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Fertilizable;
-import net.minecraft.block.SugarCaneBlock;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.SugarCaneBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(SugarCaneBlock.class)
-public abstract class SugarcaneBlockMixin implements Fertilizable {
-    @Shadow
-    protected abstract boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos);
-
+public abstract class SugarcaneBlockMixin implements BonemealableBlock {
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
-        return world.getBlockState(pos.up()).isAir()
-                && pos.getY() + 1 < world.getHeight()
-                && BedrockoidConfig.canSugarcaneBeBonemeal;
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        if (!BedrockoidConfig.canSugarcaneBeBonemeal)
+            return false;
+        BlockPos above = bedrockoid$findTop(level, pos, state.getBlock()).above();
+        return !level.isOutsideBuildHeight(above) && level.getBlockState(above).isAir();
     }
 
     @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return this.canPlaceAt(state, world, pos)
-                && world.getBlockState(pos.up()).isAir()
-                && BedrockoidConfig.canSugarcaneBeBonemeal;
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+        return true;
     }
 
     @Override
-    public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        if (world.getBlockState(pos.up()).isAir())
-            world.setBlockState(pos.up(), state, 3);
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+        Block block = state.getBlock();
+        BlockPos above = bedrockoid$findTop(level, pos, block).above();
+        if (!level.isOutsideBuildHeight(above) && level.getBlockState(above).isAir())
+            level.setBlock(above, block.defaultBlockState(), 3);
+    }
+
+    @Unique
+    private static BlockPos bedrockoid$findTop(BlockGetter level, BlockPos pos, Block block) {
+        BlockPos.MutableBlockPos cursor = pos.mutable();
+        while (level.getBlockState(cursor.above()).is(block))
+            cursor.move(Direction.UP);
+        return cursor.immutable();
     }
 }

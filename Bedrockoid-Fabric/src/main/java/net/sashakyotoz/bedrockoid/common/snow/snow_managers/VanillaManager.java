@@ -1,56 +1,61 @@
 package net.sashakyotoz.bedrockoid.common.snow.snow_managers;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SnowBlock;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.rule.GameRules;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.world.level.block.SugarCaneBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 
 public class VanillaManager implements SnowManager {
     @Override
-    public boolean placeSnow(StructureWorldAccess level, BlockPos pos) {
-        int accumulationHeight = level instanceof ServerWorld world ? world.getGameRules().getValue(GameRules.MAX_SNOW_ACCUMULATION_HEIGHT) : 1;
-
-        if (accumulationHeight > 0 && BedrockSnowManager.canSnow(level, pos)) {
-            BlockState state = level.getBlockState(pos);
-
-            if (state.isOf(Blocks.SNOW)) {
-                int currentLayers = state.get(SnowBlock.LAYERS);
-
-                if (currentLayers < Math.min(accumulationHeight, 8)) {
-                    BlockState snowLayers = state.with(SnowBlock.LAYERS, currentLayers + 1);
-
-                    Block.pushEntitiesUpBeforeBlockChange(state, snowLayers, level, pos);
-                    level.setBlockState(pos, snowLayers, 2);
-                    return true;
-                }
-            } else {
-                if (state.contains(Properties.DOUBLE_BLOCK_HALF))
-                    level.setBlockState(pos.up(), Blocks.AIR.getDefaultState(), 3);
-                if (BlockUtils.canSnowlog(state))
-                    level.setBlockState(pos, state.with(BlockUtils.LAYERS, 1), 3);
-                else
-                    level.setBlockState(pos, Blocks.SNOW.getDefaultState(), 2);
+    public boolean placeSnow(WorldGenLevel level, BlockPos pos) {
+        int accumulationHeight = level instanceof ServerLevel serverLevel ? serverLevel.getGameRules().get(GameRules.MAX_SNOW_ACCUMULATION_HEIGHT) : 1;
+        if (accumulationHeight <= 0 || !BedrockSnowManager.canSnow(level, pos))
+            return false;
+        BlockState state = level.getBlockState(pos);
+        if (state.is(Blocks.SNOW)) {
+            int currentLayers = state.getValue(SnowLayerBlock.LAYERS);
+            if (currentLayers >= Math.min(accumulationHeight, 8))
+                return false;
+            BlockState snowLayers = state.setValue(SnowLayerBlock.LAYERS, currentLayers + 1);
+            Block.pushEntitiesUp(state, snowLayers, level, pos);
+            level.setBlock(pos, snowLayers, 2);
+            return true;
+        }
+        if (state.getBlock() instanceof SugarCaneBlock)
+            return false;
+        boolean snowlogging = BedrockoidConfig.snowlogging && BlockUtils.canSnowlog(state);
+        if (state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF)) {
+            if (snowlogging && state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.LOWER) {
+                level.setBlock(pos, state.setValue(BlockUtils.LAYERS, 1), 2);
                 return true;
             }
+            return false;
         }
-
-        return false;
+        if (snowlogging) {
+            level.setBlock(pos, state.setValue(BlockUtils.LAYERS, 1), 2);
+            return true;
+        }
+        level.setBlock(pos, Blocks.SNOW.defaultBlockState(), 2);
+        return true;
     }
 
     @Override
-    public boolean isSnow(StructureWorldAccess level, BlockPos pos) {
-        return level.getBlockState(pos).isOf(Blocks.SNOW);
+    public boolean isSnow(WorldGenLevel level, BlockPos pos) {
+        return level.getBlockState(pos).is(Blocks.SNOW);
     }
 
     @Override
-    public BlockState getStateAfterMelting(BlockState stateNow, StructureWorldAccess level, BlockPos pos) {
-        return Blocks.AIR.getDefaultState();
+    public BlockState getStateAfterMelting(BlockState stateNow, WorldGenLevel level, BlockPos pos) {
+        return Blocks.AIR.defaultBlockState();
     }
 }

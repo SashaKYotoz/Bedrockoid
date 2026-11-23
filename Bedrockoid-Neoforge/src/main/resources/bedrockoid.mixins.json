@@ -3,38 +3,38 @@
   "minVersion": "0.8",
   "package": "net.sashakyotoz.bedrockoid.mixin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "bedrockoid.refmap.json",
   "mixins": [
+    "FrostedIceBlockMixin",
     "ItemMixin",
+    "ReplaceDiskMixin",
+    "blocks.BedBlockMixin",
     "blocks.BlockItemMixin",
     "blocks.BlockMixin",
     "blocks.BlockStateMixin",
     "blocks.ComposterBlockMixin",
     "blocks.FlowerBlockMixin",
-    "blocks.LayeredCauldronBlockMixin",
-    "blocks.NotWaterloggableBlockMixin",
+    "blocks.LevelMixin",
     "blocks.PlantsMixin",
     "blocks.RedstoneWireBlockMixin",
     "blocks.SnowyBlockMixin",
-    "blocks.StateDefinitionAccess",
     "blocks.SugarcaneBlockMixin",
     "blocks.TntBlockMixin",
+    "blocks.waterlog.NotWaterloggableBlockMixin",
     "entities.ArmorStandEntityMixin",
     "entities.EntityMixin",
     "entities.LivingEntityMixin",
     "entities.MobEntityMixin",
-    "entities.ServerPlayerInteractionManagerMixin",
     "worldgen.BiomeMixin",
     "worldgen.ServerLevelMixin",
     "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
-    "blocks.BlockColorsMixin",
-    "client.BlockRenderDispatcherMixin",
+    "client.LevelRendererMixin",
     "client.MinecraftClientMixin",
-    "client.SectionCompilerMixin"
+    "client.SectionCompilerMixin",
+    "client.sodium.BlockRendererMixin"
   ],
-  "plugin": "net.sashakyotoz.bedrockoid.mixin.MixinConfigPlugin",
+  "plugin": "net.sashakyotoz.bedrockoid.mixin.MixinPlugin",
   "injectors": {
     "defaultRequire": 1
   }

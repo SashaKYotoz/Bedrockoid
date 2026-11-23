@@ -1,102 +1,94 @@
 package net.sashakyotoz.bedrockoid.common.utils;
 
 import com.google.common.base.Predicate;
-import net.minecraft.block.*;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.BlockRenderView;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.FoliageColors;
-import net.minecraft.world.rule.GameRules;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.gamerules.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockUtils {
-    public static final IntProperty LAYERS = IntProperty.of("snow_layers", 0, 8);
+    public static final IntegerProperty LAYERS = IntegerProperty.create("snow_layers", 0, 8);
+
+    private static final Class<?>[] WATERLOGGING_CANDIDATES = {
+            AbstractCauldronBlock.class, AnvilBlock.class, GrindstoneBlock.class, StonecutterBlock.class, BellBlock.class,
+            LecternBlock.class, HopperBlock.class, BrewingStandBlock.class, BasePressurePlateBlock.class, FenceGateBlock.class, BedBlock.class
+    };
 
     public static boolean isSnowlogged(@Nullable BlockState state) {
         return state != null
-                && state.getProperties() != null
-                && state.contains(LAYERS)
-                && state.get(LAYERS) > 0
+                && state.hasProperty(LAYERS)
+                && state.getValue(LAYERS) > 0
                 && ModsUtils.isSnowloggingNotOverrided();
     }
 
     public static BlockState getSnowEquivalent(BlockState state) {
-        return Blocks.SNOW.getDefaultState().with(Properties.LAYERS, Math.max(1, state.get(LAYERS)));
-    }
-
-    public static BlockState getSnowPlacementState(BlockState state, ItemPlacementContext context) {
-        return getSnowloggedState(state, context.getWorld().getBlockState(context.getBlockPos()));
+        return Blocks.SNOW.defaultBlockState().setValue(BlockStateProperties.LAYERS, Math.max(1, state.getValue(LAYERS)));
     }
 
     public static boolean canSnowlog(@Nullable BlockState state) {
-        return state != null && state.getProperties() != null
-                && state.contains(LAYERS) && state.getFluidState().isEmpty()
-                && ModsUtils.isSnowloggingNotOverrided();
+        if (state == null || !state.hasProperty(LAYERS))
+            return false;
+        if (state.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) && state.getValue(BlockStateProperties.DOUBLE_BLOCK_HALF) == DoubleBlockHalf.UPPER)
+            return false;
+        return state.getFluidState().isEmpty() && ModsUtils.isSnowloggingNotOverrided();
     }
 
-    public static boolean isTouchingBlock(World world, BlockPos pos, Predicate<BlockState> predicate) {
+    public static boolean addProperty(StateDefinition.Builder<Block, BlockState> builder, Property<?> property) {
+        try {
+            builder.add(property);
+            return true;
+        } catch (IllegalArgumentException duplicate) {
+            return false;
+        }
+    }
+
+    public static boolean isWaterloggingCandidate(Block block) {
+        if (block instanceof LavaCauldronBlock)
+            return false;
+        for (Class<?> clazz : WATERLOGGING_CANDIDATES) {
+            if (clazz.isInstance(block))
+                return true;
+        }
+        return false;
+    }
+
+    public static boolean hasExtraWaterlogging(Block block) {
+        return block instanceof BedrockoidBlock extended && extended.bedrockoid$hasExtraWaterlogging();
+    }
+
+    public static boolean isExtraWaterlogged(BlockState state) {
+        return hasExtraWaterlogging(state.getBlock()) && state.getValue(BlockStateProperties.WATERLOGGED);
+    }
+
+    public static boolean isTouchingBlock(Level level, BlockPos pos, Predicate<BlockState> predicate) {
         for (Direction dir : Direction.values()) {
-            BlockState state = world.getBlockState(pos.offset(dir));
-            if (predicate.test(state)) return true;
+            BlockState state = level.getBlockState(pos.relative(dir));
+            if (predicate.test(state))
+                return true;
         }
         return false;
     }
 
-    public static BlockState getSnowloggedState(BlockState state, BlockState snowState) {
-        if (snowState != null && canSnowlog(state) && snowState.isOf(Blocks.SNOW)) {
-            int layers = snowState.get(Properties.LAYERS);
-            if (layers < 8)
-                state = state.with(LAYERS, layers);
-        }
-        return state;
-    }
-
-    public static boolean canVinesBeCoveredInSnow(BlockState state, BlockRenderView world, BlockPos pos) {
-        if (world != null && pos != null) {
-            return state.getBlock() instanceof VineBlock && world.getBiomeFabric(pos) != null
-                    && world.getBiomeFabric(pos).value().getTemperature() < 0.15f
-                    && world.getBiomeFabric(pos).value().hasPrecipitation();
+    public static boolean haveLeavesToChangeColor(BlockState state, BlockGetter getter, BlockPos pos) {
+        if (getter != null && pos != null) {
+            BlockState upperState = getter.getBlockState(pos.above());
+            return (state.getBlock() instanceof LeavesBlock && upperState.is(Blocks.SNOW))
+                    || (state.getBlock() instanceof LeavesBlock && upperState.getBlock() instanceof LeavesBlock && getter.getBlockState(pos.above(2)).is(Blocks.SNOW));
         }
         return false;
-    }
-
-    public static boolean haveLeavesToChangeColor(BlockState state, BlockRenderView world, BlockPos pos) {
-        if (world != null && pos != null) {
-            BlockState upperState = world.getBlockState(pos.up());
-            return (state.getBlock() instanceof LeavesBlock && upperState.isOf(Blocks.SNOW))
-                    || (upperState.getBlock() instanceof LeavesBlock && world.getBlockState(pos.up(2)).isOf(Blocks.SNOW));
-        }
-        return false;
-    }
-
-    public static int leavesSnowyColor(BlockState state, BlockPos pos) {
-        ClientWorld level = MinecraftClient.getInstance().world;
-        if (state.getBlock() instanceof LeavesBlock && level != null && pos != null) {
-            BlockState upperState = level.getBlockState(pos.up());
-            if (upperState.isOf(Blocks.SNOW) || (upperState.getBlock() instanceof LeavesBlock && level.getBlockState(pos.up(2)).isOf(Blocks.SNOW)))
-                return BlockUtils.blendColors(BiomeColors.getFoliageColor(level, pos), 0xFFFFFF, 0.95f);
-            if (level.getBiome(pos).value().getTemperature() < 0.1f && level.getBiome(pos).value().hasPrecipitation()) {
-                return getNeighborBlocks(level, pos) ? BlockUtils.blendColors(BiomeColors.getFoliageColor(level, pos), 0xFFFFFF, 0.4f)
-                        : BlockUtils.blendColors(BiomeColors.getFoliageColor(level, pos), 0xFFFFFF, 0.75f);
-            }
-        }
-        return level != null && pos != null ? BiomeColors.getFoliageColor(level, pos) : FoliageColors.DEFAULT;
-    }
-
-    private static boolean getNeighborBlocks(ClientWorld world, BlockPos pos) {
-        return world.getBiome(pos.north()).value().getTemperature() > 0.1f
-                || world.getBiome(pos.south()).value().getTemperature() > 0.1f
-                || world.getBiome(pos.east()).value().getTemperature() > 0.1f
-                || world.getBiome(pos.west()).value().getTemperature() > 0.1f;
     }
 
     public static int blendColors(int colorA, int colorB, float t) {
@@ -107,39 +99,20 @@ public class BlockUtils {
         return (r << 16) | (g << 8) | b;
     }
 
-    public static boolean haveToFillUpCauldron(BlockState state, ServerWorld world, BlockPos pos) {
-        if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.WATER_CAULDRON) && state.get(Properties.LEVEL_3) != 3)
-            return true;
-        else if (world.getFluidState(pos.up()).isOf(Fluids.WATER) && state.isOf(Blocks.CAULDRON)) {
-            world.setBlockState(pos, Blocks.WATER_CAULDRON.getDefaultState().with(Properties.LEVEL_3, 1).with(Properties.WATERLOGGED, state.get(Properties.WATERLOGGED)));
-            return true;
-        } else if (world.getFluidState(pos.up()).isOf(Fluids.LAVA) && state.isOf(Blocks.CAULDRON) && world.getGameRules().getValue(GameRules.LAVA_SOURCE_CONVERSION)) {
-            world.setBlockState(pos, Blocks.LAVA_CAULDRON.getDefaultState());
-            return true;
+    public static void fillCauldronNaturally(BlockState state, ServerLevel level, BlockPos pos) {
+        FluidState above = level.getFluidState(pos.above());
+        BlockState filled = null;
+        if (above.is(Fluids.WATER)) {
+            if (state.is(Blocks.WATER_CAULDRON) && state.getValue(BlockStateProperties.LEVEL_CAULDRON) < 3)
+                filled = state.setValue(BlockStateProperties.LEVEL_CAULDRON, state.getValue(BlockStateProperties.LEVEL_CAULDRON) + 1);
+            else if (state.is(Blocks.CAULDRON))
+                filled = Blocks.WATER_CAULDRON.defaultBlockState();
+        } else if (above.is(Fluids.LAVA) && state.is(Blocks.CAULDRON) && level.getGameRules().get(GameRules.LAVA_SOURCE_CONVERSION)) {
+            filled = Blocks.LAVA_CAULDRON.defaultBlockState();
         }
-        return false;
-    }
-
-    private static final Class<?>[] WATERLOGGED_MISSING_BLOCKS = {
-            LeveledCauldronBlock.class,
-            AbstractCauldronBlock.class,
-            AnvilBlock.class,
-            BellBlock.class,
-            BedBlock.class,
-            PressurePlateBlock.class,
-            FenceGateBlock.class,
-            LecternBlock.class,
-            HopperBlock.class,
-            BrewingStandBlock.class,
-            GrindstoneBlock.class,
-            StonecutterBlock.class
-    };
-
-    public static boolean isInstanceOfAny(Block block) {
-        for (Class<?> clazz : WATERLOGGED_MISSING_BLOCKS) {
-            if (clazz.isInstance(block))
-                return true;
+        if (filled != null) {
+            level.setBlockAndUpdate(pos, filled);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(filled));
         }
-        return false;
     }
 }

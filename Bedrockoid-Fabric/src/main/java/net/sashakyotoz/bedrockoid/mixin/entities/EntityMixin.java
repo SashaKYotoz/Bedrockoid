@@ -2,62 +2,84 @@ package net.sashakyotoz.bedrockoid.mixin.entities;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.block.AbstractCandleBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CampfireBlock;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.vehicle.TntMinecartEntity;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleType;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.minecart.MinecartTNT;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.CampfireBlock;
+import net.minecraft.world.level.block.CandleBlock;
+import net.minecraft.world.level.block.CandleCakeBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.Vec3;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
+import net.sashakyotoz.bedrockoid.common.utils.EnchantUtils;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
-public class EntityMixin {
+public abstract class EntityMixin {
     @Inject(method = "baseTick", at = @At("TAIL"))
-    private void handleTick(CallbackInfo ci) {
-        Entity entity = (Entity) ((Object) this);
-        if (entity.isOnFire() && BedrockoidConfig.entitySharesFire) {
-            BlockState state = entity.getEntityWorld().getBlockState(entity.getBlockPos());
-            if ((state.getBlock() instanceof CampfireBlock || state.getBlock() instanceof AbstractCandleBlock) && !state.get(Properties.LIT)) {
-                entity.getEntityWorld().setBlockState(entity.getBlockPos(), state.with(Properties.LIT, true));
-                entity.playSoundIfNotSilent(SoundEvents.ITEM_FLINTANDSTEEL_USE);
-            }
+    private void bedrockoid$shareFire(CallbackInfo ci) {
+        Entity entity = (Entity) (Object) this;
+        Level level = entity.level();
+        if (level.isClientSide() || !BedrockoidConfig.entitySharesFire || !entity.isOnFire())
+            return;
+        BlockPos pos = entity.blockPosition();
+        if (!bedrockoid$tryLight(entity, level, pos))
+            bedrockoid$tryLight(entity, level, pos.below());
+    }
+
+    @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+    private void bedrockoid$primeTntMinecart(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir) {
+        if (!BedrockoidConfig.fireAspectImprovements || !((Object) this instanceof MinecartTNT minecart) || minecart.isPrimed())
+            return;
+        ItemStack stack = player.getItemInHand(hand);
+        if (!EnchantUtils.hasFireAspect(player.level(), stack))
+            return;
+        if (!player.level().isClientSide()) {
+            minecart.primeFuse(null);
+            stack.hurtAndBreak(1, player, hand.asEquipmentSlot());
+            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
         }
+        cir.setReturnValue(InteractionResult.SUCCESS);
     }
 
     @WrapOperation(
-            method = "spawnSprintingParticles",
+            method = "spawnSprintParticle",
             at = @At(
                     value = "NEW",
-                    target = "(Lnet/minecraft/particle/ParticleType;Lnet/minecraft/block/BlockState;)Lnet/minecraft/particle/BlockStateParticleEffect;"
-            )
+                    target = "(Lnet/minecraft/core/particles/ParticleType;Lnet/minecraft/world/level/block/state/BlockState;)Lnet/minecraft/core/particles/BlockParticleOption;")
     )
-    public BlockStateParticleEffect spawnSprintParticle(ParticleType type, BlockState blockState, Operation<BlockStateParticleEffect> original) {
-        if (BlockUtils.isSnowlogged(blockState) && BedrockoidConfig.snowlogging)
+    private BlockParticleOption bedrockoid$snowSprintParticle(ParticleType<BlockParticleOption> type, BlockState blockState, Operation<BlockParticleOption> original) {
+        if (BedrockoidConfig.snowlogging && BlockUtils.isSnowlogged(blockState))
             blockState = BlockUtils.getSnowEquivalent(blockState);
         return original.call(type, blockState);
     }
 
-    @Inject(method = "interact", at = @At("HEAD"))
-    private void handleFireAspectInteraction(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        Entity entity = (Entity) ((Object) this);
-        if (BedrockoidConfig.entitySharesFire) {
-            if (entity instanceof TntMinecartEntity minecart && player.getEntityWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).isPresent()
-                    && EnchantmentHelper.getLevel(player.getEntityWorld().getRegistryManager().getOptionalEntry(Enchantments.FIRE_ASPECT).get(), player.getStackInHand(hand)) > 0)
-                minecart.prime(null);
-        }
+    @Unique
+    private static boolean bedrockoid$tryLight(Entity entity, Level level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        if (!CampfireBlock.canLight(state) && !CandleBlock.canLight(state) && !CandleCakeBlock.canLight(state))
+            return false;
+        level.setBlockAndUpdate(pos, state.setValue(BlockStateProperties.LIT, true));
+        level.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
+        level.gameEvent(entity, GameEvent.BLOCK_CHANGE, pos);
+        return true;
     }
 }

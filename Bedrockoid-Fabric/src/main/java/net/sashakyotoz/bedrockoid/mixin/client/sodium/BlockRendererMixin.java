@@ -1,38 +1,29 @@
 package net.sashakyotoz.bedrockoid.mixin.client.sodium;
 
-import net.caffeinemc.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.client.render.model.BlockStateModel;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Pseudo
-@Environment(EnvType.CLIENT)
-@Mixin(BlockRenderer.class)
+@Mixin(targets = "net.caffeinemc.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer")
 public abstract class BlockRendererMixin {
-    @Unique
-    private static final BlockRenderManager BLOCK_MODEL_SHAPER = MinecraftClient.getInstance().getBlockRenderManager();
-
-    @Shadow
+    @Shadow(remap = false)
     public abstract void renderModel(BlockStateModel model, BlockState state, BlockPos pos, BlockPos origin);
 
     @Inject(method = "renderModel", at = @At("HEAD"), remap = false, require = 0)
-    public void renderModel(BlockStateModel model, BlockState state, BlockPos pos, BlockPos origin, CallbackInfo info) {
-        if (!BlockUtils.isSnowlogged(state)) return;
-        final BlockState snowState = BlockUtils.getSnowEquivalent(state);
-        final BlockStateModel snowModel = BLOCK_MODEL_SHAPER.getModel(snowState);
-        this.renderModel(snowModel, snowState, pos, origin);
+    private void bedrockoid$renderSnowLayer(BlockStateModel model, BlockState state, BlockPos pos, BlockPos origin, CallbackInfo ci) {
+        if (!BedrockoidConfig.snowlogging || !BlockUtils.isSnowlogged(state))
+            return;
+        BlockState snowState = BlockUtils.getSnowEquivalent(state);
+        this.renderModel(Minecraft.getInstance().getModelManager().getBlockStateModelSet().get(snowState), snowState, pos, origin);
     }
-
 }

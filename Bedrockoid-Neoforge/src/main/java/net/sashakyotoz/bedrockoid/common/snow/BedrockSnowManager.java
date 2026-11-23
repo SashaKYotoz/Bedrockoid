@@ -1,12 +1,12 @@
 package net.sashakyotoz.bedrockoid.common.snow;
 
-import com.google.common.collect.Iterables;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
-import net.minecraft.server.level.ChunkHolder;
-import net.minecraft.server.level.ServerChunkCache;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
+import it.unimi.dsi.fastutil.longs.LongSet;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.WorldGenLevel;
@@ -16,22 +16,14 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.sashakyotoz.bedrockoid.common.snow.snow_managers.SnowManager;
 import net.sashakyotoz.bedrockoid.common.snow.snow_managers.VanillaManager;
 
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-//copyright bl4ckscor3 MIT License https://github.com/bl4ckscor3/SnowUnderTrees/
 public class BedrockSnowManager {
-    private static SnowManager snowManager;
-    private static ChunkRunner chunkRunner;
-    private static BiFunction<WorldGenLevel, BlockPos, Boolean> temperatureCheck;
+    private static final int CHUNK_RADIUS = 10;
+    private static SnowManager snowManager = new VanillaManager();
 
     public static void init() {
-//        if (ModsUtils.isSnowRealMagicIn())
-//            snowManager = new SnowRealMagicManager();
-//        else
         snowManager = new VanillaManager();
-        temperatureCheck = (level, pos) -> !level.getBiome(pos).value().warmEnoughToRain(pos, level.getSeaLevel());
-        chunkRunner = (level, action) -> Iterables.unmodifiableIterable(level.getChunkSource().chunkMap.visibleChunkMap.values()).forEach(chunkHolder -> chunkHolder.getEntityTickingChunkFuture().getNow(ChunkHolder.UNLOADED_LEVEL_CHUNK).ifSuccess(action::accept));
     }
 
     public static boolean placeSnow(WorldGenLevel level, BlockPos pos) {
@@ -40,22 +32,15 @@ public class BedrockSnowManager {
 
     public static boolean canSnow(WorldGenLevel level, BlockPos pos) {
         Holder<Biome> biome = level.getBiome(pos);
-
-        if (biome.value().getPrecipitationAt(pos, level.getSeaLevel()) == Biome.Precipitation.SNOW) {
-            BlockState stateAtPos = level.getBlockState(pos);
-
-            if (!stateAtPos.canBeReplaced())
-                return false;
-
-            if (temperatureCheck.apply(level, pos) && isInBuildRangeAndDarkEnough(level, pos)) {
-                BlockPos posBelow = pos.below();
-                BlockState stateBelow = level.getBlockState(posBelow);
-
-                return stateBelow.isFaceSturdy(level, posBelow, Direction.UP);
-            }
-        }
-
-        return false;
+        if (biome.value().getPrecipitationAt(pos, level.getSeaLevel()) != Biome.Precipitation.SNOW)
+            return false;
+        BlockState stateAtPos = level.getBlockState(pos);
+        if (!stateAtPos.canBeReplaced())
+            return false;
+        if (biome.value().warmEnoughToRain(pos, level.getSeaLevel()) || !isInBuildRangeAndDarkEnough(level, pos))
+            return false;
+        BlockPos posBelow = pos.below();
+        return level.getBlockState(posBelow).isFaceSturdy(level, posBelow, Direction.UP);
     }
 
     public static boolean isSnow(WorldGenLevel level, BlockPos pos) {
@@ -67,24 +52,24 @@ public class BedrockSnowManager {
     }
 
     private static boolean isInBuildRangeAndDarkEnough(WorldGenLevel level, BlockPos pos) {
-        return pos.getY() >= level.getMinY() && pos.getY() <= level.getHeight() && level.getBrightness(LightLayer.BLOCK, pos) < 10;
+        return pos.getY() >= level.getMinY() && pos.getY() <= level.getMaxY() && level.getBrightness(LightLayer.BLOCK, pos) < 10;
     }
 
     public static void runForChunks(ServerLevel level, Consumer<LevelChunk> action) {
-        ServerChunkCache cache = level.getChunkSource();
-
-        chunkRunner.run(level, chunk -> {
-            ChunkPos chunkPos = chunk.getPos();
-
-            if ((level.canSpawnEntitiesInChunk(chunkPos) && cache.chunkMap.anyPlayerCloseEnoughForSpawning(chunkPos)) || cache.chunkMap.getDistanceManager().inBlockTickingRange(chunkPos.toLong())) {
-                if (level.shouldTickBlocksAt(chunkPos.toLong()))
-                    action.accept(chunk);
+        LongSet visited = new LongOpenHashSet();
+        for (ServerPlayer player : level.players()) {
+            ChunkPos center = player.chunkPosition();
+            for (int dx = -CHUNK_RADIUS; dx <= CHUNK_RADIUS; dx++) {
+                for (int dz = -CHUNK_RADIUS; dz <= CHUNK_RADIUS; dz++) {
+                    int chunkX = center.x() + dx;
+                    int chunkZ = center.z() + dz;
+                    if (!visited.add(ChunkPos.pack(chunkX, chunkZ)))
+                        continue;
+                    LevelChunk chunk = level.getChunkSource().getChunkNow(chunkX, chunkZ);
+                    if (chunk != null && level.shouldTickBlocksAt(new BlockPos(chunkX << 4, 0, chunkZ << 4)))
+                        action.accept(chunk);
+                }
             }
-        });
-    }
-
-    @FunctionalInterface
-    private interface ChunkRunner {
-        void run(ServerLevel level, Consumer<LevelChunk> action);
+        }
     }
 }

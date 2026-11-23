@@ -1,45 +1,44 @@
 package net.sashakyotoz.bedrockoid.mixin.client;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.thread.ReentrantThreadExecutor;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.thread.ReentrantBlockableEventLoop;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 import net.sashakyotoz.bedrockoid.common.utils.ReachPlacementUtils;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-//juancarloscp52 copyright
-//stating changes: 'if' condition modifications to use mod's config
-//source code: https://github.com/juancarloscp52/BedrockIfy/blob/1.21/src/main/java/me/juancarloscp52/bedrockify/mixin/client/features/reacharoundPlacement/MinecraftClientMixin.java
-@Mixin(MinecraftClient.class)
-public abstract class MinecraftClientMixin extends ReentrantThreadExecutor<Runnable> {
-    public MinecraftClientMixin(String string) {
-        super(string);
+import org.jetbrains.annotations.Nullable;
+
+@Mixin(Minecraft.class)
+public abstract class MinecraftClientMixin extends ReentrantBlockableEventLoop<Runnable> {
+    public MinecraftClientMixin(String name, boolean propagatesCrashes) {
+        super(name, propagatesCrashes);
     }
 
     @Shadow
-    public ClientPlayerEntity player;
+    public LocalPlayer player;
+
     @Shadow
     @Nullable
-    public HitResult crosshairTarget;
+    public HitResult hitResult;
 
-    @Inject(method = "doItemUse", at = @At("HEAD"))
+    @Inject(method = "startUseItem", at = @At("HEAD"))
     private void crosshairTargetHandling(CallbackInfo ci) {
         if (this.player == null || ModsUtils.isBedrockifyIn() || !BedrockoidConfig.reachAroundPlacement)
             return;
         if (ReachPlacementUtils.INSTANCE.canReachAround()) {
-            final ClientPlayerEntity player = this.player;
+            final LocalPlayer player = this.player;
             final BlockPos targetPos = ReachPlacementUtils.getFacingSteppingBlockPos(player);
-            this.crosshairTarget = new BlockHitResult(new Vec3d(targetPos.getX(), player.getY(), targetPos.getZ()), player.getHorizontalFacing(), targetPos, false);
+            this.hitResult = new BlockHitResult(new Vec3(targetPos.getX(), player.getY(), targetPos.getZ()), player.getDirection(), targetPos, false);
         }
     }
 }
