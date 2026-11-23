@@ -36,8 +36,8 @@
       "predicate": {
         "type": "minecraft:would_survive",
         "state": {
-          "Name": "minecraft:dark_oak_sapling",
-          "Properties": {
+          "id": "minecraft:dark_oak_sapling",
+          "properties": {
             "snow_layers": "0",
             "stage": "0"
           }

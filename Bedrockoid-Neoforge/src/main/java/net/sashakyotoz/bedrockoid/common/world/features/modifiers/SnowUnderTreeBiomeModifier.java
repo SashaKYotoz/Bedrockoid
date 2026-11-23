@@ -2,6 +2,7 @@ package net.sashakyotoz.bedrockoid.common.world.features.modifiers;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -13,7 +14,7 @@ import net.sashakyotoz.bedrockoid.common.world.features.BiomeModifiers;
 
 public record SnowUnderTreeBiomeModifier(Holder<PlacedFeature> snowUnderTreesFeature) implements BiomeModifier {
     @Override
-    public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+    public void modify(RegistryAccess registries, Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase == Phase.ADD && BedrockoidConfig.snowSpawnsUnderTrees) {
             ClimateSettingsBuilder climate = builder.getClimateSettings();
 

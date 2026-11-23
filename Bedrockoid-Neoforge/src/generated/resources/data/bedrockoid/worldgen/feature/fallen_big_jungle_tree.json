@@ -1,0 +1,10 @@
+{
+  "type": "bedrockoid:fallen_tree",
+  "isDoubleTrunk": true,
+  "logType": {
+    "id": "minecraft:jungle_log",
+    "properties": {
+      "axis": "y"
+    }
+  }
+}

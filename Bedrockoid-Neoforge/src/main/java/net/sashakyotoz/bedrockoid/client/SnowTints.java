@@ -12,11 +12,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.BiConsumer;
 
 public final class SnowTints {
@@ -40,9 +43,20 @@ public final class SnowTints {
             if (sources == null || sources.isEmpty() || sources.get(0) == null || sources.get(0) instanceof SnowTintSource)
                 continue;
             List<BlockTintSource> wrapped = new ArrayList<>(sources);
-            wrapped.set(0, new SnowTintSource(kind, sources.get(0)));
+            wrapped.set(0, new SnowTintSource(kind, sources.get(0), relevantProperties(kind, block, sources.get(0))));
             registrar.accept(wrapped, block);
         }
+    }
+
+    private static Set<Property<?>> relevantProperties(Kind kind, Block block, BlockTintSource delegate) {
+        Set<Property<?>> properties = new HashSet<>(delegate.relevantProperties());
+        if (kind == Kind.PLANT) {
+            for (Property<?> property : block.getStateDefinition().getProperties()) {
+                if (property == BlockUtils.LAYERS || property == BlockStateProperties.DOUBLE_BLOCK_HALF)
+                    properties.add(property);
+            }
+        }
+        return Set.copyOf(properties);
     }
 
     private enum Kind {
@@ -51,7 +65,7 @@ public final class SnowTints {
         VINE
     }
 
-    private record SnowTintSource(Kind kind, BlockTintSource delegate) implements BlockTintSource {
+    private record SnowTintSource(Kind kind, BlockTintSource delegate, Set<Property<?>> properties) implements BlockTintSource {
         @Override
         public int color(BlockState state) {
             return this.delegate.color(state);
@@ -70,6 +84,11 @@ public final class SnowTints {
         @Override
         public int colorAsTerrainParticle(BlockState state, BlockAndTintGetter level, BlockPos pos) {
             return this.delegate.colorAsTerrainParticle(state, level, pos);
+        }
+
+        @Override
+        public Set<Property<?>> relevantProperties() {
+            return this.properties;
         }
     }
 

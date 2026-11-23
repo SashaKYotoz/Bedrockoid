@@ -12,7 +12,9 @@ import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 
-public class WorldTickHandler {
+public final class WorldTickHandler {
+    private WorldTickHandler() {
+    }
 
     public static void onStartTick(ServerLevel level) {
         if (!BedrockoidConfig.snowSpawnsUnderTrees || !level.isRaining() || ModsUtils.isSnowUnderTreesIn())

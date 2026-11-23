@@ -29,7 +29,7 @@
     "worldgen.SimpleBlockFeatureMixin"
   ],
   "client": [
-    "client.LevelRendererMixin",
+    "client.LevelExtractorMixin",
     "client.MinecraftClientMixin",
     "client.SectionCompilerMixin",
     "client.sodium.BlockRendererMixin"

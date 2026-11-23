@@ -12,7 +12,9 @@ import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import org.jetbrains.annotations.Nullable;
 
-public class SnowBreakHandler {
+public final class SnowBreakHandler {
+    private SnowBreakHandler() {
+    }
 
     public static boolean beforeBlockBreak(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
         if (!BedrockoidConfig.snowlogging || !BlockUtils.isSnowlogged(state) || !(level instanceof ServerLevel serverLevel))

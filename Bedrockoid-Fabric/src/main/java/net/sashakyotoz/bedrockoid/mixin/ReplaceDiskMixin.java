@@ -18,22 +18,22 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(ReplaceDisk.class)
 public abstract class ReplaceDiskMixin {
     @WrapMethod(method = "apply(Lnet/minecraft/server/level/ServerLevel;ILnet/minecraft/world/item/enchantment/EnchantedItemInUse;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V")
-    private void bedrockoid$squareFrostWalker(ServerLevel serverLevel, int enchantmentLevel, EnchantedItemInUse item, Entity entity, Vec3 origin, Operation<Void> original) {
+    private void bedrockoid$squareFrostWalker(ServerLevel level, int enchantmentLevel, EnchantedItemInUse item, Entity entity, Vec3 origin, Operation<Void> original) {
         ReplaceDisk self = (ReplaceDisk) (Object) this;
         BlockPos center = BlockPos.containing(origin).offset(self.offset());
         RandomSource random = entity.getRandom();
-        if (!BedrockoidConfig.frostwalkerBoost || !(self.blockState() instanceof SimpleStateProvider provider) || !provider.getState(serverLevel, random, center).is(Blocks.FROSTED_ICE)) {
-            original.call(serverLevel, enchantmentLevel, item, entity, origin);
+        if (!BedrockoidConfig.frostwalkerBoost || !(self.blockState().value() instanceof SimpleStateProvider provider) || !provider.getState(level, random, center).is(Blocks.FROSTED_ICE)) {
+            original.call(level, enchantmentLevel, item, entity, origin);
             return;
         }
         int radius = (int) self.radius().calculate(enchantmentLevel);
         int height = (int) self.height().calculate(enchantmentLevel);
         for (BlockPos pos : BlockPos.betweenClosed(center.offset(-radius, 0, -radius), center.offset(radius, Math.max(height - 1, 0), radius))) {
-            if (!self.predicate().map(predicate -> predicate.test(serverLevel, pos)).orElse(true))
+            if (!self.predicate().map(predicate -> predicate.test(level, pos)).orElse(true))
                 continue;
-            BlockState state = provider.getState(serverLevel, random, pos);
-            if (serverLevel.setBlockAndUpdate(pos, state))
-                self.triggerGameEvent().ifPresent(event -> serverLevel.gameEvent(entity, event, pos));
+            BlockState state = provider.getState(level, random, pos);
+            if (level.setBlockAndUpdate(pos, state))
+                self.triggerGameEvent().ifPresent(event -> level.gameEvent(entity, event, pos));
         }
     }
 }

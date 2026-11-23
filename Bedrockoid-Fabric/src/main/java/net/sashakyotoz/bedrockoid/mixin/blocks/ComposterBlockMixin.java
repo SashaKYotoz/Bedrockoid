@@ -3,10 +3,10 @@ package net.sashakyotoz.bedrockoid.mixin.blocks;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Compostable;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -37,11 +37,11 @@ public abstract class ComposterBlockMixin {
         return original.call(state, level, pos, context);
     }
 
-    @Inject(method = "addItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/LevelAccessor;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z"))
-    private static void bedrockoid$liftEntity(Entity user, BlockState state, LevelAccessor level, BlockPos pos, ItemStack stack, CallbackInfoReturnable<BlockState> cir) {
-        if (user != null && user.getOnPos().equals(pos) && BedrockoidConfig.composterCollisionFix) {
+    @Inject(method = "addLayer", at = @At("RETURN"))
+    private static void bedrockoid$liftEntity(Entity user, BlockState state, ServerLevel level, BlockPos pos, Compostable compostable, CallbackInfoReturnable<BlockState> cir) {
+        if (user != null && cir.getReturnValue() != state && user.getOnPos().equals(pos) && BedrockoidConfig.composterCollisionFix) {
             user.setDeltaMovement(0, 0.15f, 0);
-            user.hurtMarked = true;
+            user.syncVelocity = true;
         }
     }
 }

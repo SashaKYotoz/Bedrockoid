@@ -16,7 +16,6 @@ rather than make Java Edition look like Bedrock Edition
 - Frostwalker radius is increased to be matched with what is in Bedrock Edition
 - Color of sheep's fur applies to all fur spots
 - Reach around placement for blocks
-- Fallen trees from snapshot 25W09A are backported + trees with 2x2 trunk
 - Any entities in fire can light candles and campfires
 - Wet sponge dries out when in dry biome (doesn't dry out instantly like in nether, it takes some time)
 - Stop elytra flying by pressing space on air

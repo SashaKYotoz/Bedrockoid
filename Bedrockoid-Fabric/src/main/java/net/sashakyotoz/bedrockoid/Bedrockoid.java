@@ -4,12 +4,14 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
+import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.ComposterBlock;
 import net.sashakyotoz.bedrockoid.common.handlers.SnowBreakHandler;
 import net.sashakyotoz.bedrockoid.common.handlers.WorldTickHandler;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
+import net.sashakyotoz.bedrockoid.common.utils.BlockUtils;
 import net.sashakyotoz.bedrockoid.common.world.features.BedrockoidFeatures;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +27,7 @@ public class Bedrockoid implements ModInitializer {
         BedrockoidFeatures.register();
         ServerTickEvents.START_LEVEL_TICK.register(WorldTickHandler::onStartTick);
         PlayerBlockBreakEvents.BEFORE.register(SnowBreakHandler::beforeBlockBreak);
-        ComposterBlock.COMPOSTABLES.put(Items.GRASS_BLOCK, 0.15F);
+        DefaultItemComponentEvents.MODIFY.register(context -> context.modify(Items.GRASS_BLOCK, builder -> builder.set(DataComponents.COMPOSTABLE, BlockUtils.GRASS_BLOCK_COMPOSTABLE)));
     }
 
     public static Identifier makeID(String id) {

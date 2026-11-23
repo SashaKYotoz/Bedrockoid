@@ -1,31 +1,29 @@
 package net.sashakyotoz.bedrockoid.common.world.features.custom;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.sashakyotoz.bedrockoid.common.snow.BedrockSnowManager;
 import net.sashakyotoz.bedrockoid.common.utils.ModsUtils;
 
-public class SnowUnderTreeFeature extends Feature<NoneFeatureConfiguration> {
+public record SnowUnderTreeFeature() implements Feature {
+    public static final MapCodec<SnowUnderTreeFeature> CODEC = MapCodec.unit(SnowUnderTreeFeature::new);
 
-    public static final Feature<NoneFeatureConfiguration> INSTANCE = new SnowUnderTreeFeature(NoneFeatureConfiguration.CODEC);
-
-    public SnowUnderTreeFeature(Codec<NoneFeatureConfiguration> configCodec) {
-        super(configCodec);
+    @Override
+    public MapCodec<SnowUnderTreeFeature> codec() {
+        return CODEC;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
-        BlockPos pos = ctx.origin();
-        WorldGenLevel level = ctx.level();
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos pos) {
         BlockPos.MutableBlockPos mPos = new BlockPos.MutableBlockPos();
 
         if (!ModsUtils.isSnowUnderTreesIn()) {

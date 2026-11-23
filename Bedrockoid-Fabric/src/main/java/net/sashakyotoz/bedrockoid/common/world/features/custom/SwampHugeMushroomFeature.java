@@ -1,39 +1,37 @@
 package net.sashakyotoz.bedrockoid.common.world.features.custom;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
 
-public class SwampHugeMushroomFeature extends Feature<NoneFeatureConfiguration> {
-    public static final Feature<NoneFeatureConfiguration> INSTANCE = new SwampHugeMushroomFeature(NoneFeatureConfiguration.CODEC);
+public record SwampHugeMushroomFeature() implements Feature {
+    public static final MapCodec<SwampHugeMushroomFeature> CODEC = MapCodec.unit(SwampHugeMushroomFeature::new);
     private static final int CLEARANCE_RADIUS = 3;
     private static final int CLEARANCE_HEIGHT = 8;
 
-    public SwampHugeMushroomFeature(Codec<NoneFeatureConfiguration> codec) {
-        super(codec);
+    @Override
+    public MapCodec<SwampHugeMushroomFeature> codec() {
+        return CODEC;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos origin) {
         if (!BedrockoidConfig.mushroomTreesInSwamp)
             return false;
-        WorldGenLevel level = context.level();
-        BlockPos origin = context.origin();
         if (!hasClearance(level, origin))
             return false;
-        ResourceKey<ConfiguredFeature<?, ?>> mushroom = context.random().nextBoolean() ? TreeFeatures.HUGE_RED_MUSHROOM : TreeFeatures.HUGE_BROWN_MUSHROOM;
-        return level.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).get(mushroom)
-                .map(holder -> holder.value().place(level, context.chunkGenerator(), context.random(), origin))
+        ResourceKey<Feature> mushroom = random.nextBoolean() ? TreeFeatures.HUGE_RED_MUSHROOM : TreeFeatures.HUGE_BROWN_MUSHROOM;
+        return level.registryAccess().lookupOrThrow(Registries.FEATURE).get(mushroom)
+                .map(holder -> holder.value().place(level, chunkGenerator, random, origin))
                 .orElse(false);
     }
 

@@ -1,8 +1,11 @@
 package net.sashakyotoz.bedrockoid.common.world.features.custom;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -10,29 +13,30 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.VineBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.sashakyotoz.bedrockoid.BedrockoidConfig;
-import net.sashakyotoz.bedrockoid.common.world.features.custom.configs.FallenTreeFeatureConfig;
 
-public class FallenTreeFeature extends Feature<FallenTreeFeatureConfig> {
+public record FallenTreeFeature(Holder<BlockStateProvider> logType, boolean isDoubleTrunk) implements Feature {
+    public static final MapCodec<FallenTreeFeature> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(
+                    BlockStateProvider.CODEC.fieldOf("logType").forGetter(FallenTreeFeature::logType),
+                    Codec.BOOL.fieldOf("isDoubleTrunk").forGetter(FallenTreeFeature::isDoubleTrunk)
+            ).apply(instance, FallenTreeFeature::new));
 
-    public static final Feature<FallenTreeFeatureConfig> INSTANCE = new FallenTreeFeature(FallenTreeFeatureConfig.CODEC);
-
-    public FallenTreeFeature(Codec<FallenTreeFeatureConfig> configCodec) {
-        super(configCodec);
+    @Override
+    public MapCodec<FallenTreeFeature> codec() {
+        return CODEC;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<FallenTreeFeatureConfig> context) {
-        WorldGenLevel world = context.level();
-        BlockPos pos = context.origin();
-        RandomSource random = context.random();
+    public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, RandomSource random, BlockPos pos) {
         if (!BedrockoidConfig.fallenTrees)
             return false;
-        BlockState trunk = context.config().logType().getState(world, random, context.origin());
-        if (!context.config().isDoubleTrunk()) {
+        BlockState trunk = this.logType.value().getState(world, random, pos);
+        if (!this.isDoubleTrunk) {
             int size = random.nextInt(3) + 3;
             int distance = random.nextInt(6) > 1 ? 1 : 2;
             BlockPos trunkTopPos = world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, pos);
@@ -181,13 +185,13 @@ public class FallenTreeFeature extends Feature<FallenTreeFeatureConfig> {
         return true;
     }
 
-    public void setVines(WorldGenLevel world, BlockPos trunkPos) {
+    private void setVines(WorldGenLevel world, BlockPos trunkPos) {
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             setVineOnTrunk(world, trunkPos, direction);
         }
     }
 
-    public void setVineOnTrunk(WorldGenLevel world, BlockPos trunkPos, Direction direction) {
+    private void setVineOnTrunk(WorldGenLevel world, BlockPos trunkPos, Direction direction) {
         BlockPos vinePos = trunkPos.relative(direction.getOpposite());
         if (world.getBlockState(vinePos).canBeReplaced() && (world.getRandom().nextInt(6) > 3))
             world.setBlock(vinePos, Blocks.VINE.defaultBlockState().setValue(VineBlock.getPropertyForFace(direction), true), 3);

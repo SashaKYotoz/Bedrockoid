@@ -25,9 +25,9 @@ public class BedrockoidFeatures {
     public static final ResourceKey<PlacedFeature> SWAMP_HUGE_MUSHROOM = placed("swamp_huge_mushroom");
 
     public static void register() {
-        Registry.register(BuiltInRegistries.FEATURE, Bedrockoid.makeID("snow_under_tree"), SnowUnderTreeFeature.INSTANCE);
-        Registry.register(BuiltInRegistries.FEATURE, Bedrockoid.makeID("fallen_tree"), FallenTreeFeature.INSTANCE);
-        Registry.register(BuiltInRegistries.FEATURE, Bedrockoid.makeID("swamp_huge_mushroom"), SwampHugeMushroomFeature.INSTANCE);
+        Registry.register(BuiltInRegistries.FEATURE_TYPE, Bedrockoid.makeID("snow_under_tree"), SnowUnderTreeFeature.CODEC);
+        Registry.register(BuiltInRegistries.FEATURE_TYPE, Bedrockoid.makeID("fallen_tree"), FallenTreeFeature.CODEC);
+        Registry.register(BuiltInRegistries.FEATURE_TYPE, Bedrockoid.makeID("swamp_huge_mushroom"), SwampHugeMushroomFeature.CODEC);
 
         if (BedrockoidConfig.snowSpawnsUnderTrees)
             BiomeModifications.addFeature(context -> context.getBiome().hasPrecipitation() && context.getBiome().getBaseTemperature() < 0.15F,

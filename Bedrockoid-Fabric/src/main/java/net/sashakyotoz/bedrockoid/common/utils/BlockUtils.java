@@ -3,7 +3,10 @@ package net.sashakyotoz.bedrockoid.common.utils;
 import com.google.common.base.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.item.component.Compostable;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.Level;
@@ -17,10 +20,12 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.sashakyotoz.bedrockoid.Bedrockoid;
 import org.jetbrains.annotations.Nullable;
 
 public class BlockUtils {
     public static final IntegerProperty LAYERS = IntegerProperty.create("snow_layers", 0, 8);
+    public static final Compostable GRASS_BLOCK_COMPOSTABLE = new Compostable(ResourceKey.create(Registries.CONTEXT_INT_PROVIDER, Bedrockoid.makeID("compostable/grass_block")));
 
     private static final Class<?>[] WATERLOGGING_CANDIDATES = {
             AbstractCauldronBlock.class, AnvilBlock.class, GrindstoneBlock.class, StonecutterBlock.class, BellBlock.class,
